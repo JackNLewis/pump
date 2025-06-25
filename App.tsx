@@ -5,6 +5,7 @@ import Home  from './screens/Home'
 import Feed from './screens/Feed'
 import Create from './screens/Create'
 import { Home as HomeIcon, User as UserIcon} from "react-native-feather";
+import MainButton from './components/MainButton';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,31 +15,40 @@ export default function App() {
             <Tab.Navigator
                 initialRouteName="Home"
                 screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-
+                    tabBarIcon: ({ color, focused }) => {
                         switch (route.name){
                             case 'Home':
-                                return <HomeIcon color={color} fill={color} /> 
+                                return (
+                                    <View style={styles.iconContainer}>
+                                        <HomeIcon color={color} fill={color} />
+                                        {focused && <View style={styles.underline} />}
+                                    </View>
+                                )
                             case 'Feed':
-                                return <UserIcon color={color} fill={color} /> 
+                                return (
+                                    <View style={styles.iconContainer}>
+                                        <UserIcon color={color} fill={color} />
+                                        {focused && <View style={styles.underline} />}
+                                    </View>
+                                )
                         }
                         // You can return any component that you like here!
-                        return <HomeIcon color={color} title='Heya' fill={color} /> 
+                        return <MainButton /> 
                     },
                     tabBarActiveTintColor: '#00CCA7',
                     tabBarInactiveTintColor: 'gray',
                     tabBarStyle: {
                         height: 80,
-                        paddingTop:5,
+                        paddingTop:10,
                         paddingBottom: 5,
                     },
+                    tabBarShowLabel: false,
                 })}
             >
                 <Tab.Screen
                     name="Home"
                     component={Home}
-                    options={{ headerShown: false }}
+                    options={{ headerShown: false, }}
                 />
                 <Tab.Screen
                     name="Create"
@@ -54,4 +64,19 @@ export default function App() {
         </NavigationContainer>
     );
 }
+
+const styles = StyleSheet.create({
+    iconContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    underline: {
+        position: 'absolute',
+        bottom: -5,
+        width: 20,
+        height: 2,
+        backgroundColor: '#00CCA7',
+        borderRadius: 1,
+    },
+});
 
