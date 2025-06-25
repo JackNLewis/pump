@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-
-function Feed() {
+function Create() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Feed Screen</Text>
+            <Text style={styles.title}>Create Workout Screen</Text>
         </View>
     );
 }
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red'
+    backgroundColor: 'green'
   },
   title: {
     fontSize: 24,
@@ -23,4 +22,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Feed;
+export default Create;

@@ -1,14 +1,10 @@
-import {Button, StyleSheet, View} from 'react-native';
-import {
-  useNavigation,
-} from '@react-navigation/native';
+import {StyleSheet, View, Text} from 'react-native';
 
 function Home() {
-    const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
-            <Button title='Go To Feed' onPress={() => navigation.navigate("Feed")}/>
+            <Text style={styles.title}>Home Screen</Text>   
         </View>
     );
 }
@@ -20,6 +16,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'blue'
   },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white'
+  }
 });
 
 export default Home;
