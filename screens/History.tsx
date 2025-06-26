@@ -1,10 +1,11 @@
-import {StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 
-function Home() {
+
+function History() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Home Screen</Text>   
+            <Text>Stats Page</Text>
         </View>
     );
 }
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue'
+    backgroundColor: 'purple'
   },
   title: {
     fontSize: 24,
@@ -23,4 +24,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default History 

@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import { Plus } from 'react-native-feather';
 
-function MainButton() {
+function CreateWorkoutButton() {
     return (
         <View style={styles.container}>
             <Plus color={'white'} />
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MainButton;
+export default CreateWorkoutButton;

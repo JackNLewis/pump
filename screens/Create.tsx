@@ -1,10 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 
-function Create() {
+type CreateProps = {
+    modalVisible: boolean
+    setModalVisible: (visible: boolean) => void
+}
+
+function Create({modalVisible, setModalVisible} : CreateProps) {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Create Workout Screen</Text>
-        </View>
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+            <View style={styles.container}>
+                <Text style={styles.title}>This is a modal!</Text>
+                <Button title="Close" onPress={() => setModalVisible(false)} />
+            </View>
+        </Modal>
     );
 }
 
