@@ -1,6 +1,47 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import supabase from '../SupaBase';
 
 function SignUp() {
+    const navigation = useNavigation<any>();
+    const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleSignUp = async () => {
+        if (!email || !password || !fullName) {
+            Alert.alert('Error', 'Please fill in all fields');
+            return;
+        }
+
+        setLoading(true);
+        Keyboard.dismiss;
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: email.trim(),
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                    }
+                }
+            });
+
+            if (error) {
+                Alert.alert('Sign Up Error', error.message);
+            } else {
+                Alert.alert('Success', 'Please check your email to confirm your account');
+                navigation.navigate('Login');
+            }
+        } catch (error) {
+            Alert.alert('Error', 'An unexpected error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -12,6 +53,8 @@ function SignUp() {
                     placeholder="Full Name"
                     placeholderTextColor="#999"
                     autoCapitalize="words"
+                    value={fullName}
+                    onChangeText={setFullName}
                 />
                 
                 <TextInput
@@ -20,6 +63,8 @@ function SignUp() {
                     placeholderTextColor="#999"
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    value={email}
+                    onChangeText={setEmail}
                 />
                 
                 <TextInput
@@ -27,10 +72,18 @@ function SignUp() {
                     placeholder="Password"
                     placeholderTextColor="#999"
                     secureTextEntry={true}
+                    value={password}
+                    onChangeText={setPassword}
                 />
                 
-                <TouchableOpacity style={styles.signupButton}>
-                    <Text style={styles.signupButtonText}>Sign Up</Text>
+                <TouchableOpacity 
+                    style={[styles.signupButton, loading && styles.signupButtonDisabled]} 
+                    onPress={handleSignUp}
+                    disabled={loading}
+                >
+                    <Text style={styles.signupButtonText}>
+                        {loading ? 'Signing Up...' : 'Sign Up'}
+                    </Text>
                 </TouchableOpacity>
                 
                 <View style={styles.dividerContainer}>
@@ -49,7 +102,7 @@ function SignUp() {
                 
                 <View style={styles.loginContainer}>
                     <Text style={styles.loginText}>Already have an account </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.popTo('Login')}>
                         <Text style={styles.loginLink}>Login</Text>
                     </TouchableOpacity>
                 </View>
@@ -98,6 +151,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 18,
         fontWeight: '600',
+    },
+    signupButtonDisabled: {
+        backgroundColor: '#80E6D4',
     },
     dividerContainer: {
         flexDirection: 'row',

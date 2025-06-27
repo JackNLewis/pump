@@ -1,6 +1,40 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import supabase from '../SupaBase';
 
 function Login() {
+    const navigation = useNavigation<any>();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleLogin = async () => {
+        if (!email || !password) {
+            Alert.alert('Error', 'Please fill in all fields');
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email.trim(),
+                password: password,
+            });
+
+            if (error) {
+                Alert.alert('Login Error', error.message);
+            } else {
+                Alert.alert('Success', 'Login successful!');
+                // Navigate to main app or home screen
+            }
+        } catch (error) {
+            Alert.alert('Error', 'An unexpected error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -13,6 +47,8 @@ function Login() {
                     placeholderTextColor="#999"
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    value={email}
+                    onChangeText={setEmail}
                 />
                 
                 <TextInput
@@ -20,10 +56,18 @@ function Login() {
                     placeholder="Password"
                     placeholderTextColor="#999"
                     secureTextEntry={true}
+                    value={password}
+                    onChangeText={setPassword}
                 />
                 
-                <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.loginButtonText}>Login</Text>
+                <TouchableOpacity 
+                    style={[styles.loginButton, loading && styles.loginButtonDisabled]} 
+                    onPress={handleLogin}
+                    disabled={loading}
+                >
+                    <Text style={styles.loginButtonText}>
+                        {loading ? 'Logging In...' : 'Login'}
+                    </Text>
                 </TouchableOpacity>
                 
                 <View style={styles.dividerContainer}>
@@ -42,7 +86,7 @@ function Login() {
                 
                 <View style={styles.signupContainer}>
                     <Text style={styles.signupText}>Don't have an account, </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                         <Text style={styles.signupLink}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
@@ -91,6 +135,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    loginButtonDisabled: {
+        backgroundColor: '#80E6D4',
     },
     dividerContainer: {
         flexDirection: 'row',

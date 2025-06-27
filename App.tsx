@@ -7,18 +7,55 @@ import Create from './screens/Create'
 import Profile from './screens/Profile';
 import { Home as HomeIcon, User as UserIcon} from "react-native-feather";
 import CreateWorkoutButton from './components/CreateWorkoutButton';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
+import supabase from './SupaBase';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const DummyScreen = () => null;
 
-
 export default function App() {
     const [modalVisible, setModalVisible] = useState(false);
     const [isSignedIn, setSignedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Check current session on app load
+        const checkSession = async () => {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                setSignedIn(!!session);
+            } catch (error) {
+                console.error('Error checking session:', error);
+                setSignedIn(false);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkSession();
+
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+            (event, session) => {
+                setSignedIn(!!session);
+                setLoading(false);
+            }
+        );
+
+        return () => subscription.unsubscribe();
+    }, []);
+
+    // Show loading screen while checking authentication
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
 
     return (
         <NavigationContainer>
@@ -84,7 +121,10 @@ export default function App() {
                 ) : 
                 (
                 <>
-                    <Stack.Navigator>
+                    <Stack.Navigator
+                        screenOptions={{
+                            headerShown: false,
+                        }}>
                          <Stack.Screen name="Login" component={Login} />
                         <Stack.Screen name="SignUp" component={SignUp} />
                     </Stack.Navigator>
@@ -107,6 +147,12 @@ const styles = StyleSheet.create({
         height: 2,
         backgroundColor: '#00CCA7',
         borderRadius: 1,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
     },
 });
 
