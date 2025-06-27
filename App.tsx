@@ -11,6 +11,8 @@ import React, { useState, useEffect } from 'react';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import supabase from './SupaBase';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AddSet from './screens/AddSet';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -58,10 +60,11 @@ export default function App() {
     }
 
     return (
-        <NavigationContainer>
-            { isSignedIn ? (
-                <>
-                    <Tab.Navigator
+        <SafeAreaProvider>
+            <NavigationContainer>
+                { isSignedIn ? (
+                    <>
+                        <Tab.Navigator
                         initialRouteName="Home"
                         screenOptions={({ route }) => ({
                             tabBarIcon: ({ color, focused }) => {
@@ -96,7 +99,7 @@ export default function App() {
                     >
                     <Tab.Screen
                         name="Home"
-                        component={Feed}
+                        component={AddSet}
                         options={{ headerShown: false, }}
                     />
                     <Tab.Screen
@@ -131,7 +134,8 @@ export default function App() {
                 </>
                 )}
 
-        </NavigationContainer>
+            </NavigationContainer>
+        </SafeAreaProvider>
     );
 }
 

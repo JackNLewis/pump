@@ -1,4 +1,7 @@
-import { StyleSheet, Text, View, Modal, Button } from 'react-native';
+import { StyleSheet, Text, View, Modal, Button, TouchableOpacity } from 'react-native';
+import { X } from "react-native-feather";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AddExerciseButton from '../components/AddExerciseButton';
 
 type CreateProps = {
     modalVisible: boolean
@@ -6,11 +9,20 @@ type CreateProps = {
 }
 
 function Create({modalVisible, setModalVisible} : CreateProps) {
+    const insets = useSafeAreaInsets();
+    
     return (
-        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+        <Modal visible={modalVisible} animationType="slide" transparent={false}>
             <View style={styles.container}>
-                <Text style={styles.title}>This is a modal!</Text>
-                <Button title="Close" onPress={() => setModalVisible(false)} />
+                <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
+                    <Text style={styles.headerText}>WORKOUT</Text>
+                    <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <X stroke="#000" width={24} height={24}/>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.contentContainer}>
+                    <AddExerciseButton onPress={() => console.log('Add exercise pressed')} />
+                </View>
             </View>
         </Modal>
     );
@@ -19,15 +31,24 @@ function Create({modalVisible, setModalVisible} : CreateProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'green'
+    backgroundColor: 'white',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white'
-  }
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#4E4E4E',
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default Create;
