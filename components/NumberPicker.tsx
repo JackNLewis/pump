@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         height: 180,
-        width: 80,
+        width: 120,
         overflow: 'hidden',
     },
     scrollView: {
