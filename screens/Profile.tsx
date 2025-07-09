@@ -1,6 +1,8 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { View,StyleSheet } from 'react-native';
 import Stats from './Stats'
 import History from './History'
+import ProfileHeader from '../components/ProfileHeader'
 import { useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
@@ -10,11 +12,12 @@ function Profile() {
     const insets = useSafeAreaInsets();
 
     return (
+        <View style={[styles.container, {paddingTop: insets.top,}]}>
+            <ProfileHeader />
             <Tab.Navigator
              screenOptions={{
                 tabBarStyle: {
                         justifyContent: 'center',
-                        paddingTop: insets.top,
                         paddingBottom: 5,
                     },
                 tabBarLabelStyle: {
@@ -30,7 +33,14 @@ function Profile() {
                 <Tab.Screen name="History" component={History} />
                 <Tab.Screen name="Stats" component={Stats} />
             </Tab.Navigator>
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: { 
+        flex: 1,
+        backgroundColor: 'white' }
+})
 
 export default Profile;
