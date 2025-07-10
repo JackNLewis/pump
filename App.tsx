@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import Feed from './screens/Feed'
 import Create from './screens/Create'
 import Profile from './screens/Profile';
@@ -13,42 +12,42 @@ import SignUp from './screens/SignUp';
 import supabase from './SupaBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AddSet from './screens/AddSet';
+import HomeTabs from './screens/HomeTabs';
 
-const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-const DummyScreen = () => null;
+
+const Stack = createStackNavigator();
 
 export default function App() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [isSignedIn, setSignedIn] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [isSignedIn, setSignedIn] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        // Check current session on app load
-        const checkSession = async () => {
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                setSignedIn(!!session);
-            } catch (error) {
-                console.error('Error checking session:', error);
-                setSignedIn(false);
-            } finally {
-                setLoading(false);
-            }
-        };
+    // useEffect(() => {
+    //     // Check current session on app load
+    //     const checkSession = async () => {
+    //         try {
+    //             const { data: { session } } = await supabase.auth.getSession();
+    //             setSignedIn(!!session);
+    //         } catch (error) {
+    //             console.error('Error checking session:', error);
+    //             setSignedIn(false);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        checkSession();
+    //     checkSession();
 
-        // Listen for auth state changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            (event, session) => {
-                setSignedIn(!!session);
-                setLoading(false);
-            }
-        );
+    //     // Listen for auth state changes
+    //     const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    //         (event, session) => {
+    //             setSignedIn(!!session);
+    //             setLoading(false);
+    //         }
+    //     );
 
-        return () => subscription.unsubscribe();
-    }, []);
+    //     return () => subscription.unsubscribe();
+    // }, []);
 
     // Show loading screen while checking authentication
     if (loading) {
@@ -62,77 +61,29 @@ export default function App() {
     return (
         <SafeAreaProvider>
             <NavigationContainer>
-                { isSignedIn ? (
-                    <>
-                        <Tab.Navigator
-                        initialRouteName="Home"
-                        screenOptions={({ route }) => ({
-                            tabBarIcon: ({ color, focused }) => {
-                                switch (route.name){
-                                    case 'Home':
-                                        return (
-                                            <View style={styles.iconContainer}>
-                                                <HomeIcon color={color} fill={color} />
-                                                {focused && <View style={styles.underline} />}
-                                            </View>
-                                        )
-                                    case 'Feed':
-                                        return (
-                                            <View style={styles.iconContainer}>
-                                                <UserIcon color={color} fill={color} />
-                                                {focused && <View style={styles.underline} />}
-                                            </View>
-                                        )
-                                }
-                                // You can return any component that you like here!
-                                return <CreateWorkoutButton /> 
-                            },
-                            tabBarActiveTintColor: '#00CCA7',
-                            tabBarInactiveTintColor: 'gray',
-                            tabBarStyle: {
-                                height: 80,
-                                paddingTop:10,
-                                paddingBottom: 5,
-                            },
-                            tabBarShowLabel: false,
-                        })}
-                    >
-                    <Tab.Screen
-                        name="Home"
-                        component={AddSet}
-                        options={{ headerShown: false, }}
-                    />
-                    <Tab.Screen
-                        name="Create"
-                        component={DummyScreen}
-                        listeners={{
-                            tabPress: e => {
-                            e.preventDefault(); // Prevent default navigation
-                            setModalVisible(true); // Show modal instead
-                            },
-                        }}
-                        options={{ tabBarLabel: 'Open Modal' }}
-                    />
-                    <Tab.Screen
-                        name="Feed"
-                        component={Profile}
-                        options={{ headerShown: false }}
-                    />
-                    </Tab.Navigator>
-                    <Create modalVisible={modalVisible} setModalVisible={setModalVisible} />
-                </>
-                ) : 
-                (
-                <>
-                    <Stack.Navigator
+                <Stack.Navigator
                         screenOptions={{
                             headerShown: false,
                         }}>
-                         <Stack.Screen name="Login" component={Login} />
+                { isSignedIn ? (
+                    // Authenticated Pages
+                    <Stack.Group>
+                        <Stack.Screen name="HomeTabs" component={HomeTabs} />
+                        <Stack.Screen name="AddSet" component={AddSet} options={{
+                            cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                            gestureEnabled: false,
+                        }}/>
+                    </Stack.Group>
+                ): 
+                (
+                     // Non-Authenticated Pages
+                    <Stack.Group>
+                        <Stack.Screen name="Login" component={Login} />
                         <Stack.Screen name="SignUp" component={SignUp} />
-                    </Stack.Navigator>
-                </>
+                    </Stack.Group>
                 )}
+                
+                </Stack.Navigator>
 
             </NavigationContainer>
         </SafeAreaProvider>

@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { X, Check } from 'react-native-feather';
 import NumberPicker from '../components/NumberPicker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 function AddSet() {
+    const navigation = useNavigation<any>();
+
     const insets = useSafeAreaInsets();
     const [reps, setReps] = useState(10);
     const [weight, setWeight] = useState(85);
@@ -86,7 +89,7 @@ function AddSet() {
             </View>
 
             <View style={styles.bottomActions}>
-                <TouchableOpacity style={styles.bottomButton}>
+                <TouchableOpacity style={styles.bottomButton} onPress={()=>navigation.pop()}>
                     <X stroke="#FFFFFF" width={24} height={24} />
                 </TouchableOpacity>
 
