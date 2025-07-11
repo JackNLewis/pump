@@ -1,10 +1,10 @@
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Profile from './Profile';
+import Profile from './ProfileTabs';
 import { Home as HomeIcon, User as UserIcon } from "react-native-feather";
 import CreateWorkoutButton from '../components/CreateWorkoutButton';
 import { useNavigation } from '@react-navigation/native';
-import Explore from './Explore';
+import Feed from './Feed';
 
 
 const Tab = createBottomTabNavigator();
@@ -20,7 +20,7 @@ function HomeTabs() {
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ color, focused }) => {
                     switch (route.name) {
-                        case 'Explore':
+                        case 'Feed':
                             return (
                                 <View style={styles.iconContainer}>
                                     <HomeIcon color={color} fill={color} />
@@ -49,8 +49,8 @@ function HomeTabs() {
             })}
         >
             <Tab.Screen
-                name="Explore"
-                component={Explore}
+                name="Feed"
+                component={Feed}
                 options={{ headerShown: false, }}
             />
             <Tab.Screen

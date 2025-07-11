@@ -33,6 +33,7 @@ function ProgressChart({ data, maxValue = 120 }: ProgressChartProps) {
         labelWidth={40}
         xAxisLabelTextStyle={styles.xAxisLabel}
         hideYAxisText
+        disableScroll={true}
       />
     </View>
   );

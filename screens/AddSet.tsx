@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { X, Check } from 'react-native-feather';
 import NumberPicker from '../components/NumberPicker';

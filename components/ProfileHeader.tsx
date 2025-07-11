@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import {  User } from 'react-native-feather';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {  UserPlus } from 'react-native-feather';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileHeader = () => {
+  const navigation = useNavigation<any>();
   return (
     <View style={styles.container}>
       <View style={styles.leftSection}>
-        <User stroke="#666" width={24} height={24} />
+        <TouchableOpacity onPress={() => navigation.navigate('People')}>
+          <UserPlus stroke="#666" width={24} height={24} />
+        </TouchableOpacity>
       </View>
       <View style={styles.rightSection}>
         <View style={styles.userInfo}>

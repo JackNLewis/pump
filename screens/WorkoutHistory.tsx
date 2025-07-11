@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import MonthWorkouts from '../components/MonthWorkouts';
+import { useNavigation } from '@react-navigation/native';
+import { useRef } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 
-function History() {
+function WorkoutHistory() {
+
     const sampleWorkoutImages = [
         'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
         'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
@@ -10,9 +14,22 @@ function History() {
         'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
     ];
 
+    const scrollViewRef = useRef(null);
+
+
+
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+
+            <ScrollView
+                // Native ScrollView doesn't interfere with tab swipes
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollView}
+            >
+
+                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} />
+                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} />
+                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} />
                 <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} />
                 <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} />
             </ScrollView>
@@ -48,4 +65,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default History
+export default WorkoutHistory

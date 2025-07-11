@@ -1,9 +1,8 @@
 import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import Feed from './screens/Feed'
 import Create from './screens/Create'
-import Profile from './screens/Profile';
+import Profile from './screens/ProfileTabs';
 import { Home as HomeIcon, User as UserIcon} from "react-native-feather";
 import CreateWorkoutButton from './components/CreateWorkoutButton';
 import React, { useState, useEffect } from 'react';
@@ -13,6 +12,7 @@ import supabase from './SupaBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AddSet from './screens/AddSet';
 import HomeTabs from './screens/HomeTabs';
+import People from './screens/People';
 
 
 const Stack = createStackNavigator();
@@ -73,6 +73,7 @@ export default function App() {
                             cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
                             gestureEnabled: false,
                         }}/>
+                        <Stack.Screen name="People" component={People} />
                     </Stack.Group>
                 ): 
                 (

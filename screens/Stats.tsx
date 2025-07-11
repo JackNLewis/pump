@@ -65,7 +65,7 @@ function Stats() {
         <View style={styles.exerciseHeader}>
           <View style={styles.exerciseTitle}>
             <Text style={styles.exerciseName}>Bench Press</Text>
-            <ChevronDown color="#666" size={16} />
+            <ChevronDown color="#666" height={16} width={16}/>
           </View>
           <Text style={styles.currentWeight}>110kg</Text>
         </View>
