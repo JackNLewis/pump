@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import MonthWorkouts from '../components/MonthWorkouts';
+import MonthWorkouts from '../../components/MonthWorkouts';
 import { useNavigation } from '@react-navigation/native';
 import { useRef } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';

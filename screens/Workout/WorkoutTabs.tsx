@@ -2,12 +2,12 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { View, StyleSheet } from 'react-native';
 import Stats from './Stats'
 import WorkoutHistory from './WorkoutHistory'
-import ProfileHeader from '../components/ProfileHeader'
+import ProfileHeader from '../../components/ProfileHeader'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 
-function ProfileTabs() {
+function WorkoutTabs() {
 
     const insets = useSafeAreaInsets();
 
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ProfileTabs;
+export default WorkoutTabs;

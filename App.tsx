@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import Create from './screens/Create'
-import Profile from './screens/ProfileTabs';
+import Create from './screens/Create/AddExercise'
+import Profile from './screens/Workout/WorkoutTabs';
 import { Home as HomeIcon, User as UserIcon} from "react-native-feather";
 import CreateWorkoutButton from './components/CreateWorkoutButton';
 import React, { useState, useEffect } from 'react';
@@ -10,9 +10,10 @@ import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import supabase from './SupaBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import AddSet from './screens/AddSet';
+import AddExercise from './screens/Create/AddExercise';
 import HomeTabs from './screens/HomeTabs';
 import People from './screens/People';
+import AddSet from './screens/Create/AddSet';
 
 
 const Stack = createStackNavigator();
@@ -69,10 +70,11 @@ export default function App() {
                     // Authenticated Pages
                     <Stack.Group>
                         <Stack.Screen name="HomeTabs" component={HomeTabs} />
-                        <Stack.Screen name="AddSet" component={AddSet} options={{
+                        <Stack.Screen name="AddExercise" component={AddExercise} options={{
                             cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
                             gestureEnabled: false,
                         }}/>
+                         <Stack.Screen name="AddSet" component={AddSet} />
                         <Stack.Screen name="People" component={People} />
                     </Stack.Group>
                 ): 

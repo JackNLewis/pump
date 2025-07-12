@@ -1,9 +1,9 @@
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Profile from './ProfileTabs';
-import { Home as HomeIcon, User as UserIcon } from "react-native-feather";
+import Profile from './Workout/WorkoutTabs';
+import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as BookIcon } from "react-native-feather";
 import CreateWorkoutButton from '../components/CreateWorkoutButton';
-import { useNavigation } from '@react-navigation/native';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
 import Feed from './Feed';
 
 
@@ -11,26 +11,34 @@ const Tab = createBottomTabNavigator();
 
 const DummyScreen = () => null;
 
-function HomeTabs() {
-    const navigation = useNavigation<any>();
-    
-    return (
-        <Tab.Navigator
-            initialRouteName="Profile"
-            screenOptions={({ route }) => ({
-                tabBarIcon: ({ color, focused }) => {
+const TabOptions = ({route} : any) => ({
+        tabBarIcon: ({ color, focused } : any) => {
                     switch (route.name) {
-                        case 'Feed':
+                        case 'Exercises':
                             return (
                                 <View style={styles.iconContainer}>
-                                    <HomeIcon color={color} fill={color} />
+                                    <BookIcon color={color} />
+                                    {focused && <View style={styles.underline} />}
+                                </View>
+                            )
+                        case 'Explore':
+                            return (
+                                <View style={styles.iconContainer}>
+                                    <CompassIcon color={color}  />
+                                    {focused && <View style={styles.underline} />}
+                                </View>
+                            )
+                        case 'WorkoutTabs':
+                            return (
+                                <View style={styles.iconContainer}>
+                                    <HomeIcon color={color} />
                                     {focused && <View style={styles.underline} />}
                                 </View>
                             )
                         case 'Profile':
                             return (
                                 <View style={styles.iconContainer}>
-                                    <UserIcon color={color} fill={color} />
+                                    <UserIcon color={color}/>
                                     {focused && <View style={styles.underline} />}
                                 </View>
                             )
@@ -38,31 +46,48 @@ function HomeTabs() {
                     // You can return any component that you like here!
                     return <CreateWorkoutButton />
                 },
-                tabBarActiveTintColor: '#00CCA7',
-                tabBarInactiveTintColor: 'gray',
-                tabBarStyle: {
-                    height: 80,
-                    paddingTop: 10,
-                    paddingBottom: 5,
-                },
-                tabBarShowLabel: false,
-            })}
+        tabBarActiveTintColor: '#00CCA7',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+            height: 80,
+            paddingTop: 10,
+            paddingBottom: 5,
+        },
+        tabBarShowLabel: false,
+        });
+    
+function HomeTabs() {
+    const navigation = useNavigation<any>();
+    return (
+        <Tab.Navigator
+            initialRouteName="Profile"
+            screenOptions={TabOptions}
         >
             <Tab.Screen
-                name="Feed"
+                name="Exercises"
+                component={Profile}
+                options={{ headerShown: false }}
+            />
+            <Tab.Screen
+                name="Explore"
                 component={Feed}
                 options={{ headerShown: false, }}
             />
             <Tab.Screen
-                name="Create"
+                name="AddExercise"
                 component={DummyScreen}
                 listeners={{
                     tabPress: e => {
                         e.preventDefault();
-                        navigation.navigate('AddSet');
+                        navigation.navigate('AddExercise');
                     },
                 }}
                 options={{ tabBarLabel: 'Open Modal' }}
+            />
+            <Tab.Screen
+                name="WorkoutTabs"
+                component={Profile}
+                options={{ headerShown: false }}
             />
             <Tab.Screen
                 name="Profile"

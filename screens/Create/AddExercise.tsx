@@ -1,30 +1,25 @@
 import { StyleSheet, Text, View, Modal, Button, TouchableOpacity } from 'react-native';
 import { X } from "react-native-feather";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import AddExerciseButton from '../components/AddExerciseButton';
+import AddExerciseButton from '../../components/AddExerciseButton';
+import { useNavigation } from '@react-navigation/native';
 
-type CreateProps = {
-    modalVisible: boolean
-    setModalVisible: (visible: boolean) => void
-}
-
-function Create({modalVisible, setModalVisible} : CreateProps) {
+function AddExercise() {
+    const navigation = useNavigation<any>();
     const insets = useSafeAreaInsets();
     
     return (
-        <Modal visible={modalVisible} animationType="slide" transparent={false}>
             <View style={styles.container}>
                 <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
                     <Text style={styles.headerText}>WORKOUT</Text>
-                    <TouchableOpacity onPress={() => setModalVisible(false)}>
+                    <TouchableOpacity onPress={()=>navigation.pop()}>
                         <X stroke="#000" width={24} height={24}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.contentContainer}>
-                    <AddExerciseButton onPress={() => console.log('Add exercise pressed')} />
+                    <AddExerciseButton onPress={() => navigation.navigate('AddSet')} />
                 </View>
             </View>
-        </Modal>
     );
 }
 
@@ -51,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Create;
+export default AddExercise;

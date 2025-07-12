@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { X, Check } from 'react-native-feather';
-import NumberPicker from '../components/NumberPicker';
+import NumberPicker from '../../components/NumberPicker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
