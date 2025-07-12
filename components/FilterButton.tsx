@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'transparent',
     marginRight: 8,
   },
   activeButton: {
-    backgroundColor: '#00CCA7',
+    backgroundColor: '#F5F5F5',
   },
   text: {
     fontSize: 14,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   activeText: {
-    color: '#FFFFFF',
+    color: '#666',
   },
 });
 

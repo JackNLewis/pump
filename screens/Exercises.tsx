@@ -61,21 +61,26 @@ const ExercisesContent = () => {
       <SearchBar value={searchText} onChangeText={setSearchText} />
       
       <View style={styles.filtersContainer}>
-        <FilterButton
-          title="All"
-          isActive={activeFilter === 'All'}
-          onPress={() => setActiveFilter('All')}
-        />
-        <FilterButton
-          title="Official"
-          isActive={activeFilter === 'Official'}
-          onPress={() => setActiveFilter('Official')}
-        />
-        <FilterButton
-          title="Custom"
-          isActive={activeFilter === 'Custom'}
-          onPress={() => setActiveFilter('Custom')}
-        />
+        <View style={styles.filtersGroup}>
+          <FilterButton
+            title="All"
+            isActive={activeFilter === 'All'}
+            onPress={() => setActiveFilter('All')}
+          />
+          <FilterButton
+            title="Official"
+            isActive={activeFilter === 'Official'}
+            onPress={() => setActiveFilter('Official')}
+          />
+          <FilterButton
+            title="Custom"
+            isActive={activeFilter === 'Custom'}
+            onPress={() => setActiveFilter('Custom')}
+          />
+        </View>
+        <TouchableOpacity style={styles.createButton}>
+          <Text style={styles.createButtonText}>Add</Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -99,9 +104,6 @@ const Exercises = ({ navigation }: any) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>EXERCISES</Text>
-        <TouchableOpacity style={styles.createButton}>
-          <Text style={styles.createButtonText}>Create</Text>
-        </TouchableOpacity>
       </View>
       
       <ExercisesContent />
@@ -131,14 +133,15 @@ const styles = StyleSheet.create({
   },
   createButton: {
     backgroundColor: '#00CCA7',
-    paddingHorizontal: 20,
-    paddingVertical: 2,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderRadius: 20,
+    marginRight: 8,
   },
   createButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: '500',
   },
   content: {
     flex: 1,
@@ -146,8 +149,13 @@ const styles = StyleSheet.create({
   },
   filtersContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 20,
     paddingBottom: 16,
+  },
+  filtersGroup: {
+    flexDirection: 'row',
   },
   searchContainer: {
     flexDirection: 'row',
