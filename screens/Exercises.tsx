@@ -60,30 +60,30 @@ const ExercisesContent = () => {
     <View style={styles.content}>
       <SearchBar value={searchText} onChangeText={setSearchText} />
       
-      <View style={styles.filtersContainer}>
-        <View style={styles.filtersGroup}>
-          <FilterButton
-            title="All"
-            isActive={activeFilter === 'All'}
-            onPress={() => setActiveFilter('All')}
-          />
-          <FilterButton
-            title="Official"
-            isActive={activeFilter === 'Official'}
-            onPress={() => setActiveFilter('Official')}
-          />
-          <FilterButton
-            title="Custom"
-            isActive={activeFilter === 'Custom'}
-            onPress={() => setActiveFilter('Custom')}
-          />
-        </View>
-        <TouchableOpacity style={styles.createButton}>
-          <Text style={styles.createButtonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
-
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <View style={styles.filtersContainer}>
+          <View style={styles.filtersGroup}>
+            <FilterButton
+              title="All"
+              isActive={activeFilter === 'All'}
+              onPress={() => setActiveFilter('All')}
+            />
+            <FilterButton
+              title="Official"
+              isActive={activeFilter === 'Official'}
+              onPress={() => setActiveFilter('Official')}
+            />
+            <FilterButton
+              title="Custom"
+              isActive={activeFilter === 'Custom'}
+              onPress={() => setActiveFilter('Custom')}
+            />
+          </View>
+          <TouchableOpacity style={styles.createButton}>
+            <Text style={styles.createButtonText}>Add</Text>
+          </TouchableOpacity>
+        </View>
+
         {getFilteredExercises().map((exercise) => (
           <ExerciseItem
             key={exercise.id}
