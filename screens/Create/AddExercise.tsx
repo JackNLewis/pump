@@ -6,16 +6,13 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-const CreateStack = createStackNavigator();
-
 function AddExercise() {
     const navigation = useNavigation<any>();
     const insets = useSafeAreaInsets();
-
     return (
 
         <View style={styles.container}>
-            <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
+            <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>WORKOUT</Text>
                 <TouchableOpacity onPress={() => navigation.pop()}>
                     <X stroke="#000" width={24} height={24} />

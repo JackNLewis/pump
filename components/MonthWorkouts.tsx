@@ -64,6 +64,14 @@ const styles = StyleSheet.create({
     height: imageSize,
     borderRadius: 12,
     backgroundColor: '#F2F2F7',
+    shadowColor: 'black',
+    shadowOffset: {
+        height: 0,
+        width: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+
   },
 });
 

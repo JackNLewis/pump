@@ -5,6 +5,7 @@ import { UserPlus, AlignRight } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 import ProfileStat from '../components/ProfileStat';
 import SharedWorkouts from '../components/SharedWorkouts';
+import ActivitySection from '../components/ActivitySection';
 
 const Profile = () => {
   const navigation = useNavigation<any>();
@@ -46,12 +47,7 @@ const Profile = () => {
           <Text style={styles.gymName}>Pure Gym Bromsgrove</Text>
         </View>
 
-        <View style={styles.activitySection}>
-          <Text style={styles.activityTitle}>Activity</Text>
-          <View style={styles.activityPlaceholder}>
-            <Text style={styles.placeholderText}>Activity section placeholder</Text>
-          </View>
-        </View>
+        <ActivitySection />
 
         <SharedWorkouts />
       </ScrollView>
@@ -127,27 +123,6 @@ const styles = StyleSheet.create({
   gymName: {
     fontSize: 16,
     color: '#666',
-  },
-  activitySection: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-  activityTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 16,
-  },
-  activityPlaceholder: {
-    height: 150,
-    backgroundColor: '#F8F8F8',
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  placeholderText: {
-    fontSize: 16,
-    color: '#999',
   },
 });
 

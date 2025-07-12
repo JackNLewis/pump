@@ -33,6 +33,15 @@ function WorkoutScreens() {
                         backgroundColor:'#00CCA7',
                         height: 0, // This removes the blue indicator line
                     },
+                     tabBarItemStyle: {
+                        width: 'auto',
+                        alignItems: 'flex-start',
+                    },
+                    tabBarContentContainerStyle: {
+                        justifyContent: 'space-between',
+                        paddingHorizontal: 10,
+                    }
+
                 }}>
                 <Tab.Screen name="HISTORY" component={WorkoutHistory} />
                 <Tab.Screen name="STATS" component={Stats} />

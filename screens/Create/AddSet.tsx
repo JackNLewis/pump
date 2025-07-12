@@ -16,7 +16,7 @@ function AddSet() {
     const [increment, setIncrement] = useState(5);
 
     return (
-        <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={styles.container}>
             <Text style={styles.title}>CHEST PRESS</Text>
 
             <View style={styles.setsContainer}>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        padding: 20,
+        paddingHorizontal: 20,
     },
     title: {
         fontSize: 24,
