@@ -29,8 +29,8 @@ function WorkoutScreens() {
                         height: 0, // This removes the blue indicator line
                     }
                 }}>
-                <Tab.Screen name="Workouts" component={WorkoutHistory}/>
-                <Tab.Screen name="Stats" component={Stats} />
+                <Tab.Screen name="WORKOUTS" component={WorkoutHistory}/>
+                <Tab.Screen name="STATS" component={Stats} />
             </Tab.Navigator>
         </View>
     );

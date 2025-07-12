@@ -5,6 +5,8 @@ import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as Boo
 import CreateWorkoutButton from '../components/CreateWorkoutButton';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import Feed from './Feed';
+import Profile from './Profile';
+import Exercises from './Exercises';
 
 
 const Tab = createBottomTabNavigator();
@@ -65,7 +67,7 @@ function HomeTabs() {
         >
             <Tab.Screen
                 name="Exercises"
-                component={WorkoutScreens}
+                component={Exercises}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
@@ -91,7 +93,7 @@ function HomeTabs() {
             />
             <Tab.Screen
                 name="Profile"
-                component={WorkoutScreens}
+                component={Profile}
                 options={{ headerShown: false }}
             />
         </Tab.Navigator>
