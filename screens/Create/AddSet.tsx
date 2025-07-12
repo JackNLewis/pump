@@ -62,19 +62,18 @@ function AddSet() {
 
             <View style={styles.pickersContainer}>
                 <NumberPicker
-                    label="Reps"
-                    value={reps}
-                    onChange={setReps}
-                    currentValue={10}
-                    increment={1}
-                />
-
-                <NumberPicker
                     label="Weight"
                     value={weight}
                     onChange={setWeight}
                     currentValue={85}
                     increment={5}
+                />
+                 <NumberPicker
+                    label="Reps"
+                    value={reps}
+                    onChange={setReps}
+                    currentValue={10}
+                    increment={1}
                 />
             </View>
 

@@ -7,13 +7,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 
-function WorkoutTabs() {
+function WorkoutScreens() {
 
     const insets = useSafeAreaInsets();
 
     return (
         <View style={[styles.container, { paddingTop: insets.top, }]}>
-            <ProfileHeader />
             <Tab.Navigator
                 screenOptions={{
                     tabBarStyle: {
@@ -44,4 +43,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default WorkoutTabs;
+export default WorkoutScreens;

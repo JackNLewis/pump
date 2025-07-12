@@ -3,17 +3,22 @@ import { X } from "react-native-feather";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AddExerciseButton from '../../components/AddExerciseButton';
 import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack'; 
+
+
+const CreateStack = createStackNavigator();
 
 function AddExercise() {
     const navigation = useNavigation<any>();
     const insets = useSafeAreaInsets();
-    
+
     return (
+
             <View style={styles.container}>
                 <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
                     <Text style={styles.headerText}>WORKOUT</Text>
-                    <TouchableOpacity onPress={()=>navigation.pop()}>
-                        <X stroke="#000" width={24} height={24}/>
+                    <TouchableOpacity onPress={() => navigation.pop()}>
+                        <X stroke="#000" width={24} height={24} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.contentContainer}>
@@ -24,26 +29,26 @@ function AddExercise() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  headerText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#4E4E4E',
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    headerText: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#4E4E4E',
+    },
+    contentContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default AddExercise;

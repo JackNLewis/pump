@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Profile from './Workout/WorkoutTabs';
+import WorkoutScreens from './Workout/WorkoutScreens';
 import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as BookIcon } from "react-native-feather";
 import CreateWorkoutButton from '../components/CreateWorkoutButton';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
@@ -65,7 +65,7 @@ function HomeTabs() {
         >
             <Tab.Screen
                 name="Exercises"
-                component={Profile}
+                component={WorkoutScreens}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
@@ -79,19 +79,19 @@ function HomeTabs() {
                 listeners={{
                     tabPress: e => {
                         e.preventDefault();
-                        navigation.navigate('AddExercise');
+                        navigation.navigate('Create');
                     },
                 }}
                 options={{ tabBarLabel: 'Open Modal' }}
             />
             <Tab.Screen
                 name="WorkoutTabs"
-                component={Profile}
+                component={WorkoutScreens}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
                 name="Profile"
-                component={Profile}
+                component={WorkoutScreens}
                 options={{ headerShown: false }}
             />
         </Tab.Navigator>

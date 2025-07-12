@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import Create from './screens/Create/AddExercise'
-import Profile from './screens/Workout/WorkoutTabs';
+import Profile from './screens/Workout/WorkoutScreens';
 import { Home as HomeIcon, User as UserIcon} from "react-native-feather";
 import CreateWorkoutButton from './components/CreateWorkoutButton';
 import React, { useState, useEffect } from 'react';
@@ -14,6 +14,7 @@ import AddExercise from './screens/Create/AddExercise';
 import HomeTabs from './screens/HomeTabs';
 import People from './screens/People';
 import AddSet from './screens/Create/AddSet';
+import CreateScreens from './screens/Create/CreateScreens'
 
 
 const Stack = createStackNavigator();
@@ -70,11 +71,10 @@ export default function App() {
                     // Authenticated Pages
                     <Stack.Group>
                         <Stack.Screen name="HomeTabs" component={HomeTabs} />
-                        <Stack.Screen name="AddExercise" component={AddExercise} options={{
+                        <Stack.Screen name="Create" component={CreateScreens} options={{
                             cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
                             gestureEnabled: false,
                         }}/>
-                         <Stack.Screen name="AddSet" component={AddSet} />
                         <Stack.Screen name="People" component={People} />
                     </Stack.Group>
                 ): 

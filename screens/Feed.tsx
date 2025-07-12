@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { User as UserIcon, MoreHorizontal } from 'react-native-feather';
+import { User as UserIcon, MoreHorizontal, Search as SearchIcon } from 'react-native-feather';
 
 const CardHeader = ({ name, workout, profileImage }: any) => {
     return (
@@ -52,7 +52,7 @@ const Feed = () => {
             <View style={styles.header}>
                 <Text style={styles.title}>EXPLORE</Text>
                 <TouchableOpacity style={styles.headerIcon}>
-                    <UserIcon height={24} width={24} color="#333" />
+                    <SearchIcon height={24} width={24} color="#333" />
                 </TouchableOpacity>
             </View>
 
