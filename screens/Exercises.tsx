@@ -98,7 +98,7 @@ const Exercises = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>SEARCH</Text>
+        <Text style={styles.title}>EXERCISES</Text>
         <TouchableOpacity style={styles.createButton}>
           <Text style={styles.createButtonText}>Create</Text>
         </TouchableOpacity>
@@ -120,8 +120,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
   },
   backButton: {
     padding: 4,
@@ -134,7 +132,7 @@ const styles = StyleSheet.create({
   createButton: {
     backgroundColor: '#00CCA7',
     paddingHorizontal: 20,
-    paddingVertical: 8,
+    paddingVertical: 2,
     borderRadius: 20,
   },
   createButtonText: {

@@ -16,25 +16,36 @@ function WorkoutScreens() {
             <Tab.Navigator
                 screenOptions={{
                     tabBarStyle: {
-                        justifyContent: 'center',
-                        paddingBottom: 5,
+                        elevation: 0,
+                        shadowOpacity: 0,
+                        borderBottomWidth: 0,
                     },
                     tabBarLabelStyle: {
-                        fontSize: 16,
-                        fontWeight: '600',
+                        fontSize: 24,
+                        fontWeight: 'bold',
                     },
                     tabBarActiveTintColor: '#00CCA7',
-                    tabBarInactiveTintColor: 'gray',
+                    tabBarInactiveTintColor: '#333',
                     tabBarIndicatorStyle: {
                         height: 0, // This removes the blue indicator line
+                    },
+                    tabBarItemStyle: {
+                        width: 'auto',
+                        alignItems: 'flex-start',
+                    },
+                    tabBarContentContainerStyle: {
+                        justifyContent: 'space-between',
+                        paddingHorizontal: 0,
                     }
                 }}>
-                <Tab.Screen name="WORKOUTS" component={WorkoutHistory}/>
+                <Tab.Screen name=" WORKOUTS" component={WorkoutHistory} />
                 <Tab.Screen name="STATS" component={Stats} />
             </Tab.Navigator>
         </View>
     );
 }
+
+
 
 const styles = StyleSheet.create({
     container: {

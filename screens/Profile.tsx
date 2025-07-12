@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { UserPlus, Settings } from 'react-native-feather';
+import { UserPlus, AlignRight } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 import ProfileStat from '../components/ProfileStat';
 import SharedWorkouts from '../components/SharedWorkouts';
@@ -13,12 +13,15 @@ const Profile = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate('People')}>
-            <UserPlus stroke="#666" width={24} height={24} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Settings stroke="#666" width={24} height={24} />
-          </TouchableOpacity>
+          <Text style={styles.headerTitle}>PROFILE</Text>
+          <View style={styles.headerIcons}>
+            <TouchableOpacity onPress={() => navigation.navigate('People')} style={styles.iconButton}>
+              <UserPlus stroke="#666" width={24} height={24} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconButton}>
+              <AlignRight stroke="#666" width={24} height={24} />
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.profileSection}>
@@ -70,6 +73,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    marginLeft: 16,
   },
   profileSection: {
     alignItems: 'center',
