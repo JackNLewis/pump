@@ -17,7 +17,7 @@ function AddSet() {
 
     return (
         <View style={[styles.container, { paddingTop: insets.top }]}>
-            <Text style={styles.title}>Chest Press</Text>
+            <Text style={styles.title}>CHEST PRESS</Text>
 
             <View style={styles.setsContainer}>
                 <Text style={styles.setsLabel}>Sets:</Text>
@@ -68,7 +68,7 @@ function AddSet() {
                     currentValue={85}
                     increment={5}
                 />
-                 <NumberPicker
+                <NumberPicker
                     label="Reps"
                     value={reps}
                     onChange={setReps}
@@ -88,7 +88,7 @@ function AddSet() {
             </View>
 
             <View style={styles.bottomActions}>
-                <TouchableOpacity style={styles.bottomButton} onPress={()=>navigation.pop()}>
+                <TouchableOpacity style={styles.bottomButton} onPress={() => navigation.pop()}>
                     <X stroke="#FFFFFF" width={24} height={24} />
                 </TouchableOpacity>
 
@@ -107,9 +107,9 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-        fontSize: 32,
-        fontWeight: '600',
-        color: '#4E4E4E',
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
         marginBottom: 20,
     },
     setsContainer: {
@@ -162,15 +162,15 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.25,
         shadowRadius: 3,
-        borderWidth:1,
-        borderColor:'#E6E6E6',
+        borderWidth: 1,
+        borderColor: '#E6E6E6',
         borderRadius: 10,
         padding: 2,
     },
     toggleIndicator: {
         width: 24,
         height: 24,
-        top:-6,
+        top: -6,
         borderRadius: 16,
         backgroundColor: '#00D4AA',
         transform: [{ translateX: 0 }],

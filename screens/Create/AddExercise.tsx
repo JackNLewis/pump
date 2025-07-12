@@ -3,7 +3,7 @@ import { X } from "react-native-feather";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AddExerciseButton from '../../components/AddExerciseButton';
 import { useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack'; 
+import { createStackNavigator } from '@react-navigation/stack';
 
 
 const CreateStack = createStackNavigator();
@@ -14,17 +14,17 @@ function AddExercise() {
 
     return (
 
-            <View style={styles.container}>
-                <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
-                    <Text style={styles.headerText}>WORKOUT</Text>
-                    <TouchableOpacity onPress={() => navigation.pop()}>
-                        <X stroke="#000" width={24} height={24} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.contentContainer}>
-                    <AddExerciseButton onPress={() => navigation.navigate('AddSet')} />
-                </View>
+        <View style={styles.container}>
+            <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
+                <Text style={styles.headerText}>WORKOUT</Text>
+                <TouchableOpacity onPress={() => navigation.pop()}>
+                    <X stroke="#000" width={24} height={24} />
+                </TouchableOpacity>
             </View>
+            <View style={styles.contentContainer}>
+                <AddExerciseButton onPress={() => navigation.navigate('AddSet')} />
+            </View>
+        </View>
     );
 }
 
@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     headerText: {
-        fontSize: 18,
-        fontWeight: '600',
-        color: '#4E4E4E',
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
     },
     contentContainer: {
         flex: 1,
