@@ -16,7 +16,7 @@ const Profile = () => {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>PROFILE</Text>
           <View style={styles.headerIcons}>
-            <TouchableOpacity onPress={() => navigation.navigate('People')} style={styles.iconButton}>
+            <TouchableOpacity onPress={() => navigation.navigate('SearchUser')} style={styles.iconButton}>
               <UserPlus stroke="#666" width={24} height={24} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.iconButton}>
@@ -38,8 +38,16 @@ const Profile = () => {
 
         <View style={styles.statsContainer}>
           <ProfileStat label="Workouts" value="360" />
-          <ProfileStat label="Followers" value="24" />
-          <ProfileStat label="Following" value="32" />
+          <ProfileStat 
+            label="Followers" 
+            value="24" 
+            onPress={() => navigation.navigate('People', { initialTab: 'Followers' })}
+          />
+          <ProfileStat 
+            label="Following" 
+            value="32" 
+            onPress={() => navigation.navigate('People', { initialTab: 'Following' })}
+          />
         </View>
 
         <View style={styles.gymSection}>

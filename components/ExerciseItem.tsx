@@ -32,7 +32,7 @@ const ExerciseItem = ({
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <View style={styles.container} >
       <View style={styles.exerciseContent}>
         <View style={styles.iconContainer}>
           <Image 
@@ -40,6 +40,7 @@ const ExerciseItem = ({
             style={styles.exerciseIcon}
           />
         </View>
+        <TouchableOpacity onPress={onPress}>
         <View style={styles.exerciseInfo}>
           <Text style={styles.exerciseName}>{name}</Text>
           <View style={styles.difficultyContainer}>
@@ -48,7 +49,7 @@ const ExerciseItem = ({
               {renderStars()}
             </View>
           </View>
-        </View>
+        </View></TouchableOpacity>
       </View>
       {hasInfoPage && (
         <TouchableOpacity 
@@ -58,7 +59,7 @@ const ExerciseItem = ({
           <Info width={20} height={20} color="#666" />
         </TouchableOpacity>
       )}
-    </TouchableOpacity>
+      </View>
   );
 };
 
@@ -127,7 +128,6 @@ const styles = StyleSheet.create({
   infoButton: {
     padding: 8,
     borderRadius: 20,
-    backgroundColor: '#F8F8F8',
   },
 });
 

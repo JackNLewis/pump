@@ -1,24 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowLeft, Search } from 'react-native-feather';
 import ExerciseItem from '../components/ExerciseItem';
 import FilterButton from '../components/FilterButton';
+import SearchBar from '../components/SearchBar';
 
-const SearchBar = ({ value, onChangeText }: any) => {
-  return (
-    <View style={styles.searchContainer}>
-      <Search height={20} width={20} color="#999" style={styles.searchIcon} />
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search for exercise"
-        placeholderTextColor="#999"
-        value={value}
-        onChangeText={onChangeText}
-      />
-    </View>
-  );
-};
 
 const exercisesData = [
   { id: 1, name: 'Barbell Curl', difficulty: 2, hasInfoPage: true, type: 'official' },
@@ -58,7 +44,9 @@ const ExercisesContent = () => {
 
   return (
     <View style={styles.content}>
-      <SearchBar value={searchText} onChangeText={setSearchText} />
+      <View style={{ marginHorizontal: 20, marginTop: 16, marginBottom: 20 }}>
+        <SearchBar value={searchText} onChangeText={setSearchText} placeholder="Search for exercise" />
+      </View>
       
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.filtersContainer}>
@@ -156,25 +144,6 @@ const styles = StyleSheet.create({
   },
   filtersGroup: {
     flexDirection: 'row',
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F8F8F8',
-    marginHorizontal: 20,
-    marginTop: 16,
-    marginBottom: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 12,
-  },
-  searchIcon: {
-    marginRight: 12,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: '#333',
   },
   scrollView: {
     flex: 1,

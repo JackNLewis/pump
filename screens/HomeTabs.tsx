@@ -4,7 +4,7 @@ import WorkoutScreens from './Workout/WorkoutScreens';
 import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as BookIcon } from "react-native-feather";
 import CreateWorkoutButton from '../components/CreateWorkoutButton';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
-import Feed from './Feed';
+import Explore from './Explore';
 import Profile from './Profile';
 import Exercises from './Exercises';
 
@@ -72,7 +72,7 @@ function HomeTabs() {
             />
             <Tab.Screen
                 name="Explore"
-                component={Feed}
+                component={Explore}
                 options={{ headerShown: false, }}
             />
             <Tab.Screen

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { User as UserIcon, MoreHorizontal, Search as SearchIcon } from 'react-native-feather';
+import { useNavigation } from '@react-navigation/native';
 
 const CardHeader = ({ name, workout, profileImage }: any) => {
     return (
@@ -31,7 +32,9 @@ const WorkoutCard = ({ image, name, workout }: any) => {
     );
 };
 
-const Feed = () => {
+const Explore = () => {
+    const navigation = useNavigation<any>();
+
     const workoutData = [
         {
             id: 1,
@@ -52,7 +55,7 @@ const Feed = () => {
             <View style={styles.header}>
                 <Text style={styles.title}>EXPLORE</Text>
                 <TouchableOpacity style={styles.headerIcon}>
-                    <SearchIcon height={24} width={24} color="#333" />
+                    <SearchIcon height={24} width={24} color="#333" onPress={() => navigation.navigate('SearchUser')}/>
                 </TouchableOpacity>
             </View>
 
@@ -141,4 +144,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Feed;
+export default Explore;

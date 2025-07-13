@@ -1,0 +1,132 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { User as UserIcon, ArrowLeft } from 'react-native-feather';
+import SearchBar from '../components/SearchBar';
+
+
+const UserCard = ({ name, username }: any) => {
+    return (
+        <TouchableOpacity style={styles.userCard}>
+            <View style={styles.profileSection}>
+                <View style={styles.profilePicture}>
+                    <UserIcon height={24} width={24} color="#666" />
+                </View>
+                <View style={styles.profileInfo}>
+                    <Text style={styles.profileName}>{name}</Text>
+                    <Text style={styles.username}>@{username}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
+    );
+};
+
+export default function SearchUser({ navigation }: any) {
+    const [searchText, setSearchText] = useState('');
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <ArrowLeft height={24} width={24} color="#333" />
+                </TouchableOpacity>
+                <Text style={styles.title}>FOLLOW</Text>
+            </View>
+
+            <View style={styles.content}>
+                <View style={{ marginBottom: 20, marginTop:10 }}>
+                    <SearchBar value={searchText} onChangeText={setSearchText} />
+                </View>
+
+                <Text style={styles.description}>
+                    Find other pump users by entering their username.
+                </Text>
+
+                <ScrollView
+                    style={styles.userList}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {/* Example users - replace with actual search results */}
+                    {searchText.length > 0 && (
+                        <View>
+                            <UserCard name="John Doe" username="johndoe" />
+                            <UserCard name="Jane Smith" username="janesmith" />
+                            <UserCard name="Mike Johnson" username="mikej" />
+                        </View>
+                    )}
+                </ScrollView>
+            </View>
+        </SafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 16,
+        position: 'relative',
+    },
+    backButton: {
+        position: 'absolute',
+        left: 20,
+        zIndex: 1,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
+        flex: 1,
+        textAlign: 'right',
+    },
+    content: {
+        flex: 1,
+        paddingHorizontal: 20,
+    },
+    description: {
+        fontSize: 16,
+        color: '#666',
+        textAlign: 'center',
+        marginBottom: 30,
+        lineHeight: 22,
+    },
+    userList: {
+        flex: 1,
+    },
+    userCard: {
+        paddingVertical: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F0F0F0',
+    },
+    profileSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    profilePicture: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#F8F8F8',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 15,
+    },
+    profileInfo: {
+        flex: 1,
+    },
+    profileName: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 2,
+    },
+    username: {
+        fontSize: 14,
+        color: '#666',
+    },
+});

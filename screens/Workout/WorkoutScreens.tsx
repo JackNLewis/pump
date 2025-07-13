@@ -25,26 +25,27 @@ function WorkoutScreens() {
                     },
                     tabBarLabelStyle: {
                         fontSize: 16,
-                        fontWeight: '400',
+                        fontWeight: '500',
                     },
                     tabBarActiveTintColor: '#00CCA7',
                     tabBarInactiveTintColor: '#333',
                     tabBarIndicatorStyle: {
                         backgroundColor:'#00CCA7',
-                        height: 0, // This removes the blue indicator line
+                        height:1,
+                        // height: 0, // This removes the blue indicator line
                     },
                      tabBarItemStyle: {
-                        width: 'auto',
-                        alignItems: 'flex-start',
+                        // width: 'auto',
+                        // alignItems: 'flex-start',
                     },
                     tabBarContentContainerStyle: {
-                        justifyContent: 'space-between',
+                        // justifyContent: 'space-between',
                         paddingHorizontal: 10,
                     }
 
                 }}>
-                <Tab.Screen name="HISTORY" component={WorkoutHistory} />
-                <Tab.Screen name="STATS" component={Stats} />
+                <Tab.Screen name="History" component={WorkoutHistory} />
+                <Tab.Screen name="Stats" component={Stats} />
             </Tab.Navigator>
         </View>
     );

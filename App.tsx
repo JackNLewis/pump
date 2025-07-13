@@ -15,6 +15,7 @@ import HomeTabs from './screens/HomeTabs';
 import People from './screens/People';
 import AddSet from './screens/Create/AddSet';
 import CreateScreens from './screens/Create/CreateScreens'
+import SearchUser from './screens/SearchUser';
 
 
 const Stack = createStackNavigator();
@@ -76,6 +77,7 @@ export default function App() {
                             gestureEnabled: false,
                         }}/>
                         <Stack.Screen name="People" component={People} />
+                        <Stack.Screen name="SearchUser" component={SearchUser} />
                     </Stack.Group>
                 ): 
                 (

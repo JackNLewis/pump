@@ -1,17 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface ProfileStatProps {
   label: string;
   value: string | number;
+  onPress?: () => void;
 }
 
-const ProfileStat: React.FC<ProfileStatProps> = ({ label, value }) => {
+const ProfileStat: React.FC<ProfileStatProps> = ({ label, value, onPress }) => {
+  const Wrapper = onPress ? TouchableOpacity : View;
+  
   return (
-    <View style={styles.container}>
+    <Wrapper style={styles.container} onPress={onPress}>
       <Text style={styles.label}>{label}</Text>
       <Text style={styles.value}>{value}</Text>
-    </View>
+    </Wrapper>
   );
 };
 
