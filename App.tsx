@@ -22,35 +22,35 @@ const Stack = createStackNavigator();
 
 export default function App() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [isSignedIn, setSignedIn] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [isSignedIn, setSignedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
-    //     // Check current session on app load
-    //     const checkSession = async () => {
-    //         try {
-    //             const { data: { session } } = await supabase.auth.getSession();
-    //             setSignedIn(!!session);
-    //         } catch (error) {
-    //             console.error('Error checking session:', error);
-    //             setSignedIn(false);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
+    useEffect(() => {
+        // Check current session on app load
+        const checkSession = async () => {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                setSignedIn(!!session);
+            } catch (error) {
+                console.error('Error checking session:', error);
+                setSignedIn(false);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    //     checkSession();
+        checkSession();
 
-    //     // Listen for auth state changes
-    //     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-    //         (event, session) => {
-    //             setSignedIn(!!session);
-    //             setLoading(false);
-    //         }
-    //     );
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+            (event, session) => {
+                setSignedIn(!!session);
+                setLoading(false);
+            }
+        );
 
-    //     return () => subscription.unsubscribe();
-    // }, []);
+        return () => subscription.unsubscribe();
+    }, []);
 
     // Show loading screen while checking authentication
     if (loading) {

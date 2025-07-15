@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { User as UserIcon, ArrowLeft } from 'react-native-feather';
 import SearchBar from '../components/SearchBar';
+import { getProfiles } from '../api/profiles';
 
 
 const UserCard = ({ name, username }: any) => {
@@ -23,6 +24,45 @@ const UserCard = ({ name, username }: any) => {
 
 export default function SearchUser({ navigation }: any) {
     const [searchText, setSearchText] = useState('');
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    const getSearchMessage = (isLoading: boolean, searchTextLength: number, searchResultLength: number) => {
+        if (isLoading && searchTextLength > 0) {
+            return "Searching...";
+        }
+        if (!isLoading && searchTextLength > 0 && searchResultLength === 0) {
+            return "No users found";
+        }
+        if (!isLoading && searchTextLength === 0) {
+            return "Find other pump users by entering their username.";
+        }
+        return null;
+    };
+
+    const handleSearch = async (text: string) => {
+        if (text.length > 0) {
+            setLoading(true);
+            try {
+                const results = await getProfiles(text);
+                setSearchResults(results || []);
+            } catch (error) {
+                console.error('Search error:', error);
+                setSearchResults([]);
+            }
+            setLoading(false);
+        } else {
+            setSearchResults([]);
+        }
+    };
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            handleSearch(searchText);
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
+    }, [searchText]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -38,20 +78,24 @@ export default function SearchUser({ navigation }: any) {
                     <SearchBar value={searchText} onChangeText={setSearchText} />
                 </View>
 
-                <Text style={styles.description}>
-                    Find other pump users by entering their username.
-                </Text>
-
                 <ScrollView
                     style={styles.userList}
                     showsVerticalScrollIndicator={false}
                 >
-                    {/* Example users - replace with actual search results */}
-                    {searchText.length > 0 && (
+                    {getSearchMessage(loading, searchText.length, searchResults.length) && (
+                        <Text style={styles.messageText}>
+                            {getSearchMessage(loading, searchText.length, searchResults.length)}
+                        </Text>
+                    )}
+                    {!loading && searchResults.length > 0 && (
                         <View>
-                            <UserCard name="John Doe" username="johndoe" />
-                            <UserCard name="Jane Smith" username="janesmith" />
-                            <UserCard name="Mike Johnson" username="mikej" />
+                            {searchResults.map((user: any, index: number) => (
+                                <UserCard 
+                                    key={index} 
+                                    name={user.full_name || user.user_name} 
+                                    username={user.user_name} 
+                                />
+                            ))}
                         </View>
                     )}
                 </ScrollView>
@@ -128,5 +172,11 @@ const styles = StyleSheet.create({
     username: {
         fontSize: 14,
         color: '#666',
+    },
+    messageText: {
+        fontSize: 16,
+        color: '#666',
+        textAlign: 'center',
+        marginTop: 20,
     },
 });

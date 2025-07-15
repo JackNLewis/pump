@@ -34,6 +34,7 @@ const Profile = () => {
           </View>
           <Text style={styles.name}>Jack Lewis</Text>
           <Text style={styles.lastActive}>Worked out 1 day ago</Text>
+          <Text style={styles.username}>@_jack.lewis</Text>
         </View>
 
         <View style={styles.statsContainer}>
@@ -106,11 +107,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 4,
+    marginBottom: 6,
   },
   lastActive: {
     fontSize: 16,
     color: '#666',
+    marginBottom: 6,
   },
   statsContainer: {
     flexDirection: 'row',
@@ -132,6 +134,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
   },
+  username : {
+    fontSize: 16,
+    color: '#00CCA7',
+  }
 });
 
 export default Profile;
