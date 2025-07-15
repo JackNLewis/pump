@@ -23,11 +23,13 @@ const CardHeader = ({ name, workout, profileImage }: any) => {
     );
 };
 
-const WorkoutCard = ({ image, name, workout }: any) => {
+const WorkoutCard = ({ image, name, workout, onPress }: any) => {
     return (
         <View style={styles.card}>
             <CardHeader name={name} workout={workout} />
-            <Image source={image} style={styles.cardImage} resizeMode="cover" />
+            <TouchableOpacity onPress={onPress}>
+                <Image source={image} style={styles.cardImage} resizeMode="cover" />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -66,6 +68,7 @@ const Explore = () => {
                         image={item.image}
                         name={item.name}
                         workout={item.workout}
+                        onPress={() => navigation.navigate('ViewWorkout', { workoutId: item.id })}
                     />
                 ))}
             </ScrollView>

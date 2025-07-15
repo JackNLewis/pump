@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 const { width } = Dimensions.get('window');
 const imageSize = (width - 60) / 3;
@@ -7,23 +7,31 @@ const imageSize = (width - 60) / 3;
 interface MonthWorkoutsProps {
   month: string;
   workoutImages: string[];
+  onImagePress?: (imageIndex: number) => void;
 }
 
-const MonthWorkouts: React.FC<MonthWorkoutsProps> = ({ month, workoutImages }) => {
+const MonthWorkouts: React.FC<MonthWorkoutsProps> = ({ month, workoutImages, onImagePress }) => {
   const renderWorkoutImages = () => {
     const rows = [];
     for (let i = 0; i < workoutImages.length; i += 3) {
       const rowImages = workoutImages.slice(i, i + 3);
       rows.push(
         <View key={i} style={styles.row}>
-          {rowImages.map((image, index) => (
-            <Image
-              key={index}
-              source={{ uri: image }}
-              style={styles.workoutImage}
-              resizeMode="cover"
-            />
-          ))}
+          {rowImages.map((image, index) => {
+            const imageIndex = i + index;
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => onImagePress?.(imageIndex)}
+              >
+                <Image
+                  source={{ uri: image }}
+                  style={styles.workoutImage}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+            );
+          })}
         </View>
       );
     }

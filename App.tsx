@@ -16,6 +16,7 @@ import People from './screens/People';
 import AddSet from './screens/Create/AddSet';
 import CreateScreens from './screens/Create/CreateScreens'
 import SearchUser from './screens/SearchUser';
+import ViewWorkout from './screens/ViewWorkout';
 
 
 const Stack = createStackNavigator();
@@ -78,6 +79,7 @@ export default function App() {
                         }}/>
                         <Stack.Screen name="People" component={People} />
                         <Stack.Screen name="SearchUser" component={SearchUser} />
+                        <Stack.Screen name="ViewWorkout" component={ViewWorkout} />
                     </Stack.Group>
                 ): 
                 (
