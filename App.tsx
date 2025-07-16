@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import Create from './screens/Create/AddExercise'
+import Create from './screens/Create/AddWorkout'
 import Profile from './screens/Workout/WorkoutScreens';
 import { Home as HomeIcon, User as UserIcon} from "react-native-feather";
 import CreateWorkoutButton from './components/CreateWorkoutButton';
@@ -10,10 +10,10 @@ import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import supabase from './SupaBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import AddExercise from './screens/Create/AddExercise';
+import AddExercise from './screens/Create/AddWorkout';
 import HomeTabs from './screens/HomeTabs';
 import People from './screens/People';
-import AddSet from './screens/Create/AddSet';
+import AddSet from './screens/Create/AddExercise';
 import CreateScreens from './screens/Create/CreateScreens'
 import SearchUser from './screens/SearchUser';
 import ViewWorkout from './screens/ViewWorkout';

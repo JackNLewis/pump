@@ -1,8 +1,8 @@
 
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { View, StyleSheet } from 'react-native';
+import AddWorkout from './AddWorkout';
 import AddExercise from './AddExercise';
-import AddSet from './AddSet';
 
 const CreateStack = createStackNavigator();
 
@@ -14,8 +14,8 @@ function CreateScreens() {
                 screenOptions={{
                     headerShown: false,
                 }}>
+                <CreateStack.Screen name='AddWorkout' component={AddWorkout} />
                 <CreateStack.Screen name='AddExercise' component={AddExercise} />
-                <CreateStack.Screen name='AddSet' component={AddSet} />
             </CreateStack.Navigator>
         </View>
     );
