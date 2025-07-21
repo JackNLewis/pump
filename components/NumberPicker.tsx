@@ -1,30 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 type NumberPickerProps = {
     label: string;
     value: number;
-    onChange: (value: number) => void;
-    currentValue: number;
     increment: number;
+    onChange: (value: number) => void;
 };
 
+const ItemHeight = 60;
 const PickerBufferSize = 20;
 
-function NumberPicker({ label, onChange, currentValue, increment }: NumberPickerProps) {
+function NumberPicker({ label, value, increment, onChange }: NumberPickerProps) {
 
-    let startValue = Math.max(currentValue - increment * PickerBufferSize, 0)
-    let endValue = currentValue + increment * PickerBufferSize
+    let startValue = Math.max(value - increment * PickerBufferSize, 0)
+    let endValue = value + increment * PickerBufferSize
+
+    // number of elements rendered in scroller, rerenders on scroll end
     let pickerLength = (endValue - startValue) / increment
 
     const numbers = Array.from({ length: pickerLength }, (_, i) => startValue + i * increment);
 
-    const itemHeight = 60;
     const [centerIndex, setCenterIndex] = useState(0);
+    const scrollViewRef = useRef<ScrollView>(null);
+
+    useLayoutEffect(() => {
+        // Find the index of the current value in the numbers array
+        const valueIndex = numbers.findIndex(num => num === value);
+        if (valueIndex !== -1) {
+            setCenterIndex(valueIndex);
+            // Scroll to the correct position
+            const scrollPosition = valueIndex * ItemHeight;
+            scrollViewRef.current?.scrollTo({ y: scrollPosition, animated: false });
+        }
+    }, [value]);
 
     const handleScroll = (event: any) => {
         const offsetY = event.nativeEvent.contentOffset.y;
-        const index = Math.round(offsetY / itemHeight);
+        const index = Math.round(offsetY / ItemHeight);
         setCenterIndex(index);
     };
 
@@ -33,15 +46,16 @@ function NumberPicker({ label, onChange, currentValue, increment }: NumberPicker
             <Text style={styles.label}>{label}</Text>
             <View style={styles.scrollContainer}>
                 <ScrollView
+                    ref={scrollViewRef}
                     style={styles.scrollView}
                     contentContainerStyle={styles.scrollContent}
                     showsVerticalScrollIndicator={false}
-                    snapToInterval={itemHeight}
+                    snapToInterval={ItemHeight}
                     decelerationRate="fast"
                     onScroll={handleScroll}
                     scrollEventThrottle={16}
                     onMomentumScrollEnd={(event) => {
-                        const index = Math.round(event.nativeEvent.contentOffset.y / itemHeight);
+                        const index = Math.round(event.nativeEvent.contentOffset.y / ItemHeight);
                         const selectedValue = numbers[index] || 1;
                         onChange(selectedValue);
                     }}

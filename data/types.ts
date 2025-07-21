@@ -1,14 +1,14 @@
 export interface Set {
-  weight: number;
-  reps: number;
-  completed: boolean;
+    position: number,
+    weight: number;
+    reps: number;
 }
 
 export interface Exercise {
-  name: string;
-  sets: Set[];
+    name: string;
+    sets: Set[];
 }
 
 export interface Workout {
-  exercises: Exercise[];
+    exercises: Exercise[];
 }
