@@ -1,14 +1,32 @@
-import { StyleSheet, Text, View, Modal, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Modal, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { X } from "react-native-feather";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AddExerciseButton from '../../components/AddExerciseButton';
+import Exercise from '../../components/Exercise';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useState, useLayoutEffect, useRef } from 'react';
+import { Workout, Exercise as ExerciseType } from '../../data/types';
 
 
 function AddWorkout() {
     const navigation = useNavigation<any>();
     const insets = useSafeAreaInsets();
+    
+    const [workout, setWorkout] = useState<Workout>({ exercises: [] });
+    const scrollViewRef = useRef<ScrollView>(null);
+    
+    const addExerciseToWorkout = (exercise: ExerciseType) => {
+        setWorkout(prevWorkout => ({
+            exercises: [...prevWorkout.exercises, exercise]
+        }));
+    };
+
+    useLayoutEffect(() => {
+        if (workout.exercises.length > 0 && scrollViewRef.current) {
+            scrollViewRef.current.scrollToEnd({ animated: true });
+        }
+    }, [workout.exercises.length]);
     return (
 
         <View style={styles.container}>
@@ -19,7 +37,28 @@ function AddWorkout() {
                 </TouchableOpacity>
             </View>
             <View style={styles.contentContainer}>
-                <AddExerciseButton onPress={() => navigation.navigate('AddExercise')} />
+                <ScrollView 
+                    ref={scrollViewRef}
+                    style={styles.exercisesList} 
+                    showsVerticalScrollIndicator={false}
+                >
+                    {workout.exercises.map((exercise, index) => (
+                        <Exercise
+                            key={index}
+                            name={exercise.name}
+                            sets={exercise.sets.map(set => ({
+                                setNumber: set.position + 1,
+                                weight: set.weight,
+                                reps: set.reps
+                            }))}
+                        />
+                    ))}
+                 <AddExerciseButton 
+                        onPress={() => navigation.navigate('AddExercise', { 
+                            onAddExercise: addExerciseToWorkout 
+                        })} 
+                    />
+                </ScrollView>
             </View>
         </View>
     );
@@ -35,6 +74,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
+        marginBottom: 20,
     },
     headerText: {
         fontSize: 24,
@@ -43,8 +83,11 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    exercisesList: {
+        flex: 1,
+        marginTop: 20,
     },
 });
 

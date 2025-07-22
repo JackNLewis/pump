@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Scr
 import { X, Check, Menu, Sliders } from 'react-native-feather';
 import NumberPicker from '../../components/NumberPicker';
 import AddButton from '../../components/AddButton';
-import { useNavigation } from '@react-navigation/native';
-import { Set } from '../../data/types';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Set, Exercise as ExerciseType } from '../../data/types';
 
 
 function AddExercise() {
     const navigation = useNavigation<any>();
+    const route = useRoute<any>();
 
     const [completedSets, setCompletedSets] = useState<Set[]>([]);
 
@@ -89,6 +90,20 @@ function AddExercise() {
             return updatedNextSet
         })
         setCurrentPosition(nextSet.position + 1);
+    };
+
+    const completeExercise = () => {
+        const exercise: ExerciseType = {
+            name: "Bench Press",
+            sets: completedSets
+        };
+        
+        // Call the callback if provided
+        if (route.params?.onAddExercise) {
+            route.params.onAddExercise(exercise);
+        }
+        
+        navigation.goBack();
     };
 
 
@@ -267,7 +282,10 @@ function AddExercise() {
                     <X stroke="#FFFFFF" width={24} height={24} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.bottomButton, styles.bottomButtonActive]}>
+                <TouchableOpacity 
+                    style={[styles.bottomButton, styles.bottomButtonActive]}
+                    onPress={completeExercise}
+                >
                     <Check stroke="#FFFFFF" width={24} height={24} />
                 </TouchableOpacity>
             </View>

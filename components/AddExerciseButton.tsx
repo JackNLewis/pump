@@ -16,8 +16,8 @@ function AddExerciseButton({ onPress }: AddExerciseButtonProps) {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#00CCA7',
-    paddingHorizontal: 32,
-    paddingVertical: 16,
+    paddingHorizontal: 24,
+    paddingVertical: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.25,
@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 40,
   },
   buttonText: {
     color: 'white',
