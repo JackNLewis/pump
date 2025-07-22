@@ -95,7 +95,7 @@ function AddExercise() {
     return (
         <View style={styles.container}>
 
-            // ====================== Header and Options ======================
+            {/* ====================== Header and Options ====================== */}
             <View style={styles.header}>
                 <Text style={styles.title}>CHEST PRESS</Text>
                 <TouchableOpacity 
@@ -175,7 +175,7 @@ function AddExercise() {
                 </TouchableWithoutFeedback>
             )}
 
-            // ====================== Sets Container ======================
+            {/* ====================== Sets Container ====================== */}
             <View style={styles.setsContainer}>
                 <View style={styles.leftSection}>
                     <Text style={styles.setsSubLabel}>Completed</Text>
@@ -230,7 +230,7 @@ function AddExercise() {
                 </View>
             </View>
 
-            // ====================== Number Pickers ======================
+            {/* ====================== Number Pickers ====================== */}
             <View style={styles.pickersContainer}>
                 <NumberPicker
                     label={isKg? 'Weight (kg)': 'Weight (lb)'}
@@ -246,7 +246,7 @@ function AddExercise() {
                 />
             </View>
 
-            // ====================== Buttons ======================
+            {/* ====================== Buttons ====================== */}
             {
                 isAddMode &&
                 <View style={styles.actionContainer}>
