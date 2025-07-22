@@ -54,7 +54,7 @@ function AddWorkout() {
                         />
                     ))}
                  <AddExerciseButton 
-                        onPress={() => navigation.navigate('AddExercise', { 
+                        onPress={() => navigation.navigate('SearchExercise', { 
                             onAddExercise: addExerciseToWorkout 
                         })} 
                     />

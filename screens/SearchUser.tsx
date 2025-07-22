@@ -67,7 +67,7 @@ export default function SearchUser({ navigation }: any) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <ArrowLeft height={24} width={24} color="#333" />
                 </TouchableOpacity>
                 <Text style={styles.title}>FOLLOW</Text>
@@ -115,12 +115,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 16,
         position: 'relative',
+        justifyContent: 'space-between'
     },
-    backButton: {
-        position: 'absolute',
-        left: 20,
-        zIndex: 1,
-    },
+    // backButton: {
+    //     position: 'absolute',
+    //     left: 20,
+    //     zIndex: 1,
+    // },
     title: {
         fontSize: 24,
         fontWeight: 'bold',

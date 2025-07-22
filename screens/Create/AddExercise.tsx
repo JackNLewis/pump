@@ -93,8 +93,9 @@ function AddExercise() {
     };
 
     const completeExercise = () => {
+        const exerciseName = route.params?.exerciseName || "Exercise";
         const exercise: ExerciseType = {
-            name: "Bench Press",
+            name: exerciseName,
             sets: completedSets
         };
         
@@ -103,7 +104,7 @@ function AddExercise() {
             route.params.onAddExercise(exercise);
         }
         
-        navigation.goBack();
+        navigation.popTo("AddWorkout");
     };
 
 
@@ -112,7 +113,7 @@ function AddExercise() {
 
             {/* ====================== Header and Options ====================== */}
             <View style={styles.header}>
-                <Text style={styles.title}>CHEST PRESS</Text>
+                <Text style={styles.title}>{(route.params?.exerciseName || "EXERCISE").toUpperCase()}</Text>
                 <TouchableOpacity 
                     style={styles.optionsButton}
                     onPress={() => {
