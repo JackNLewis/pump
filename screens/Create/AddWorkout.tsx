@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Modal, Button, TouchableOpacity, ScrollView } from 'react-native';
-import { X } from "react-native-feather";
+import { X, Camera, ArrowLeft } from "react-native-feather";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AddExerciseButton from '../../components/AddExerciseButton';
 import Exercise from '../../components/Exercise';
@@ -12,10 +12,10 @@ import { Workout, Exercise as ExerciseType } from '../../data/types';
 function AddWorkout() {
     const navigation = useNavigation<any>();
     const insets = useSafeAreaInsets();
-    
+
     const [workout, setWorkout] = useState<Workout>({ exercises: [] });
     const scrollViewRef = useRef<ScrollView>(null);
-    
+
     const addExerciseToWorkout = (exercise: ExerciseType) => {
         setWorkout(prevWorkout => ({
             exercises: [...prevWorkout.exercises, exercise]
@@ -37,9 +37,9 @@ function AddWorkout() {
                 </TouchableOpacity>
             </View>
             <View style={styles.contentContainer}>
-                <ScrollView 
+                <ScrollView
                     ref={scrollViewRef}
-                    style={styles.exercisesList} 
+                    style={styles.exercisesList}
                     showsVerticalScrollIndicator={false}
                 >
                     {workout.exercises.map((exercise, index) => (
@@ -53,13 +53,21 @@ function AddWorkout() {
                             }))}
                         />
                     ))}
-                 <AddExerciseButton 
-                        onPress={() => navigation.navigate('SearchExercise', { 
-                            onAddExercise: addExerciseToWorkout 
-                        })} 
+                    <AddExerciseButton
+                        onPress={() => navigation.navigate('SearchExercise', {
+                            onAddExercise: addExerciseToWorkout
+                        })}
                     />
                 </ScrollView>
             </View>
+            
+            {/* Floating Camera Button */}
+            <TouchableOpacity 
+                style={styles.floatingCameraButton}
+                onPress={() => navigation.navigate('Camera')}
+            >
+                <Camera stroke="#FFF" width={24} height={24} />
+            </TouchableOpacity>
         </View>
     );
 }
@@ -67,6 +75,7 @@ function AddWorkout() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 25,
         backgroundColor: 'white',
     },
     headerContainer: {
@@ -80,6 +89,25 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: '#333',
+    },
+    floatingCameraButton: {
+        position: 'absolute',
+        bottom: 50,
+        right: 50,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: '#00CCA7',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
     },
     contentContainer: {
         flex: 1,

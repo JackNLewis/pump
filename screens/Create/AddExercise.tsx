@@ -307,6 +307,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     title: {
+        maxWidth: 240,
         fontSize: 24,
         fontWeight: 'bold',
         color: '#333',
