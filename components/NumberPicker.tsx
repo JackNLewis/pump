@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 type NumberPickerProps = {
     label: string;
@@ -23,6 +24,7 @@ function NumberPicker({ label, value, increment, onChange }: NumberPickerProps) 
 
     const [centerIndex, setCenterIndex] = useState(0);
     const scrollViewRef = useRef<ScrollView>(null);
+    const [isInitialized, setIsInitialized] = useState(false);
 
     useLayoutEffect(() => {
         // Find the index of the current value in the numbers array
@@ -32,8 +34,17 @@ function NumberPicker({ label, value, increment, onChange }: NumberPickerProps) 
             // Scroll to the correct position
             const scrollPosition = valueIndex * ItemHeight;
             scrollViewRef.current?.scrollTo({ y: scrollPosition, animated: false });
+            
         }
     }, [value]);
+
+    // Trigger haptic feedback when centerIndex changes (but not on initial load)
+    useEffect(() => {
+        if (isInitialized) {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
+        setIsInitialized(true);
+    }, [centerIndex]);
 
     const handleScroll = (event: any) => {
         const offsetY = event.nativeEvent.contentOffset.y;
