@@ -42,13 +42,13 @@ const Explore = () => {
             id: 1,
             name: "Jack Lewis",
             workout: "Trained Chest",
-            image: require('../assets/workout1.jpg')
+            image: require('../../assets/workout1.jpg')
         },
         {
             id: 2,
             name: "Jack Lewis",
             workout: "Trained Chest",
-            image: require('../assets/workout1.jpg')
+            image: require('../../assets/workout1.jpg')
         }
     ];
 

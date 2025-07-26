@@ -1,12 +1,13 @@
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import WorkoutScreens from './Workout/WorkoutScreens';
 import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as BookIcon } from "react-native-feather";
-import CreateWorkoutButton from '../components/CreateWorkoutButton';
+import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import Explore from './Explore';
 import Profile from './Profile';
 import Exercises from './Exercises';
+import WorkoutScreens from './workout/workoutTabs';
+
 
 
 const Tab = createBottomTabNavigator();

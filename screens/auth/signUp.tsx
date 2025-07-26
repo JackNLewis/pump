@@ -1,32 +1,39 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import supabase from '../SupaBase';
+import supabase from '../../SupaBase';
 
-function Login() {
+function SignUp() {
     const navigation = useNavigation<any>();
+    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = async () => {
-        if (!email || !password) {
+    const handleSignUp = async () => {
+        if (!email || !password || !fullName) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
 
         setLoading(true);
+        Keyboard.dismiss;
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signUp({
                 email: email.trim(),
                 password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                    }
+                }
             });
 
             if (error) {
-                Alert.alert('Login Error', error.message);
+                Alert.alert('Sign Up Error', error.message);
             } else {
-                Alert.alert('Success', 'Login successful!');
-                // Navigate to main app or home screen
+                Alert.alert('Success', 'Please check your email to confirm your account');
+                navigation.navigate('Login');
             }
         } catch (error) {
             Alert.alert('Error', 'An unexpected error occurred');
@@ -38,8 +45,17 @@ function Login() {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-                <Text style={styles.title}>Login</Text>
-                <Text style={styles.subtitle}>Log in with your existing account.</Text>
+                <Text style={styles.title}>Sign Up</Text>
+                <Text style={styles.subtitle}>Sign Up with your email.</Text>
+                
+                <TextInput
+                    style={styles.input}
+                    placeholder="Full Name"
+                    placeholderTextColor="#999"
+                    autoCapitalize="words"
+                    value={fullName}
+                    onChangeText={setFullName}
+                />
                 
                 <TextInput
                     style={styles.input}
@@ -61,12 +77,12 @@ function Login() {
                 />
                 
                 <TouchableOpacity 
-                    style={[styles.loginButton, loading && styles.loginButtonDisabled]} 
-                    onPress={handleLogin}
+                    style={[styles.signupButton, loading && styles.signupButtonDisabled]} 
+                    onPress={handleSignUp}
                     disabled={loading}
                 >
-                    <Text style={styles.loginButtonText}>
-                        {loading ? 'Logging In...' : 'Login'}
+                    <Text style={styles.signupButtonText}>
+                        {loading ? 'Signing Up...' : 'Sign Up'}
                     </Text>
                 </TouchableOpacity>
                 
@@ -84,10 +100,10 @@ function Login() {
                     <Text style={styles.appleButtonText}>Sign In with Apple</Text>
                 </TouchableOpacity>
                 
-                <View style={styles.signupContainer}>
-                    <Text style={styles.signupText}>Don't have an account, </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                        <Text style={styles.signupLink}>Sign Up</Text>
+                <View style={styles.loginContainer}>
+                    <Text style={styles.loginText}>Already have an account </Text>
+                    <TouchableOpacity onPress={() => navigation.popTo('Login')}>
+                        <Text style={styles.loginLink}>Login</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -117,26 +133,26 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: 'white',
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 15,
         marginBottom: 15,
         fontSize: 16,
         borderWidth: 1,
         borderColor: '#ddd',
     },
-    loginButton: {
+    signupButton: {
         backgroundColor: '#00CCA7',
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 15,
         alignItems: 'center',
         marginBottom: 30,
     },
-    loginButtonText: {
+    signupButtonText: {
         color: 'white',
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: '600',
     },
-    loginButtonDisabled: {
+    signupButtonDisabled: {
         backgroundColor: '#80E6D4',
     },
     dividerContainer: {
@@ -156,7 +172,7 @@ const styles = StyleSheet.create({
     },
     googleButton: {
         backgroundColor: 'white',
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 15,
         alignItems: 'center',
         marginBottom: 15,
@@ -170,7 +186,7 @@ const styles = StyleSheet.create({
     },
     appleButton: {
         backgroundColor: '#000',
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 15,
         alignItems: 'center',
         marginBottom: 30,
@@ -180,20 +196,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
     },
-    signupContainer: {
+    loginContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    signupText: {
+    loginText: {
         color: '#666',
         fontSize: 14,
     },
-    signupLink: {
+    loginLink: {
         color: '#00CCA7',
         fontSize: 14,
         fontWeight: '500',
     }
 });
 
-export default Login;
+export default SignUp;

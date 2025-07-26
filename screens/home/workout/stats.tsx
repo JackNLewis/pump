@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import { ChevronDown, Users } from 'react-native-feather';
-import FilterButton from '../../components/FilterButton';
-import ProgressChart from '../../components/ProgressChart';
-import SetSummary from '../../components/SetSummary';
+import FilterButton from '../../../components/FilterButton';
+import ProgressChart from '../../../components/ProgressChart';
+import SetSummary from '../../../components/SetSummary';
 
 const chartData = [
   { value: 100, label: 'Jan' },

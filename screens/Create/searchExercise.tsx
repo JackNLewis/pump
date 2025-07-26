@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import ExercisesContent from '../components/ExercisesContent';
+import ExercisesContent from '../../components/ExercisesContent';
 import { ArrowLeft } from 'react-native-feather';
 
 const SearchExercise = () => {

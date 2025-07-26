@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import MonthWorkouts from '../../components/MonthWorkouts';
-import FilterButton from '../../components/FilterButton';
+import MonthWorkouts from '../../../components/MonthWorkouts';
+import FilterButton from '../../../components/FilterButton';
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';

@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { UserPlus, AlignRight } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
-import ProfileStat from '../components/ProfileStat';
-import SharedWorkouts from '../components/SharedWorkouts';
-import ActivitySection from '../components/ActivitySection';
+import ProfileStat from '../../components/ProfileStat';
+import SharedWorkouts from '../../components/SharedWorkouts';
+import ActivitySection from '../../components/ActivitySection';
 
 const Profile = () => {
   const navigation = useNavigation<any>();
@@ -28,7 +28,7 @@ const Profile = () => {
         <View style={styles.profileSection}>
           <View style={styles.profileImageContainer}>
             <Image 
-              source={require('../assets/workout1.jpg')} 
+              source={require('../../assets/workout1.jpg')} 
               style={styles.profileImage}
             />
           </View>

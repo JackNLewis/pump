@@ -17,6 +17,7 @@ export interface Workout {
 
 export interface User {
     name: string,
-    lastSeen: string,
+    lastOnline: string,
     profileImage: string,
+    gym: string,
 }

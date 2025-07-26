@@ -1,9 +1,9 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, StyleSheet, Text } from 'react-native';
-import Stats from './Stats'
-import WorkoutHistory from './WorkoutHistory'
-import ProfileHeader from '../../components/ProfileHeader'
+import WorkoutHistory from './history'
+import ProfileHeader from '../../../components/ProfileHeader';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Stats from './Stats';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -32,14 +32,8 @@ function WorkoutScreens() {
                     tabBarIndicatorStyle: {
                         backgroundColor:'#00CCA7',
                         height:1,
-                        // height: 0, // This removes the blue indicator line
-                    },
-                     tabBarItemStyle: {
-                        // width: 'auto',
-                        // alignItems: 'flex-start',
                     },
                     tabBarContentContainerStyle: {
-                        // justifyContent: 'space-between',
                         paddingHorizontal: 10,
                     }
 

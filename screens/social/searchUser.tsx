@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { User as UserIcon, ArrowLeft } from 'react-native-feather';
-import SearchBar from '../components/SearchBar';
-import { getProfiles } from '../api/profiles';
+import SearchBar from '../../components/SearchBar';
+import { getProfiles } from '../../api/profiles';
 
 
 const UserCard = ({ name, username }: any) => {

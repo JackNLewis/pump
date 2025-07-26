@@ -1,57 +1,55 @@
 import { StyleSheet, Text, View, Modal, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import Create from './screens/Create/AddWorkout'
-import Profile from './screens/Workout/WorkoutScreens';
-import { Home as HomeIcon, User as UserIcon} from "react-native-feather";
+import { Home as HomeIcon, User as UserIcon } from "react-native-feather";
 import CreateWorkoutButton from './components/CreateWorkoutButton';
 import React, { useState, useEffect } from 'react';
-import Login from './screens/Login';
-import SignUp from './screens/SignUp';
 import supabase from './SupaBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import AddExercise from './screens/Create/AddWorkout';
-import HomeTabs from './screens/HomeTabs';
-import People from './screens/People';
-import AddSet from './screens/Create/AddExercise';
-import CreateScreens from './screens/Create/CreateScreens'
-import SearchUser from './screens/SearchUser';
+import People from './screens/social/People';
+import HomeTabs from './screens/home/HomeTabs';
 import ViewWorkout from './screens/ViewWorkout';
-
+import AddWorkout from './screens/create/AddWorkout';
+import Login from './screens/auth/Login';
+import SignUp from './screens/auth/SignUp';
+import SearchUser from './screens/social/SearchUser';
+import SearchExercise from './screens/create/SearchExercise';
+import AddExercise from './screens/create/AddExercise';
+import Camera from './screens/create/Camera';
 
 const Stack = createStackNavigator();
 
 export default function App() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [isSignedIn, setSignedIn] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [isSignedIn, setSignedIn] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        // Check current session on app load
-        const checkSession = async () => {
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                setSignedIn(!!session);
-            } catch (error) {
-                console.error('Error checking session:', error);
-                setSignedIn(false);
-            } finally {
-                setLoading(false);
-            }
-        };
+    // useEffect(() => {
+    //     // Check current session on app load
+    //     const checkSession = async () => {
+    //         try {
+    //             const { data: { session } } = await supabase.auth.getSession();
+    //             setSignedIn(!!session);
+    //         } catch (error) {
+    //             console.error('Error checking session:', error);
+    //             setSignedIn(false);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        checkSession();
+    //     checkSession();
 
-        // Listen for auth state changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            (event, session) => {
-                setSignedIn(!!session);
-                setLoading(false);
-            }
-        );
+    //     // Listen for auth state changes
+    //     const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    //         (event, session) => {
+    //             setSignedIn(!!session);
+    //             setLoading(false);
+    //         }
+    //     );
 
-        return () => subscription.unsubscribe();
-    }, []);
+    //     return () => subscription.unsubscribe();
+    // }, []);
 
     // Show loading screen while checking authentication
     if (loading) {
@@ -72,13 +70,20 @@ export default function App() {
                 { isSignedIn ? (
                     // Authenticated Pages
                     <Stack.Group>
+                        {/* Home Screens */}
                         <Stack.Screen name="HomeTabs" component={HomeTabs} />
-                        <Stack.Screen name="Create" component={CreateScreens} options={{
-                            cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-                            gestureEnabled: false,
-                        }}/>
+
+                        {/* Social Screens */}
                         <Stack.Screen name="People" component={People} />
                         <Stack.Screen name="SearchUser" component={SearchUser} />
+                        
+                        {/* Create Screens */}
+                        <Stack.Screen name="Create" component={AddWorkout}/>
+                        <Stack.Screen name="SearchExercise" component={SearchExercise} />
+                        <Stack.Screen name="AddExercise" component={AddExercise} />
+                        <Stack.Screen name="Camera" component={Camera} />
+
+                        {/* Common Screens */}
                         <Stack.Screen name="ViewWorkout" component={ViewWorkout} />
                     </Stack.Group>
                 ): 

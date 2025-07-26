@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ArrowLeft, User as UserIcon } from 'react-native-feather';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../../components/SearchBar';
 
 const Tab = createMaterialTopTabNavigator();
 
