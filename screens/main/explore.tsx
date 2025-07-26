@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search as SearchIcon } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 import WorkoutCard from '../../components/WorkoutCard';
-import Header from '../../components/Header';
+import Header from '../../components/header';
 
 const Explore = () => {
     const navigation = useNavigation<any>();

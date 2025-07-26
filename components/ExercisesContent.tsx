@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import ExerciseItem from './ExerciseItem';
-import FilterButton from './FilterButton';
-import SearchBar from './SearchBar';
+import ExerciseItem from './exerciseItem';
+import FilterButton from './filterButton';
+import SearchBar from './searchBar';
 
 const exercisesData = [
   { id: 1, name: 'Barbell Bench Press', difficulty: 1, hasInfoPage: true, type: 'custom' },

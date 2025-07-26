@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import { ChevronDown, Users } from 'react-native-feather';
-import FilterButton from '../../../components/FilterButton';
+import FilterButton from '../../../components/filterButton';
 import ProgressChart from '../../../components/ProgressChart';
 import SetSummary from '../../../components/SetSummary';
 

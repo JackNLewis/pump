@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, Modal, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { X, Camera, ArrowLeft } from "react-native-feather";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import AddExerciseButton from '../../components/AddExerciseButton';
-import Exercise from '../../components/Exercise';
+import AddExerciseButton from '../../components/addExerciseButton';
+import Exercise from '../../components/exercise';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState, useLayoutEffect, useRef } from 'react';
 import { Workout, Exercise as ExerciseType } from '../../data/types';
+import Header from '../../components/header';
 
 
 function AddWorkout() {
@@ -29,14 +30,12 @@ function AddWorkout() {
     }, [workout.exercises.length]);
 
     return (
-
         <View style={styles.container}>
-            <View style={styles.headerContainer}>
-                <Text style={styles.headerText}>WORKOUT</Text>
+            <Header title='WORKOUT' leftIcons={
                 <TouchableOpacity onPress={() => navigation.pop()}>
                     <X stroke="#000" width={24} height={24} />
                 </TouchableOpacity>
-            </View>
+            }/>
             <View style={styles.contentContainer}>
                 <ScrollView
                     ref={scrollViewRef}
@@ -44,14 +43,10 @@ function AddWorkout() {
                     showsVerticalScrollIndicator={false}
                 >
                     {workout.exercises.map((exercise, index) => (
-                        <Exercise
+                         <Exercise
                             key={index}
                             name={exercise.name}
-                            sets={exercise.sets.map(set => ({
-                                setNumber: set.position + 1,
-                                weight: set.weight,
-                                reps: set.reps
-                            }))}
+                            sets={exercise.sets}
                         />
                     ))}
                     <AddExerciseButton

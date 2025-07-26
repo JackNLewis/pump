@@ -5,8 +5,8 @@ import { UserPlus, AlignRight } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 import ProfileStat from '../../components/ProfileStat';
 import SharedWorkouts from '../../components/SharedWorkouts';
-import ActivitySection from '../../components/ActivitySection';
-import Header from '../../components/Header';
+import ActivitySection from '../../components/activitySection';
+import Header from '../../components/header';
 
 const Profile = () => {
     const navigation = useNavigation<any>();

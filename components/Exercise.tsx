@@ -1,18 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Set } from '../types/types';
 
-interface ExerciseSet {
-  setNumber: number;
-  weight: number;
-  reps: number;
-}
 
 interface ExerciseProps {
   name: string;
-  sets: ExerciseSet[];
+  sets: Set[];
 }
 
-const Exercise: React.FC<ExerciseProps> = ({ name, sets }) => {
+function Exercise({ name, sets } :ExerciseProps ){
   return (
     <View style={styles.container}>
       <Text style={styles.exerciseName}>{name}</Text>
@@ -25,7 +21,7 @@ const Exercise: React.FC<ExerciseProps> = ({ name, sets }) => {
       
       {sets.map((set, index) => (
         <View key={index} style={styles.setRow}>
-          <Text style={styles.setNumber}>{set.setNumber}.</Text>
+          <Text style={styles.setNumber}>{set.position}.</Text>
           <Text style={styles.setData}>{set.weight}</Text>
           <Text style={styles.setData}>{set.reps}</Text>
         </View>

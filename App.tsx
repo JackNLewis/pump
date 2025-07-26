@@ -4,7 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import supabase from './SupaBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import ViewWorkout from './screens/ViewWorkout';
 import People from './screens/social/people';
 import SearchUser from './screens/social/searchUser';
 import SearchExercise from './screens/create/searchExercise';
@@ -14,6 +13,7 @@ import Camera from './screens/create/camera';
 import Login from './screens/auth/login';
 import SignUp from './screens/auth/signUp';
 import AddWorkout from './screens/create/addWorkout';
+import ViewWorkout from './screens/viewWorkout';
 
 const Stack = createStackNavigator();
 

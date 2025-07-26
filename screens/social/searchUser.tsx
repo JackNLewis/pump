@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { User as UserIcon, ArrowLeft } from 'react-native-feather';
-import SearchBar from '../../components/SearchBar';
+import SearchBar from '../../components/searchBar';
 import { getProfiles } from '../../api/profiles';
 
 

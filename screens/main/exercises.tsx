@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ExercisesContent from '../../components/ExercisesContent';
-import Header from '../../components/Header';
+import ExercisesContent from '../../components/exercisesContent';
+import Header from '../../components/header';
 
 function Exercises(){
   return (
