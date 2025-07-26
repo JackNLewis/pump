@@ -1,21 +1,19 @@
-import { StyleSheet, Text, View, Modal, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { Home as HomeIcon, User as UserIcon } from "react-native-feather";
-import CreateWorkoutButton from './components/CreateWorkoutButton';
-import React, { useState, useEffect } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useState } from 'react';
 import supabase from './SupaBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import People from './screens/social/People';
-import HomeTabs from './screens/home/HomeTabs';
 import ViewWorkout from './screens/ViewWorkout';
-import AddWorkout from './screens/create/AddWorkout';
-import Login from './screens/auth/Login';
-import SignUp from './screens/auth/SignUp';
-import SearchUser from './screens/social/SearchUser';
-import SearchExercise from './screens/create/SearchExercise';
-import AddExercise from './screens/create/AddExercise';
-import Camera from './screens/create/Camera';
+import People from './screens/social/people';
+import SearchUser from './screens/social/searchUser';
+import SearchExercise from './screens/create/searchExercise';
+import MainNav from './screens/main/mainNav';
+import AddExercise from './screens/create/addExercise';
+import Camera from './screens/create/camera';
+import Login from './screens/auth/login';
+import SignUp from './screens/auth/signUp';
+import AddWorkout from './screens/create/addWorkout';
 
 const Stack = createStackNavigator();
 
@@ -71,7 +69,7 @@ export default function App() {
                     // Authenticated Pages
                     <Stack.Group>
                         {/* Home Screens */}
-                        <Stack.Screen name="HomeTabs" component={HomeTabs} />
+                        <Stack.Screen name="HomeTabs" component={MainNav} />
 
                         {/* Social Screens */}
                         <Stack.Screen name="People" component={People} />

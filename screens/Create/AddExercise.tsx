@@ -104,7 +104,7 @@ function AddExercise() {
             route.params.onAddExercise(exercise);
         }
         
-        navigation.popTo("AddWorkout");
+        navigation.popTo("Create");
     };
 
 

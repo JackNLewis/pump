@@ -3,12 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as BookIcon } from "react-native-feather";
 import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
-import Explore from './Explore';
-import Profile from './Profile';
-import Exercises from './Exercises';
-import WorkoutScreens from './workout/workoutTabs';
-
-
+import WorkoutScreens from './history/historyNav';
+import Explore from './explore';
+import Profile from './profile';
+import Exercises from './exercises';
+import HistoryNav from './history/historyNav';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +30,7 @@ const TabOptions = ({route} : any) => ({
                                     {focused && <View style={styles.underline} />}
                                 </View>
                             )
-                        case 'WorkoutTabs':
+                        case 'History':
                             return (
                                 <View style={styles.iconContainer}>
                                     <HomeIcon color={color} />
@@ -59,7 +58,7 @@ const TabOptions = ({route} : any) => ({
         tabBarShowLabel: false,
         });
     
-function HomeTabs() {
+function MainNav() {
     const navigation = useNavigation<any>();
     return (
         <Tab.Navigator
@@ -88,8 +87,8 @@ function HomeTabs() {
                 options={{ tabBarLabel: 'Open Modal' }}
             />
             <Tab.Screen
-                name="WorkoutTabs"
-                component={WorkoutScreens}
+                name="History"
+                component={HistoryNav}
                 options={{ headerShown: false }}
             />
             <Tab.Screen
@@ -101,7 +100,7 @@ function HomeTabs() {
     )
 }
 
-export default HomeTabs
+export default MainNav
 
 const styles = StyleSheet.create({
     iconContainer: {

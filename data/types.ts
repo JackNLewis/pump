@@ -10,8 +10,8 @@ export interface Exercise {
 }
 
 export interface Workout {
-    user: User,
-    workoutImage: string,
+    // user: User,
+    // workoutImage: string,
     exercises: Exercise[];
 }
 

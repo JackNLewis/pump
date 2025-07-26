@@ -3,11 +3,11 @@ import { View, StyleSheet, Text } from 'react-native';
 import WorkoutHistory from './history'
 import ProfileHeader from '../../../components/ProfileHeader';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Stats from './Stats';
+import Stats from './stats';
 
 const Tab = createMaterialTopTabNavigator();
 
-function WorkoutScreens() {
+function HistoryNav() {
 
     const insets = useSafeAreaInsets();
 
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default WorkoutScreens;
+export default HistoryNav;
