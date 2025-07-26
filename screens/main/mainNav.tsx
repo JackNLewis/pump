@@ -1,13 +1,13 @@
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as BookIcon } from "react-native-feather";
-import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import WorkoutScreens from './history/historyNav';
 import Explore from './explore';
 import Profile from './profile';
 import Exercises from './exercises';
 import HistoryNav from './history/historyNav';
+import CreateWorkoutIcon from '../../components/CreateWorkoutIcon';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +46,7 @@ const TabOptions = ({route} : any) => ({
                             )
                     }
                     // You can return any component that you like here!
-                    return <CreateWorkoutButton />
+                    return <CreateWorkoutIcon />
                 },
         tabBarActiveTintColor: '#00CCA7',
         tabBarInactiveTintColor: 'gray',

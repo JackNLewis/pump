@@ -26,7 +26,7 @@ export default function App() {
     //     // Check current session on app load
     //     const checkSession = async () => {
     //         try {
-    //             const { data: { session } } = await supabase.auth.getSession();
+    //             const { data: { session } } = await supabase.auth.getSession();å
     //             setSignedIn(!!session);
     //         } catch (error) {
     //             console.error('Error checking session:', error);

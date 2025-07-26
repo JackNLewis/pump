@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ArrowLeft, User as UserIcon } from 'react-native-feather';
 import SearchBar from '../../components/SearchBar';
+import Header from '../../components/Header';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -135,7 +136,7 @@ const People = ({ navigation, route }: any) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.goBack()}
@@ -143,7 +144,16 @@ const People = ({ navigation, route }: any) => {
                     <ArrowLeft height={24} width={24} color="#333" />
                 </TouchableOpacity>
                 <Text style={styles.title}>PEOPLE</Text>
-            </View>
+            </View> */}
+
+            <Header title='PEOPLE' leftIcons={
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => navigation.goBack()}
+                >
+                    <ArrowLeft height={24} width={24} color="#333" />
+                </TouchableOpacity>
+            }/>
 
             <PeopleTabNavigator initialTab={initialTab} />
         </SafeAreaView>

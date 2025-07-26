@@ -27,6 +27,7 @@ function AddWorkout() {
             scrollViewRef.current.scrollToEnd({ animated: true });
         }
     }, [workout.exercises.length]);
+
     return (
 
         <View style={styles.container}>
@@ -54,10 +55,11 @@ function AddWorkout() {
                         />
                     ))}
                     <AddExerciseButton
+                        title='ADD EXERCISE'
                         onPress={() => navigation.navigate('SearchExercise', {
                             onAddExercise: addExerciseToWorkout
-                        })}
-                    />
+                        })
+                    }/>
                 </ScrollView>
             </View>
             

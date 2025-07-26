@@ -48,6 +48,31 @@ Lib - represents functionality needed across components
 
 
 
+Needs Fixing
+Files with Multiple Components:
+
+  - screens/main/explore.tsx - 3 components (CardHeader, WorkoutCard, Explore)
+  - screens/social/people.tsx - 6 components (ProfileCard, FollowButton, FollowingTab, FollowersTab, PeopleTabNavigator, People)
+  - screens/main/mainNav.tsx - 3 components (DummyScreen, TabOptions, MainNav)
+  - screens/social/searchUser.tsx - 2 components (UserCard, SearchUser)
+
+  Files with Non-Standard Component Format:
+
+  - Arrow function pattern (const Component = () => {}):
+    - screens/create/searchExercise.tsx
+    - screens/main/profile.tsx
+    - screens/main/exercises.tsx
+    - components/SearchBar.tsx
+    - components/ExercisesContent.tsx
+    - components/ProfileHeader.tsx
+    - components/SharedWorkouts.tsx
+    - components/ActivitySection.tsx
+  - React.FC pattern (const Component: React.FC = () => {}):
+    - screens/ViewWorkout.tsx
+    - components/MonthWorkouts.tsx
+    - components/ProfileStat.tsx
+    - components/Exercise.tsx
+
 
 
 

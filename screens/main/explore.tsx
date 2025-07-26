@@ -1,38 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { User as UserIcon, MoreHorizontal, Search as SearchIcon } from 'react-native-feather';
+import { Search as SearchIcon } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
-
-const CardHeader = ({ name, workout, profileImage }: any) => {
-    return (
-        <View style={styles.cardHeader}>
-            <View style={styles.profileSection}>
-                <View style={styles.profilePicture}>
-                    <UserIcon height={20} width={20} color="#666" />
-                </View>
-                <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>{name}</Text>
-                    <Text style={styles.workoutInfo}>{workout}</Text>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.settingsIcon}>
-                <MoreHorizontal height={20} width={20} color="#666" />
-            </TouchableOpacity>
-        </View>
-    );
-};
-
-const WorkoutCard = ({ image, name, workout, onPress }: any) => {
-    return (
-        <View style={styles.card}>
-            <CardHeader name={name} workout={workout} />
-            <TouchableOpacity onPress={onPress}>
-                <Image source={image} style={styles.cardImage} resizeMode="cover" />
-            </TouchableOpacity>
-        </View>
-    );
-};
+import WorkoutCard from '../../components/WorkoutCard';
+import Header from '../../components/Header';
 
 const Explore = () => {
     const navigation = useNavigation<any>();
@@ -54,12 +26,11 @@ const Explore = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>EXPLORE</Text>
+            <Header title='EXPLORE' rightIcons={
                 <TouchableOpacity style={styles.headerIcon}>
                     <SearchIcon height={24} width={24} color="#333" onPress={() => navigation.navigate('SearchUser')}/>
                 </TouchableOpacity>
-            </View>
+            }/>
 
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 {workoutData.map((item) => (
@@ -99,51 +70,6 @@ const styles = StyleSheet.create({
     scrollView: {
         flex: 1,
         paddingHorizontal: 20,
-    },
-    card: {
-        backgroundColor: '#FFFFFF',
-        marginBottom: 24,
-    },
-    cardHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 16,
-    },
-    profileSection: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1,
-    },
-    profilePicture: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        backgroundColor: '#F0F0F0',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 12,
-    },
-    profileInfo: {
-        flex: 1,
-    },
-    profileName: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#00CCA7',
-        marginBottom: 2,
-    },
-    workoutInfo: {
-        fontSize: 14,
-        color: '#666',
-    },
-    settingsIcon: {
-        padding: 4,
-    },
-    cardImage: {
-        width: '100%',
-        height: 350,
-        borderRadius: 16
     },
 });
 

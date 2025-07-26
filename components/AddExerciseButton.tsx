@@ -2,13 +2,14 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 type AddExerciseButtonProps = {
+      title: string,
   onPress?: () => void;
 };
 
-function AddExerciseButton({ onPress }: AddExerciseButtonProps) {
+function AddExerciseButton({ title, onPress }: AddExerciseButtonProps) {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.buttonText}>ADD EXERCISE</Text>
+      <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
 }

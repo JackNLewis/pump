@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ExercisesContent from '../../components/ExercisesContent';
 import { ArrowLeft } from 'react-native-feather';
+import Header from '../../components/Header';
 
 const SearchExercise = () => {
     const navigation = useNavigation<any>();
@@ -18,12 +19,11 @@ const SearchExercise = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+            <Header title="SEARCH" leftIcons={
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <ArrowLeft height={24} width={24} color="#333" />
                 </TouchableOpacity>
-                <Text style={styles.title}>FOLLOW</Text>
-            </View>
+            } />
 
             <ExercisesContent onExercisePress={handleExerciseSelect} />
         </View>

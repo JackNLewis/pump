@@ -69,6 +69,7 @@ function NumberPicker({ label, value, increment, onChange }: NumberPickerProps) 
                         const index = Math.round(event.nativeEvent.contentOffset.y / ItemHeight);
                         const selectedValue = numbers[index] || 1;
                         onChange(selectedValue);
+                        setIsInitialized(false);
                     }}
                 >
                     {numbers.map((num, index) => (
