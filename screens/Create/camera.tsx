@@ -1,13 +1,16 @@
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { X, RotateCw } from 'react-native-feather';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Camera() {
+export default function Camera({ route }: { route: any }) {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
     const navigation = useNavigation<any>();
+    const cameraRef = useRef<CameraView>(null);
+    
+    const { onSubmitWorkout } = route.params || {};
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -28,9 +31,22 @@ export default function Camera() {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     }
 
+    async function handleCapture() {
+        if (cameraRef.current && onSubmitWorkout) {
+            try {
+                const photo = await cameraRef.current.takePictureAsync();
+                if (photo) {
+                    onSubmitWorkout({ uri: photo.uri });
+                }
+            } catch (error) {
+                console.error('Error taking picture:', error);
+            }
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <CameraView style={styles.camera} facing={facing}>
+            <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
             </CameraView>
             <View style={styles.header}>
                 <TouchableOpacity
@@ -60,7 +76,7 @@ export default function Camera() {
             <View style={styles.captureContainer}>
                 <TouchableOpacity
                     style={styles.captureButton}
-                // onPress={takePicture}
+                    onPress={handleCapture}
                 >
                     <View style={styles.captureInner} />
                 </TouchableOpacity>

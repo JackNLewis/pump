@@ -13,7 +13,7 @@ export interface Exercise {
 
 export interface Workout {
     user: User,
-    workoutImage: ImageSourcePropType,
+    workoutImage?: ImageSourcePropType,
     exercises: Exercise[];
 }
 

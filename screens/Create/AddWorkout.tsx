@@ -1,28 +1,48 @@
 import { StyleSheet, Text, View, Modal, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { X, Camera, ArrowLeft } from "react-native-feather";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import AddExerciseButton from '../../components/addExerciseButton';
 import Exercise from '../../components/exercise';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState, useLayoutEffect, useRef } from 'react';
-import { Workout, Exercise as ExerciseType } from '../../data/types';
 import Header from '../../components/header';
+import { Workout as WorkoutType, User as UserType, Exercise as ExerciseType } from '../../types/types';
+import { ImageSourcePropType } from "react-native";
 
 
 function AddWorkout() {
     const navigation = useNavigation<any>();
     const insets = useSafeAreaInsets();
 
-    const [workout, setWorkout] = useState<Workout>({ exercises: [] });
+    const [workout, setWorkout] = useState<WorkoutType>({ 
+        user : {
+            name: "",
+            lastOnline: "",
+            profileImage: "",
+            gym: "",
+        },
+        exercises: [],
+     });
     const scrollViewRef = useRef<ScrollView>(null);
 
     const addExerciseToWorkout = (exercise: ExerciseType) => {
         setWorkout(prevWorkout => ({
+            ...prevWorkout,
             exercises: [...prevWorkout.exercises, exercise]
         }));
     };
 
+    const submitWorkout = (image: ImageSourcePropType) => {
+        setWorkout(prevWorkout => ({
+            ...prevWorkout,
+            workoutImage: image,
+        }));
+
+        navigation.navigate('ViewWorkout', { workout: { ...workout, workoutImage: image } });
+    };
+
+    
     useLayoutEffect(() => {
         if (workout.exercises.length > 0 && scrollViewRef.current) {
             scrollViewRef.current.scrollToEnd({ animated: true });
@@ -30,7 +50,7 @@ function AddWorkout() {
     }, [workout.exercises.length]);
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Header title='WORKOUT' leftIcons={
                 <TouchableOpacity onPress={() => navigation.pop()}>
                     <X stroke="#000" width={24} height={24} />
@@ -61,18 +81,20 @@ function AddWorkout() {
             {/* Floating Camera Button */}
             <TouchableOpacity 
                 style={styles.floatingCameraButton}
-                onPress={() => navigation.navigate('Camera')}
+                onPress={() => navigation.navigate('Camera', { 
+                    onSubmitWorkout: submitWorkout,
+                    workout: workout 
+                })}
             >
                 <Camera stroke="#FFF" width={24} height={24} />
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 25,
         backgroundColor: 'white',
     },
     headerContainer: {

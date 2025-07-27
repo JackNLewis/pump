@@ -18,7 +18,7 @@ const SearchExercise = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Header title="SEARCH" leftIcons={
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <ArrowLeft height={24} width={24} color="#333" />
@@ -26,7 +26,7 @@ const SearchExercise = () => {
             } />
 
             <ExercisesContent onExercisePress={handleExerciseSelect} />
-        </View>
+        </SafeAreaView>
     );
 };
 

@@ -4,7 +4,8 @@ import { X, Check, Menu, Sliders } from 'react-native-feather';
 import NumberPicker from '../../components/numberPicker';
 import AddButton from '../../components/addButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Set, Exercise as ExerciseType } from '../../data/types';
+import { Set, Exercise as ExerciseType } from '../../types/types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 function AddExercise() {
@@ -30,14 +31,15 @@ function AddExercise() {
     const incrementOptions = [1.25, 2.5, 5, 10, 20, 50];
 
     const handleWeightChangeOnCompleted = (newWeight: number) => {
-
         // Update the current set in the sets array
         setCompletedSets(prevSets => {
             const updatedSets = [...prevSets];
+
             updatedSets[currentPosition] = {
                 ...updatedSets[currentPosition],
                 weight: newWeight
             };
+
             return updatedSets;
         });
     };
@@ -45,13 +47,10 @@ function AddExercise() {
     const handleWeightChangeOnNextSet = (newWeight: number) => {
 
         // Update next set state
-        setNextSet(prev => {
-            const updatedNextSet = {
-                ...prev,
-                weight: newWeight,
-            }
-            return updatedNextSet
-        })
+        setNextSet(prev => ({
+            ...prev,
+            weight: newWeight,
+        }));
     };
 
     const handleRepsChangeOnCompleted = (newReps: number) => {
@@ -70,13 +69,10 @@ function AddExercise() {
     const handleRepsChangeOnNextSet = (newReps: number) => {
 
         // Update next set state
-        setNextSet(prev => {
-            const updatedNextSet = {
-                ...prev,
-                reps: newReps,
-            }
-            return updatedNextSet
-        })
+        setNextSet(prev => ({
+            ...prev,
+            reps: newReps,
+        }));
     };
 
     const addNewSet = () => {
@@ -98,23 +94,23 @@ function AddExercise() {
             name: exerciseName,
             sets: completedSets
         };
-        
+
         // Call the callback if provided
         if (route.params?.onAddExercise) {
             route.params.onAddExercise(exercise);
         }
-        
+
         navigation.popTo("Create");
     };
 
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
 
             {/* ====================== Header and Options ====================== */}
             <View style={styles.header}>
                 <Text style={styles.title}>{(route.params?.exerciseName || "EXERCISE").toUpperCase()}</Text>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.optionsButton}
                     onPress={() => {
                         setShowOptions(!showOptions);
@@ -126,58 +122,58 @@ function AddExercise() {
             </View>
 
             {showOptions && (
-                <TouchableWithoutFeedback onPress={() => {}}>
+                <TouchableWithoutFeedback onPress={() => { }}>
                     <View style={styles.optionsDropdown}>
-                    <View style={styles.optionRow}>
-                        <Text style={styles.optionLabel}>Increment:</Text>
-                        <TouchableOpacity 
-                            style={styles.incrementDropdown}
-                            onPress={() => setShowIncrementDropdown(!showIncrementDropdown)}
-                        >
-                            <Text style={styles.incrementText}>{increment}{isKg? 'kg' : 'lb'}</Text>
-                            <Text style={styles.incrementText}>▼</Text>
-                        </TouchableOpacity>
-                        
-                        {showIncrementDropdown && (
-                            <View style={styles.incrementDropdownList}>
-                                <ScrollView showsVerticalScrollIndicator={true} bounces={false}>
-                                    {incrementOptions.map((value) => (
-                                            <Text 
-                                            key={value}
-                                            style={[
-                                                styles.incrementOptionText,
-                                                value === increment && styles.incrementOptionTextActive
-                                            ]}
-                                            selectable={false}
-                                             onPress={() => {
-                                                setIncrement(value);
-                                                setShowIncrementDropdown(false);
-                                            }}>
+                        <View style={styles.optionRow}>
+                            <Text style={styles.optionLabel}>Increment:</Text>
+                            <TouchableOpacity
+                                style={styles.incrementDropdown}
+                                onPress={() => setShowIncrementDropdown(!showIncrementDropdown)}
+                            >
+                                <Text style={styles.incrementText}>{increment}{isKg ? 'kg' : 'lb'}</Text>
+                                <Text style={styles.incrementText}>▼</Text>
+                            </TouchableOpacity>
+
+                            {showIncrementDropdown && (
+                                <View style={styles.incrementDropdownList}>
+                                    <ScrollView showsVerticalScrollIndicator={true} bounces={false}>
+                                        {incrementOptions.map((value) => (
+                                            <Text
+                                                key={value}
+                                                style={[
+                                                    styles.incrementOptionText,
+                                                    value === increment && styles.incrementOptionTextActive
+                                                ]}
+                                                selectable={false}
+                                                onPress={() => {
+                                                    setIncrement(value);
+                                                    setShowIncrementDropdown(false);
+                                                }}>
                                                 {value}{isKg ? 'kg' : 'lb'}
                                             </Text>
-                                    ))}
-                                </ScrollView>
-                            </View>
-                        )}
-                    </View>
-                    
-                    <View style={styles.optionRow}>
-                        <Text style={styles.optionLabel}>Metric:</Text>
-                        <View style={styles.metricToggle}>
-                            <TouchableOpacity 
-                                style={[styles.metricOption, !isKg && styles.metricOptionActive]}
-                                onPress={() => setIsKg(false)}
-                            >
-                                <Text style={[styles.metricText, !isKg && styles.metricTextActive]}>lb</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                style={[styles.metricOption, isKg && styles.metricOptionActive]}
-                                onPress={() => setIsKg(true)}
-                            >
-                                <Text style={[styles.metricText, isKg && styles.metricTextActive]}>kg</Text>
-                            </TouchableOpacity>
+                                        ))}
+                                    </ScrollView>
+                                </View>
+                            )}
                         </View>
-                    </View>
+
+                        <View style={styles.optionRow}>
+                            <Text style={styles.optionLabel}>Metric:</Text>
+                            <View style={styles.metricToggle}>
+                                <TouchableOpacity
+                                    style={[styles.metricOption, !isKg && styles.metricOptionActive]}
+                                    onPress={() => setIsKg(false)}
+                                >
+                                    <Text style={[styles.metricText, !isKg && styles.metricTextActive]}>lb</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.metricOption, isKg && styles.metricOptionActive]}
+                                    onPress={() => setIsKg(true)}
+                                >
+                                    <Text style={[styles.metricText, isKg && styles.metricTextActive]}>kg</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
                 </TouchableWithoutFeedback>
             )}
@@ -209,10 +205,10 @@ function AddExercise() {
                                 }}
                             >
                                 <Text
-                                 style={[
-                                    styles.setNumberText,
-                                    currentPosition === set.position && styles.setNumberTextActive
-                                ]}>
+                                    style={[
+                                        styles.setNumberText,
+                                        currentPosition === set.position && styles.setNumberTextActive
+                                    ]}>
                                     {set.position + 1}
                                 </Text>
                             </TouchableOpacity>
@@ -227,7 +223,7 @@ function AddExercise() {
                             <TouchableOpacity
                                 key={nextSet.position}
                                 style={[styles.setNumber, styles.setNumberActive]}
-                                
+
                             >
                                 <Text style={[styles.setNumberText, styles.setNumberTextActive]}>
                                     {nextSet.position + 1}
@@ -235,11 +231,11 @@ function AddExercise() {
                             </TouchableOpacity>
                         </>
                         :
-                        <AddButton 
+                        <AddButton
                             onPress={() => {
-                                    setCurrentPosition(nextSet.position);
-                                    setIsAddMode(true);
-                                }}
+                                setCurrentPosition(nextSet.position);
+                                setIsAddMode(true);
+                            }}
                             title="Add"
                         />
                     }
@@ -249,7 +245,7 @@ function AddExercise() {
             {/* ====================== Number Pickers ====================== */}
             <View style={styles.pickersContainer}>
                 <NumberPicker
-                    label={isKg? 'Weight (kg)': 'Weight (lb)'}
+                    label={isKg ? 'Weight (kg)' : 'Weight (lb)'}
                     onChange={isAddMode ? handleWeightChangeOnNextSet : handleWeightChangeOnCompleted}
                     value={isAddMode ? nextSet.weight : completedSets[currentPosition].weight}
                     increment={increment}
@@ -283,14 +279,14 @@ function AddExercise() {
                     <X stroke="#FFFFFF" width={24} height={24} />
                 </TouchableOpacity>
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={[styles.bottomButton, styles.bottomButtonActive]}
                     onPress={completeExercise}
                 >
                     <Check stroke="#FFFFFF" width={24} height={24} />
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -346,7 +342,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     incrementDropdown: {
-        flex:1,
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         // backgroundColor: '#F5F5F5',
