@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { X, Check, Menu, Sliders } from 'react-native-feather';
-import NumberPicker from '../../components/NumberPicker';
+import NumberPicker from '../../components/numberPicker';
 import AddButton from '../../components/addButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Set, Exercise as ExerciseType } from '../../data/types';

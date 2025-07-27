@@ -10,7 +10,7 @@ interface MonthWorkoutsProps {
   onImagePress?: (imageIndex: number) => void;
 }
 
-const MonthWorkouts: React.FC<MonthWorkoutsProps> = ({ month, workoutImages, onImagePress }) => {
+function MonthWorkouts({ month, workoutImages, onImagePress } :  MonthWorkoutsProps){
   const renderWorkoutImages = () => {
     const rows = [];
     for (let i = 0; i < workoutImages.length; i += 3) {

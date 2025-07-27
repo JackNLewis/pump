@@ -26,7 +26,7 @@ interface ViewWorkoutProps {
 
 function ViewWorkout({
     route,
-    exercises,
+    exercises = [], 
     user = {
         name: 'Jack Lewis',
         timeAgo: 'Trained 1 hour ago',

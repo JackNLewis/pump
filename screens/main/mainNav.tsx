@@ -7,7 +7,7 @@ import Explore from './explore';
 import Profile from './profile';
 import Exercises from './exercises';
 import HistoryNav from './history/historyNav';
-import CreateWorkoutIcon from '../../components/CreateWorkoutIcon';
+import CreateWorkoutIcon from '../../components/createWorkoutIcon';
 
 const Tab = createBottomTabNavigator();
 

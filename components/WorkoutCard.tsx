@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import CardHeader from './CardHeader';
+import CardHeader from './cardHeader';
 import { spacing } from '../styles/spacing';
 import { colors } from '../styles/colors';
 

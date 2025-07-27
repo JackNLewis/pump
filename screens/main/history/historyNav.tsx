@@ -1,9 +1,10 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, StyleSheet, Text } from 'react-native';
 import WorkoutHistory from './history'
-import ProfileHeader from '../../../components/ProfileHeader';
+import ProfileHeader from '../../../components/profileHeader';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Stats from './stats';
+import Header from '../../../components/header';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -13,9 +14,7 @@ function HistoryNav() {
 
     return (
         <View style={[styles.container, { paddingTop: insets.top, }]}>
-            <View style={styles.header}>
-                <Text style={styles.title}>WORKOUTS</Text>
-            </View>
+            <Header title='WORKOUTS'/>
             <Tab.Navigator
                 screenOptions={{
                     tabBarStyle: {

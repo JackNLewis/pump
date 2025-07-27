@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { UserPlus, AlignRight } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
-import ProfileStat from '../../components/ProfileStat';
-import SharedWorkouts from '../../components/SharedWorkouts';
+import ProfileStat from '../../components/profileStat';
+import SharedWorkouts from '../../components/sharedWorkouts';
 import ActivitySection from '../../components/activitySection';
 import Header from '../../components/header';
 
