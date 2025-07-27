@@ -30,7 +30,7 @@ const TabOptions = ({route} : any) => ({
                                     {focused && <View style={styles.underline} />}
                                 </View>
                             )
-                        case 'History':
+                        case 'Workouts':
                             return (
                                 <View style={styles.iconContainer}>
                                     <HomeIcon color={color} />
@@ -87,7 +87,7 @@ function MainNav() {
                 options={{ tabBarLabel: 'Open Modal' }}
             />
             <Tab.Screen
-                name="History"
+                name="Workouts"
                 component={HistoryNav}
                 options={{ headerShown: false }}
             />

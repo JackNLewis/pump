@@ -5,6 +5,7 @@ import { Search as SearchIcon } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 import WorkoutCard from '../../components/workoutCard';
 import Header from '../../components/header';
+import { stubWorkoutData } from '../../types/stub';
 
 const Explore = () => {
     const navigation = useNavigation<any>();
@@ -39,7 +40,7 @@ const Explore = () => {
                         image={item.image}
                         name={item.name}
                         workout={item.workout}
-                        onPress={() => navigation.navigate('ViewWorkout', { workoutId: item.id })}
+                        onPress={() => navigation.navigate('ViewWorkout', { workout: stubWorkoutData })}
                     />
                 ))}
             </ScrollView>

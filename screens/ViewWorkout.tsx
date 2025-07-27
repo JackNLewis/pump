@@ -5,49 +5,53 @@ import { useNavigation } from '@react-navigation/native';
 import { X } from 'react-native-feather';
 import { LinearGradient } from 'expo-linear-gradient';
 import Exercise from '../components/exercise';
-import { Exercise as ExerciseType } from '../types/types';
 import { colors } from '../styles/colors';
 import { spacing } from '../styles/spacing';
 import { typography } from '../styles/typography';
-
+import { Workout as WorkoutType } from '../types/types';
 const { width } = Dimensions.get('window');
 
-interface ViewWorkoutProps {
-    route?: any;
-    exercises: ExerciseType[];
-    user?: {
-        name: string;
-        timeAgo: string;
-        gym: string;
-        profileImage?: any;
-    };
-    workoutImage?: any;
-}
+// interface ViewWorkoutProps {
+//     exercises: ExerciseType[];
+//     user?: {
+//         name: string;
+//         timeAgo: string;
+//         gym: string;
+//         profileImage?: any;
+//     };
+//     workoutImage?: any;
+// }
 
-function ViewWorkout({
-    route,
-    exercises = [], 
-    user = {
-        name: 'Jack Lewis',
-        timeAgo: 'Trained 1 hour ago',
-        gym: 'Harveys Gym',
-        profileImage: null
-    },
-    workoutImage = require('../assets/workout2.jpg')
-} : ViewWorkoutProps) {
+function ViewWorkout({route} : {route: any}) {
     const navigation = useNavigation();
 
-    const workoutData = {
-        user,
-        workoutImage,
-        exercises,
+    let workoutData: WorkoutType = route.params?.workout || {
+        user: {
+            name: 'Unknown User',
+            lastOnline: 'Unknown',
+            profileImage: '',
+            gym: 'Unknown Gym',
+        },
+        workoutImage: require('../assets/workout2.jpg'),
+        exercises: []
     };
+
+    // const workoutData = {
+    //     user: {
+    //     name: 'Jack Lewis',
+    //     timeAgo: 'Trained 1 hour ago',
+    //     gym: 'Harveys Gym',
+    //     profileImage: null
+    // },
+    //     workoutImage: require('../assets/workout2.jpg'),
+    //     exercises: exercisesParam,
+    // };
 
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <View style={styles.imageContainer}>
-                    <Image source={workoutData.workoutImage} style={styles.workoutImage} resizeMode="cover" />
+                    <Image source={workoutData?.workoutImage} style={styles.workoutImage} resizeMode="cover" />
                     <LinearGradient
                         colors={['transparent', 'rgba(0, 0, 0, 0.9)']}
                         style={styles.gradient}
@@ -60,18 +64,18 @@ function ViewWorkout({
                         <X height={24} width={24} color="#FFFFFF" />
                     </TouchableOpacity>
                     <View style={styles.overlay}>
-                        <Text style={styles.userName}>{workoutData.user.name}</Text>
-                        <Text style={styles.workoutTime}>{workoutData.user.timeAgo}</Text>
-                        <Text style={styles.gymName}>{workoutData.user.gym}</Text>
+                        <Text style={styles.userName}>{workoutData?.user?.name || 'Unknown User'}</Text>
+                        <Text style={styles.workoutTime}>{workoutData?.user?.lastOnline || 'Unknown time'}</Text>
+                        <Text style={styles.gymName}>{workoutData?.user?.gym || 'Unknown gym'}</Text>
                     </View>
                 </View>
 
                 <View style={styles.exercisesContainer}>
-                    {workoutData.exercises.map((exercise, index) => (
+                    {workoutData?.exercises?.map((exercise, index) => (
                         <Exercise
                             key={index}
-                            name={exercise.name}
-                            sets={exercise.sets}
+                            name={exercise?.name || 'Unknown Exercise'}
+                            sets={exercise?.sets || []}
                         />
                     ))}
                 </View>
@@ -150,3 +154,17 @@ const styles = StyleSheet.create({
 });
 
 export default ViewWorkout;
+
+
+
+
+// {
+//     exercises = [], 
+//     user = {
+//         name: 'Jack Lewis',
+//         timeAgo: 'Trained 1 hour ago',
+//         gym: 'Harveys Gym',
+//         profileImage: null
+//     },
+// //     workoutImage = require('../assets/workout2.jpg')
+// }

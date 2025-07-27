@@ -4,6 +4,7 @@ import FilterButton from '../../../components/filterButton';
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
+import { stubWorkoutData } from '../../../types/stub';
 
 function WorkoutHistory() {
     const navigation = useNavigation<any>();
@@ -21,7 +22,7 @@ function WorkoutHistory() {
     ];
 
     const handleImagePress = (imageIndex: number) => {
-        navigation.navigate('ViewWorkout', { imageIndex });
+        navigation.navigate('ViewWorkout', { workout: stubWorkoutData });
     };
 
     return (

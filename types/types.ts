@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface Set {
     position: number,
     weight: number;
@@ -11,7 +13,7 @@ export interface Exercise {
 
 export interface Workout {
     user: User,
-    workoutImage: string,
+    workoutImage: ImageSourcePropType,
     exercises: Exercise[];
 }
 
