@@ -5,25 +5,12 @@ import { Search as SearchIcon } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 import WorkoutCard from '../../components/workoutCard';
 import Header from '../../components/header';
-import { stubWorkoutData } from '../../types/stub';
+import { stubWorkoutData, stubExploreWorkoutData } from '../../types/stub';
 
 const Explore = () => {
     const navigation = useNavigation<any>();
 
-    const workoutData = [
-        {
-            id: 1,
-            name: "Jack Lewis",
-            workout: "Trained Chest",
-            image: require('../../assets/workout1.jpg')
-        },
-        {
-            id: 2,
-            name: "Jack Lewis",
-            workout: "Trained Chest",
-            image: require('../../assets/workout1.jpg')
-        }
-    ];
+    const workoutData = stubExploreWorkoutData;
 
     return (
         <SafeAreaView style={styles.container}>

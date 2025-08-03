@@ -4,22 +4,12 @@ import FilterButton from '../../../components/filterButton';
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { stubWorkoutData } from '../../../types/stub';
+import { stubWorkoutData, stubWorkoutImages } from '../../../types/stub';
 
 function WorkoutHistory() {
     const navigation = useNavigation<any>();
     const [activeFilter, setActiveFilter] = useState('All');
 
-    const sampleWorkoutImages = [
-        'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    ];
 
     const handleImagePress = (imageIndex: number) => {
         navigation.navigate('ViewWorkout', { workout: stubWorkoutData });
@@ -50,11 +40,11 @@ function WorkoutHistory() {
                     />
                 </View>
 
-                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} onImagePress={handleImagePress} />
-                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} onImagePress={handleImagePress} />
-                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} onImagePress={handleImagePress} />
-                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} onImagePress={handleImagePress} />
-                <MonthWorkouts month="June 2022" workoutImages={sampleWorkoutImages} onImagePress={handleImagePress} />
+                <MonthWorkouts month="June 2022" workoutImages={stubWorkoutImages} onImagePress={handleImagePress} />
+                <MonthWorkouts month="June 2022" workoutImages={stubWorkoutImages} onImagePress={handleImagePress} />
+                <MonthWorkouts month="June 2022" workoutImages={stubWorkoutImages} onImagePress={handleImagePress} />
+                <MonthWorkouts month="June 2022" workoutImages={stubWorkoutImages} onImagePress={handleImagePress} />
+                <MonthWorkouts month="June 2022" workoutImages={stubWorkoutImages} onImagePress={handleImagePress} />
             </ScrollView>
         </SafeAreaView>
     );

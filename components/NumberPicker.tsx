@@ -24,7 +24,6 @@ function NumberPicker({ label, value, increment, onChange }: NumberPickerProps) 
 
     const [centerIndex, setCenterIndex] = useState(0);
     const scrollViewRef = useRef<ScrollView>(null);
-    const [isInitialized, setIsInitialized] = useState(false);
 
     useLayoutEffect(() => {
         // Find the index of the current value in the numbers array
@@ -38,17 +37,12 @@ function NumberPicker({ label, value, increment, onChange }: NumberPickerProps) 
         }
     }, [value]);
 
-    // Trigger haptic feedback when centerIndex changes (but not on initial load)
-    useEffect(() => {
-        if (isInitialized) {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        }
-        setIsInitialized(true);
-    }, [centerIndex]);
-
     const handleScroll = (event: any) => {
         const offsetY = event.nativeEvent.contentOffset.y;
         const index = Math.round(offsetY / ItemHeight);
+        if (index !== centerIndex){
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
         setCenterIndex(index);
     };
 
@@ -69,7 +63,6 @@ function NumberPicker({ label, value, increment, onChange }: NumberPickerProps) 
                         const index = Math.round(event.nativeEvent.contentOffset.y / ItemHeight);
                         const selectedValue = numbers[index] || 1;
                         onChange(selectedValue);
-                        setIsInitialized(false);
                     }}
                 >
                     {numbers.map((num, index) => (

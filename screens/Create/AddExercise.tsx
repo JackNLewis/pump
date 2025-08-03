@@ -6,7 +6,8 @@ import AddButton from '../../components/addButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Set, Exercise as ExerciseType } from '../../types/types';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import AddExerciseButton from '../../components/addExerciseButton';
+import * as Haptics from 'expo-haptics';
 
 function AddExercise() {
     const navigation = useNavigation<any>();
@@ -262,7 +263,10 @@ function AddExercise() {
             {
                 isAddMode &&
                 <View style={styles.actionContainer}>
-                    <TouchableOpacity style={styles.addSetButton} onPress={() => addNewSet()}>
+                    <TouchableOpacity style={styles.addSetButton} onPress={() => {
+                        addNewSet();
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                        }}>
                         <Text style={styles.addSetButtonText} >ADD SET</Text>
                     </TouchableOpacity>
 
