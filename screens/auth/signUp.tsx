@@ -1,7 +1,10 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import supabase from '../../SupaBase';
+import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
+import { doc, setDoc, Timestamp } from '@firebase/firestore';
+import { auth, db } from '../../FireBase';
+import { serverTimestamp } from "@firebase/firestore";
 
 function SignUp() {
     const navigation = useNavigation<any>();
@@ -17,26 +20,34 @@ function SignUp() {
         }
 
         setLoading(true);
-        Keyboard.dismiss;
+        Keyboard.dismiss();
         try {
-            const { data, error } = await supabase.auth.signUp({
-                email: email.trim(),
-                password: password,
-                options: {
-                    data: {
-                        full_name: fullName,
-                    }
-                }
+            const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+
+            // Update the user's display name
+            await updateProfile(userCredential.user, {
+                displayName: fullName
             });
 
-            if (error) {
-                Alert.alert('Sign Up Error', error.message);
-            } else {
-                Alert.alert('Success', 'Please check your email to confirm your account');
-                navigation.navigate('Login');
-            }
-        } catch (error) {
-            Alert.alert('Error', 'An unexpected error occurred');
+            // Parse full name into first and last name
+            const nameParts = fullName.trim().split(' ');
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+
+            // Create user document in Firestore
+            await setDoc(doc(db, 'users', userCredential.user.uid), {
+                first_name: firstName,
+                last_name: lastName,
+                username: `user_${userCredential.user.uid.slice(0, 8)}`,
+                follower_count: 0,
+                following_count: 0,
+                email: email.trim(),
+                created_at: serverTimestamp(),
+            });
+
+
+        } catch (error: any) {
+            Alert.alert('Sign Up Error', error.message);
         } finally {
             setLoading(false);
         }
@@ -47,7 +58,7 @@ function SignUp() {
             <View style={styles.container}>
                 <Text style={styles.title}>Sign Up</Text>
                 <Text style={styles.subtitle}>Sign Up with your email.</Text>
-                
+
                 <TextInput
                     style={styles.input}
                     placeholder="Full Name"
@@ -56,7 +67,7 @@ function SignUp() {
                     value={fullName}
                     onChangeText={setFullName}
                 />
-                
+
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
@@ -66,7 +77,7 @@ function SignUp() {
                     value={email}
                     onChangeText={setEmail}
                 />
-                
+
                 <TextInput
                     style={styles.input}
                     placeholder="Password"
@@ -75,9 +86,9 @@ function SignUp() {
                     value={password}
                     onChangeText={setPassword}
                 />
-                
-                <TouchableOpacity 
-                    style={[styles.signupButton, loading && styles.signupButtonDisabled]} 
+
+                <TouchableOpacity
+                    style={[styles.signupButton, loading && styles.signupButtonDisabled]}
                     onPress={handleSignUp}
                     disabled={loading}
                 >
@@ -85,21 +96,21 @@ function SignUp() {
                         {loading ? 'Signing Up...' : 'Sign Up'}
                     </Text>
                 </TouchableOpacity>
-                
+
                 <View style={styles.dividerContainer}>
                     <View style={styles.dividerLine} />
                     <Text style={styles.dividerText}>or</Text>
                     <View style={styles.dividerLine} />
                 </View>
-                
+
                 <TouchableOpacity style={styles.googleButton}>
                     <Text style={styles.googleButtonText}>Sign In with Google</Text>
                 </TouchableOpacity>
-                
+
                 <TouchableOpacity style={styles.appleButton}>
                     <Text style={styles.appleButtonText}>Sign In with Apple</Text>
                 </TouchableOpacity>
-                
+
                 <View style={styles.loginContainer}>
                     <Text style={styles.loginText}>Already have an account </Text>
                     <TouchableOpacity onPress={() => navigation.popTo('Login')}>

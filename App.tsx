@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useState } from 'react';
-import supabase from './SupaBase';
+import React, { useState, useEffect } from 'react';
+import { onAuthStateChanged } from '@firebase/auth';
+import { auth } from './FireBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import People from './screens/social/people';
 import SearchUser from './screens/social/searchUser';
@@ -18,36 +19,17 @@ import ViewWorkout from './screens/viewWorkout';
 const Stack = createStackNavigator();
 
 export default function App() {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [isSignedIn, setSignedIn] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [isSignedIn, setSignedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
-    //     // Check current session on app load
-    //     const checkSession = async () => {
-    //         try {
-    //             const { data: { session } } = await supabase.auth.getSession();å
-    //             setSignedIn(!!session);
-    //         } catch (error) {
-    //             console.error('Error checking session:', error);
-    //             setSignedIn(false);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setSignedIn(!!user);
+            setLoading(false);
+        });
 
-    //     checkSession();
-
-    //     // Listen for auth state changes
-    //     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-    //         (event, session) => {
-    //             setSignedIn(!!session);
-    //             setLoading(false);
-    //         }
-    //     );
-
-    //     return () => subscription.unsubscribe();
-    // }, []);
+        return () => unsubscribe();
+    }, []);
 
     // Show loading screen while checking authentication
     if (loading) {

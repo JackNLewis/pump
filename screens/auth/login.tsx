@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import supabase from '../../SupaBase';
+import { signInWithEmailAndPassword } from '@firebase/auth';
+import { auth } from '../../FireBase';
 
 function Login() {
     const navigation = useNavigation<any>();
@@ -17,19 +18,10 @@ function Login() {
 
         setLoading(true);
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email.trim(),
-                password: password,
-            });
-
-            if (error) {
-                Alert.alert('Login Error', error.message);
-            } else {
-                Alert.alert('Success', 'Login successful!');
-                // Navigate to main app or home screen
-            }
-        } catch (error) {
-            Alert.alert('Error', 'An unexpected error occurred');
+            await signInWithEmailAndPassword(auth, email.trim(), password);
+            Alert.alert('Success', 'Login successful!');
+        } catch (error: any) {
+            Alert.alert('Login Error', error.message);
         } finally {
             setLoading(false);
         }
