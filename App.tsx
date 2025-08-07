@@ -13,10 +13,13 @@ import AddExercise from './screens/create/addExercise';
 import Camera from './screens/create/camera';
 import Login from './screens/auth/login';
 import SignUp from './screens/auth/signUp';
+import RegisterProfile from './screens/auth/registerProfile';
+import RegisterPicture from './screens/auth/registerPicture';
 import AddWorkout from './screens/create/addWorkout';
 import ViewWorkout from './screens/viewWorkout';
 
 const Stack = createStackNavigator();
+const Dummy = () => <></>;
 
 export default function App() {
     const [isSignedIn, setSignedIn] = useState(false);
@@ -50,6 +53,10 @@ export default function App() {
                 { isSignedIn ? (
                     // Authenticated Pages
                     <Stack.Group>
+                        {/* Create Profile Pages */}
+                        <Stack.Screen name="RegisterProfile" component={RegisterProfile}/>
+                        <Stack.Screen name="RegisterPicture" component={RegisterPicture}/>
+
                         {/* Home Screens */}
                         <Stack.Screen name="HomeTabs" component={MainNav} />
 

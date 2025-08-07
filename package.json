@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^22.4.0",
     "@react-navigation/bottom-tabs": "^7.4.2",
     "@react-navigation/material-top-tabs": "^7.3.2",
     "@react-navigation/native": "^7.1.14",
@@ -16,6 +17,9 @@
     "@react-navigation/stack": "^7.4.2",
     "@supabase/supabase-js": "^2.50.2",
     "expo": "~53.0.12",
+    "expo-camera": "~16.1.11",
+    "expo-haptics": "~14.1.4",
+    "expo-image-picker": "^16.1.4",
     "expo-linear-gradient": "^14.1.5",
     "expo-status-bar": "~2.2.3",
     "firebase": "^11.9.1",
@@ -29,12 +33,11 @@
     "react-native-screens": "~4.11.1",
     "react-native-svg": "^15.12.0",
     "react-native-tab-view": "^4.1.2",
-    "react-native-vector-icons": "^10.2.0",
-    "expo-camera": "~16.1.11",
-    "expo-haptics": "~14.1.4"
+    "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@types/firebase": "^2.4.32",
     "@types/react": "~19.0.10",
     "@types/react-native-vector-icons": "^6.4.18",
     "typescript": "~5.8.3"
