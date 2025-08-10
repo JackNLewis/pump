@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { colors } from '../../styles/colors';
 import { typography } from '../../styles/typography';
 import { spacing } from '../../styles/spacing';
+import {Camera as CameraIcon, ArrowUpRight}  from 'react-native-feather';
 
 function RegisterPicture({ route }: { route?: any }) {
     const navigation = useNavigation<any>();
@@ -77,7 +78,7 @@ function RegisterPicture({ route }: { route?: any }) {
             {!selectedImage ? (
                 <View style={styles.uploadSection}>
                     <TouchableOpacity style={styles.uploadButton} onPress={choosePhoto}>
-                        <Text style={styles.uploadIcon}>↗</Text>
+                        <ArrowUpRight color={colors.grey[800]} height={20} width={20} style={{marginRight:10}}/>
                         <Text style={styles.uploadButtonText}>Choose a photo</Text>
                     </TouchableOpacity>
                     
@@ -88,7 +89,7 @@ function RegisterPicture({ route }: { route?: any }) {
                     </View>
                     
                     <TouchableOpacity style={styles.cameraButton} onPress={takePhoto}>
-                        <Text style={styles.cameraIcon}>📷</Text>
+                         <CameraIcon color={colors.grey[800]} height={20} width={20} style={{marginRight:10}} />
                         <Text style={styles.cameraButtonText}>Take a photo</Text>
                     </TouchableOpacity>
                 </View>
