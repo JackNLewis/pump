@@ -27,9 +27,11 @@ function ViewWorkout({route} : {route: any}) {
 
     let workoutData: WorkoutType = route.params?.workout || {
         user: {
-            name: 'Unknown User',
+            firstName: 'Unknown',
+            lastName: 'User',
+            username: 'unknown',
+            imageURI: '',
             lastOnline: 'Unknown',
-            profileImage: '',
             gym: 'Unknown Gym',
         },
         workoutImage: require('../assets/workout2.jpg'),
@@ -64,7 +66,7 @@ function ViewWorkout({route} : {route: any}) {
                         <X height={24} width={24} color="#FFFFFF" />
                     </TouchableOpacity>
                     <View style={styles.overlay}>
-                        <Text style={styles.userName}>{workoutData?.user?.name || 'Unknown User'}</Text>
+                        <Text style={styles.userName}>{`${workoutData?.user?.firstName || 'Unknown'} ${workoutData?.user?.lastName || 'User'}`}</Text>
                         <Text style={styles.workoutTime}>{workoutData?.user?.lastOnline || 'Unknown time'}</Text>
                         <Text style={styles.gymName}>{workoutData?.user?.gym || 'Unknown gym'}</Text>
                     </View>

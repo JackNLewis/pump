@@ -1,15 +1,28 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { useState, useCallback } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { ref, uploadBytes, getDownloadURL } from '@firebase/storage';
 import { colors } from '../../styles/colors';
 import { typography } from '../../styles/typography';
 import { spacing } from '../../styles/spacing';
 import {Camera as CameraIcon, ArrowUpRight}  from 'react-native-feather';
+import { storage, auth } from '../../FireBase';
+import { createUser } from '../../api/users';
+import { User } from '../../types/types';
 
-function RegisterPicture({ route }: { route?: any }) {
+interface RegisterImageProps {
+    setProfile: (user: User) => void;
+}
+
+function RegisterImage({ setProfile }: RegisterImageProps) {
+    const route = useRoute<any>();
+    const { profile }: { profile: User } = route.params || {};
+
     const navigation = useNavigation<any>();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     // Handle photo returned from Camera screen
     useFocusEffect(
@@ -41,7 +54,7 @@ function RegisterPicture({ route }: { route?: any }) {
         if (!hasPermission) return;
 
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ['images'],
             allowsEditing: true,
             aspect: [1, 1],
             quality: 1,
@@ -62,12 +75,64 @@ function RegisterPicture({ route }: { route?: any }) {
         setSelectedImage(null);
     };
 
-    const handleCreate = () => {
-        navigation.navigate('HomeTabs');
+    const handleCreate = async () => {
+        if (!selectedImage) {
+            setError('Please select a profile image');
+            return;
+        }
+
+        if (!profile) {
+            setError('Profile data is missing');
+            return;
+        }
+
+        setIsLoading(true);
+        setError('');
+
+        try {
+            // Convert image URI to blob
+            const response = await fetch(selectedImage);
+            const blob = await response.blob();
+
+            // Create a unique filename
+            const filename = `profiles/${profile.username}_profile.jpg`;
+            const storageRef = ref(storage, filename);
+
+            // Upload image to Firebase Storage
+            await uploadBytes(storageRef, blob);
+            const downloadURL = await getDownloadURL(storageRef);
+
+            // Create profile with image URL and auth ID
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+                throw new Error('No authenticated user found');
+            }
+            
+            const updatedProfile: User = {
+                ...profile,
+                id: currentUser.uid,
+                imageURI: downloadURL
+            };
+
+            console.log('creating user', updatedProfile)
+
+            const createdUser = await createUser(updatedProfile);
+            
+            // Update the profile state in App.tsx
+            if (setProfile && createdUser) {
+                setProfile(createdUser);
+            }
+            
+        } catch (uploadError) {
+            console.error('Error during profile creation:', uploadError);
+            setError('Failed to create profile. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleGoBack = () => {
-        navigation.goBack();
+       navigation.navigate('HomeTabs');
     };
 
     return (
@@ -104,11 +169,15 @@ function RegisterPicture({ route }: { route?: any }) {
                 </View>
             )}
             
+             {error ? <Text style={styles.error}>{error}</Text> : null}
             <TouchableOpacity 
-                style={styles.createButton} 
+                style={[styles.createButton, isLoading && styles.createButtonDisabled]} 
                 onPress={handleCreate}
+                disabled={isLoading}
             >
-                <Text style={styles.createButtonText}>Create</Text>
+                <Text style={styles.createButtonText}>
+                    {isLoading ? 'Creating Profile...' : 'Create'}
+                </Text>
             </TouchableOpacity>
             
             <TouchableOpacity onPress={handleGoBack}>
@@ -234,12 +303,21 @@ const styles = StyleSheet.create({
         fontSize: typography.fontSize.lg,
         fontWeight: typography.fontWeight.bold,
     },
+    createButtonDisabled: {
+        backgroundColor: colors.grey[400],
+    },
     goBackText: {
         color: colors.primary[500],
         fontSize: typography.fontSize.md,
         textAlign: 'center',
         textDecorationLine: 'underline',
-    }
+    },
+    error: {
+        color: 'red',
+        fontSize: typography.fontSize.sm,
+        fontWeight: typography.fontWeight.medium,
+        textAlign: 'center',
+    },
 });
 
-export default RegisterPicture;
+export default RegisterImage;

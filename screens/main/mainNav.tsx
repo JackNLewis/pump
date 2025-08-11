@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home as HomeIcon, User as UserIcon, Compass as CompassIcon, Book as BookIcon } from "react-native-feather";
-import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 import WorkoutScreens from './history/historyNav';
 import Explore from './explore';
 import Profile from './profile';
@@ -60,6 +60,8 @@ const TabOptions = ({route} : any) => ({
     
 function MainNav() {
     const navigation = useNavigation<any>();
+    const route = useRoute<any>();
+    const { profile } = route.params || {};
     return (
         <Tab.Navigator
             initialRouteName="Profile"
@@ -93,9 +95,10 @@ function MainNav() {
             />
             <Tab.Screen
                 name="Profile"
-                component={Profile}
                 options={{ headerShown: false }}
-            />
+            >
+                {(props) => <Profile {...props} profile={profile} />}
+            </Tab.Screen>
         </Tab.Navigator>
     )
 }

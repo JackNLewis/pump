@@ -3,12 +3,17 @@ import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { UserPlus, AlignRight } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
+import { User } from '../../types/types';
 import ProfileStat from '../../components/profileStat';
 import SharedWorkouts from '../../components/sharedWorkouts';
 import ActivitySection from '../../components/activitySection';
 import Header from '../../components/header';
 
-const Profile = () => {
+interface ProfileProps {
+    profile?: User;
+}
+
+const Profile = ({ profile }: ProfileProps) => {
     const navigation = useNavigation<any>();
 
     return (
@@ -29,13 +34,13 @@ const Profile = () => {
                 <View style={styles.profileSection}>
                     <View style={styles.profileImageContainer}>
                         <Image
-                            source={require('../../assets/workout1.jpg')}
+                            source={profile?.imageURI ? { uri: profile.imageURI } : require('../../assets/workout1.jpg')}
                             style={styles.profileImage}
                         />
                     </View>
-                    <Text style={styles.name}>Jack Lewis</Text>
-                    <Text style={styles.lastActive}>Worked out 1 day ago</Text>
-                    <Text style={styles.username}>@_jack.lewis</Text>
+                    <Text style={styles.name}>{profile?.firstName && profile?.lastName ? `${profile.firstName} ${profile.lastName}` : 'Unknown User'}</Text>
+                    <Text style={styles.lastActive}>{profile?.lastOnline || 'Last activity unknown'}</Text>
+                    <Text style={styles.username}>@{profile?.username || 'username'}</Text>
                 </View>
 
                 <View style={styles.statsContainer}>
@@ -52,10 +57,12 @@ const Profile = () => {
                     />
                 </View>
 
-                <View style={styles.gymSection}>
-                    <Text style={styles.gymLabel}>Gym</Text>
-                    <Text style={styles.gymName}>Pure Gym Bromsgrove</Text>
-                </View>
+                {profile?.gym && (
+                    <View style={styles.gymSection}>
+                        <Text style={styles.gymLabel}>Gym</Text>
+                        <Text style={styles.gymName}>{profile.gym}</Text>
+                    </View>
+                )}
 
                 <ActivitySection />
 

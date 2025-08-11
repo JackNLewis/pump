@@ -2,9 +2,12 @@ import { Workout } from './types';
 
 export const stubWorkoutData: Workout = {
     user: {
-        name: 'Jack Lewis',
+        id: '1',
+        firstName: 'Jack',
+        lastName: 'Lewis',
+        username: 'jacklewis',
+        imageURI: '',
         lastOnline: 'Trained 1 hour ago',
-        profileImage: '',
         gym: 'Harveys Gym',
     },
     workoutImage: require('../assets/workout2.jpg'),

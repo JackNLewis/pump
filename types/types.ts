@@ -18,8 +18,15 @@ export interface Workout {
 }
 
 export interface User {
-    name: string,
-    lastOnline: string,
-    profileImage: string,
-    gym: string,
+    id? : string,
+    firstName: string,
+    lastName: string,
+    username: string,
+    imageURI?: string,
+    gym?: string,
+    lastOnline?: string,
+    follower_count?: number,
+    following_count?: number,
+    workout_count? : number,
 }
+

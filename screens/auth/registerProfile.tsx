@@ -1,22 +1,56 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { signOut } from '@firebase/auth';
 import { colors } from '../../styles/colors';
 import { typography } from '../../styles/typography';
 import { spacing } from '../../styles/spacing';
+import { getUserByUsername } from '../../api/users';
+import { auth } from '../../FireBase';
+import { User } from '../../types/types';
 
 function RegisterProfile() {
     const navigation = useNavigation<any>();
     const [username, setUsername] = useState('');
+    const [error, setError] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-
-    const handleContinue = () => {
-        navigation.navigate('RegisterPicture');
+    
+    const handleContinue = async () => {
+        try {
+            setError('');
+            
+            if (!username.trim()) {
+                setError('Username is required');
+                return;
+            }
+            
+            const existingUser = await getUserByUsername(username.trim());
+            
+            if (existingUser) {
+                setError('Username already taken');
+                return;
+            }
+            
+            const profile: User = {
+                firstName,
+                lastName,
+                username: username.trim(),
+            };
+            
+            navigation.navigate('RegisterImage', { profile });
+        } catch (error) {
+            console.error('Error checking username:', error);
+            setError('Error checking username availability');
+        }
     };
 
-    const handleGoBack = () => {
-        navigation.goBack();
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            setError('Error signing out');
+        }
     };
 
     return (
@@ -49,7 +83,7 @@ function RegisterProfile() {
                     value={lastName}
                     onChangeText={setLastName}
                 />
-                
+                {error ? <Text style={styles.error}>{error}</Text> : null}
                 <TouchableOpacity 
                     style={styles.continueButton} 
                     onPress={handleContinue}
@@ -57,9 +91,10 @@ function RegisterProfile() {
                     <Text style={styles.continueButtonText}>Continue</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity onPress={handleGoBack}>
+                <TouchableOpacity onPress={handleSignOut}>
                     <Text style={styles.goBackText}>Sign Out</Text>
                 </TouchableOpacity>
+
             </View>
         </TouchableWithoutFeedback>
     );
@@ -106,6 +141,12 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: typography.fontSize.lg,
         fontWeight: typography.fontWeight.bold,
+    },
+    error: {
+        color: 'red',
+        fontSize: typography.fontSize.sm,
+        fontWeight: typography.fontWeight.medium,
+        textAlign: 'center',
     },
     goBackText: {
         color: colors.primary[500],

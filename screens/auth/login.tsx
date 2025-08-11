@@ -19,7 +19,6 @@ function Login() {
         setLoading(true);
         try {
             await signInWithEmailAndPassword(auth, email.trim(), password);
-            Alert.alert('Success', 'Login successful!');
         } catch (error: any) {
             Alert.alert('Login Error', error.message);
         } finally {

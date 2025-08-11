@@ -17,9 +17,11 @@ function AddWorkout() {
 
     const [workout, setWorkout] = useState<WorkoutType>({ 
         user : {
-            name: "",
+            firstName: "",
+            lastName: "",
+            username: "",
+            imageURI: "",
             lastOnline: "",
-            profileImage: "",
             gym: "",
         },
         exercises: [],
