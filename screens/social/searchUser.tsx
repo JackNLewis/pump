@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { User as UserIcon, ArrowLeft } from 'react-native-feather';
 import SearchBar from '../../components/searchBar';
-import { getProfiles } from '../../api/profiles';
+// import { getProfiles } from '../../api/profiles';
 
 
 const UserCard = ({ name, username }: any) => {
@@ -41,19 +41,19 @@ export default function SearchUser({ navigation }: any) {
     };
 
     const handleSearch = async (text: string) => {
-        if (text.length > 0) {
-            setLoading(true);
-            try {
-                const results = await getProfiles(text);
-                setSearchResults(results || []);
-            } catch (error) {
-                console.error('Search error:', error);
-                setSearchResults([]);
-            }
-            setLoading(false);
-        } else {
-            setSearchResults([]);
-        }
+        // if (text.length > 0) {
+        //     setLoading(true);
+        //     try {
+        //         const results = await getProfiles(text);
+        //         setSearchResults(results || []);
+        //     } catch (error) {
+        //         console.error('Search error:', error);
+        //         setSearchResults([]);
+        //     }
+        //     setLoading(false);
+        // } else {
+        //     setSearchResults([]);
+        // }
     };
 
     useEffect(() => {

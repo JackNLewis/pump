@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import MonthWorkouts from '../../../components/monthWorkouts';
 import FilterButton from '../../../components/filterButton';
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { stubWorkoutData, stubWorkoutImages } from '../../../types/stub';
+import MonthWorkouts from '../../../components/MonthWorkouts';
 
 function WorkoutHistory() {
     const navigation = useNavigation<any>();

@@ -4,17 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { UserPlus, AlignRight } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 import { User } from '../../types/types';
-import ProfileStat from '../../components/profileStat';
-import SharedWorkouts from '../../components/sharedWorkouts';
-import ActivitySection from '../../components/activitySection';
 import Header from '../../components/header';
+import ProfileStat from '../../components/ProfileStat';
+import SharedWorkouts from '../../components/SharedWorkouts';
+import ActivitySection from '../../components/activitySection';
+import { UserContextProvider, UserContext, UserContextType } from '../../context/userContext';
+import {useContext } from 'react';
 
-interface ProfileProps {
-    profile?: User;
-}
 
-const Profile = ({ profile }: ProfileProps) => {
+const Profile = () => {
     const navigation = useNavigation<any>();
+    const { user } = useContext(UserContext) as UserContextType;
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -34,13 +35,13 @@ const Profile = ({ profile }: ProfileProps) => {
                 <View style={styles.profileSection}>
                     <View style={styles.profileImageContainer}>
                         <Image
-                            source={profile?.imageURI ? { uri: profile.imageURI } : require('../../assets/workout1.jpg')}
+                            source={user?.imageURI ? { uri: user.imageURI } : require('../../assets/workout1.jpg')}
                             style={styles.profileImage}
                         />
                     </View>
-                    <Text style={styles.name}>{profile?.firstName && profile?.lastName ? `${profile.firstName} ${profile.lastName}` : 'Unknown User'}</Text>
-                    <Text style={styles.lastActive}>{profile?.lastOnline || 'Last activity unknown'}</Text>
-                    <Text style={styles.username}>@{profile?.username || 'username'}</Text>
+                    <Text style={styles.name}>{user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : 'Unknown User'}</Text>
+                    <Text style={styles.lastActive}>{user?.lastOnline || 'Last activity unknown'}</Text>
+                    <Text style={styles.username}>@{user?.username || 'username'}</Text>
                 </View>
 
                 <View style={styles.statsContainer}>
@@ -57,10 +58,10 @@ const Profile = ({ profile }: ProfileProps) => {
                     />
                 </View>
 
-                {profile?.gym && (
+                {user?.gym && (
                     <View style={styles.gymSection}>
                         <Text style={styles.gymLabel}>Gym</Text>
-                        <Text style={styles.gymName}>{profile.gym}</Text>
+                        <Text style={styles.gymName}>{user.gym}</Text>
                     </View>
                 )}
 

@@ -58,10 +58,10 @@ const TabOptions = ({route} : any) => ({
         tabBarShowLabel: false,
         });
     
+
 function MainNav() {
     const navigation = useNavigation<any>();
-    const route = useRoute<any>();
-    const { profile } = route.params || {};
+
     return (
         <Tab.Navigator
             initialRouteName="Profile"
@@ -95,10 +95,9 @@ function MainNav() {
             />
             <Tab.Screen
                 name="Profile"
+                component={Profile}
                 options={{ headerShown: false }}
-            >
-                {(props) => <Profile {...props} profile={profile} />}
-            </Tab.Screen>
+            />
         </Tab.Navigator>
     )
 }
