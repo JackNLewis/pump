@@ -9,7 +9,7 @@ import { getUserByUsername } from '../../api/users';
 import { auth } from '../../FireBase';
 import { User } from '../../types/types';
 
-function RegisterProfile() {
+function RegisterDetails() {
     const navigation = useNavigation<any>();
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
@@ -156,4 +156,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RegisterProfile;
+export default RegisterDetails;

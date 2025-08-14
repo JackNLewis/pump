@@ -14,7 +14,7 @@ import AddExercise from './screens/create/addExercise';
 import Camera from './screens/create/camera';
 import Login from './screens/auth/login';
 import SignUp from './screens/auth/signUp';
-import RegisterProfile from './screens/auth/registerProfile';
+import RegisterDetails from './screens/auth/registerDetails';
 import AddWorkout from './screens/create/addWorkout';
 import ViewWorkout from './screens/viewWorkout';
 import RegisterImage from './screens/auth/registerImage';
@@ -138,7 +138,7 @@ function AppContent() {
                             ) : (
                                 // Authenticated but not registered - Registration Pages
                                 <Stack.Group>
-                                    <Stack.Screen name="RegisterProfile" component={RegisterProfile} />
+                                    <Stack.Screen name="RegisterDetails" component={RegisterDetails} />
                                     <Stack.Screen name="RegisterImage">
                                         {(props) => <RegisterImage {...props} setProfile={setUser} />}
                                     </Stack.Screen>

@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { User as UserIcon, ArrowLeft } from 'react-native-feather';
 import SearchBar from '../../components/searchBar';
-// import { getProfiles } from '../../api/profiles';
+import { searchUsersByUsername } from '../../api/users';
+import { User } from '../../types/types';
 
 
 const UserCard = ({ name, username }: any) => {
@@ -24,7 +25,7 @@ const UserCard = ({ name, username }: any) => {
 
 export default function SearchUser({ navigation }: any) {
     const [searchText, setSearchText] = useState('');
-    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [searchResults, setSearchResults] = useState<User[]>([]);
     const [loading, setLoading] = useState(false);
 
     const getSearchMessage = (isLoading: boolean, searchTextLength: number, searchResultLength: number) => {
@@ -41,19 +42,19 @@ export default function SearchUser({ navigation }: any) {
     };
 
     const handleSearch = async (text: string) => {
-        // if (text.length > 0) {
-        //     setLoading(true);
-        //     try {
-        //         const results = await getProfiles(text);
-        //         setSearchResults(results || []);
-        //     } catch (error) {
-        //         console.error('Search error:', error);
-        //         setSearchResults([]);
-        //     }
-        //     setLoading(false);
-        // } else {
-        //     setSearchResults([]);
-        // }
+        if (text.length > 0) {
+            setLoading(true);
+            try {
+                const results = await searchUsersByUsername(text);
+                setSearchResults(results || []);
+            } catch (error) {
+                console.error('Search error:', error);
+                setSearchResults([]);
+            }
+            setLoading(false);
+        } else {
+            setSearchResults([]);
+        }
     };
 
     useEffect(() => {
@@ -89,11 +90,11 @@ export default function SearchUser({ navigation }: any) {
                     )}
                     {!loading && searchResults.length > 0 && (
                         <View>
-                            {searchResults.map((user: any, index: number) => (
+                            {searchResults.map((user: User, index: number) => (
                                 <UserCard 
-                                    key={index} 
-                                    name={user.full_name || user.user_name} 
-                                    username={user.user_name} 
+                                    key={user.id || index} 
+                                    name={`${user.firstName} ${user.lastName}`.trim() || user.username} 
+                                    username={user.username} 
                                 />
                             ))}
                         </View>
