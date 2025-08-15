@@ -1,27 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { User as UserIcon, ArrowLeft } from 'react-native-feather';
+import { ArrowLeft } from 'react-native-feather';
 import SearchBar from '../../components/searchBar';
 import { searchUsersByUsername } from '../../api/users';
 import { User } from '../../types/types';
+import UserOverviewCard from '../../components/UserOverviewCard';
 
 
-const UserCard = ({ name, username }: any) => {
-    return (
-        <TouchableOpacity style={styles.userCard}>
-            <View style={styles.profileSection}>
-                <View style={styles.profilePicture}>
-                    <UserIcon height={24} width={24} color="#666" />
-                </View>
-                <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>{name}</Text>
-                    <Text style={styles.username}>@{username}</Text>
-                </View>
-            </View>
-        </TouchableOpacity>
-    );
-};
 
 export default function SearchUser({ navigation }: any) {
     const [searchText, setSearchText] = useState('');
@@ -91,10 +77,12 @@ export default function SearchUser({ navigation }: any) {
                     {!loading && searchResults.length > 0 && (
                         <View>
                             {searchResults.map((user: User, index: number) => (
-                                <UserCard 
+                                <UserOverviewCard 
                                     key={user.id || index} 
                                     name={`${user.firstName} ${user.lastName}`.trim() || user.username} 
-                                    username={user.username} 
+                                    secondaryText={`@${user.username}`}
+                                    buttonType="follow"
+                                    onPress={() => {}}
                                 />
                             ))}
                         </View>
@@ -143,37 +131,6 @@ const styles = StyleSheet.create({
     },
     userList: {
         flex: 1,
-    },
-    userCard: {
-        paddingVertical: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: '#F0F0F0',
-    },
-    profileSection: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    profilePicture: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#F8F8F8',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 15,
-    },
-    profileInfo: {
-        flex: 1,
-    },
-    profileName: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#333',
-        marginBottom: 2,
-    },
-    username: {
-        fontSize: 14,
-        color: '#666',
     },
     messageText: {
         fontSize: 16,
