@@ -30,3 +30,16 @@ export interface User {
     workout_count? : number,
 }
 
+// follows collection
+export interface Follow{
+  id: string,
+  followerId: string,
+  followeeId: string, 
+  createdAt: Date,
+  status: "pending" | "accepted" | "blocked" // if you want friend requests
+}
+
+export interface UserSearchResult {
+    user: User,
+    status: string
+}

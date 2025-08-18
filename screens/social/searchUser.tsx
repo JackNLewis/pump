@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeft } from 'react-native-feather';
 import SearchBar from '../../components/searchBar';
 import { searchUsersByUsername } from '../../api/users';
-import { User } from '../../types/types';
-import UserOverviewCard from '../../components/UserOverviewCard';
-
-
+import { User, UserSearchResult } from '../../types/types';
+import UserOverviewCard from '../../components/userOverviewCard';
+import { UserContext } from '../../context/userContext';
 
 export default function SearchUser({ navigation }: any) {
     const [searchText, setSearchText] = useState('');
-    const [searchResults, setSearchResults] = useState<User[]>([]);
+    const [searchResults, setSearchResults] = useState<UserSearchResult[]>([]);
     const [loading, setLoading] = useState(false);
+    const userContext = useContext(UserContext);
+    const currentUser = userContext?.user;
 
     const getSearchMessage = (isLoading: boolean, searchTextLength: number, searchResultLength: number) => {
         if (isLoading && searchTextLength > 0) {
@@ -31,7 +32,7 @@ export default function SearchUser({ navigation }: any) {
         if (text.length > 0) {
             setLoading(true);
             try {
-                const results = await searchUsersByUsername(text);
+                const results = await searchUsersByUsername(text, currentUser?.id!);
                 setSearchResults(results || []);
             } catch (error) {
                 console.error('Search error:', error);
@@ -76,12 +77,14 @@ export default function SearchUser({ navigation }: any) {
                     )}
                     {!loading && searchResults.length > 0 && (
                         <View>
-                            {searchResults.map((user: User, index: number) => (
+                            {searchResults.map((res: UserSearchResult, index: number) => (
                                 <UserOverviewCard 
-                                    key={user.id || index} 
-                                    name={`${user.firstName} ${user.lastName}`.trim() || user.username} 
-                                    secondaryText={`@${user.username}`}
-                                    buttonType="follow"
+                                    key={res.user.id || index} 
+                                    name={`${res.user.firstName} ${res.user.lastName}`.trim() || res.user.username} 
+                                    secondaryText={`@${res.user.username}`}
+                                    buttonType={res.status}
+                                    currentUserId={currentUser?.id}
+                                    targetUserId={res.user.id}
                                     onPress={() => {}}
                                 />
                             ))}
@@ -106,11 +109,6 @@ const styles = StyleSheet.create({
         position: 'relative',
         justifyContent: 'space-between'
     },
-    // backButton: {
-    //     position: 'absolute',
-    //     left: 20,
-    //     zIndex: 1,
-    // },
     title: {
         fontSize: 24,
         fontWeight: 'bold',

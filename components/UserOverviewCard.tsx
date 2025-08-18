@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { User as UserIcon } from 'react-native-feather';
+import { insertFollow } from '../api/follows';
 
-type ButtonType = 'none' | 'follow' | 'following';
 
 interface UserOverviewCardProps {
     name: string;
     secondaryText: string;
-    buttonType?: ButtonType;
+    buttonType?: string;
     onPress?: () => void;
     onFollowPress?: () => void;
+    currentUserId?: string;
+    targetUserId?: string;
 }
 
 const UserOverviewCard: React.FC<UserOverviewCardProps> = ({
@@ -17,26 +19,52 @@ const UserOverviewCard: React.FC<UserOverviewCardProps> = ({
     secondaryText,
     buttonType = 'none',
     onPress,
-    onFollowPress
+    onFollowPress,
+    currentUserId,
+    targetUserId
 }) => {
-    const renderButton = () => {
-        if (buttonType === 'none') return null;
+    const [currentButtonType, setCurrentButtonType] = useState<string>(buttonType);
 
-        const isFollowing = buttonType === 'following';
+    const handleFollowPress = async () => {
+        if (currentButtonType === 'follow' && currentUserId && targetUserId) {
+            setCurrentButtonType('pending');
+            
+            try {
+                await insertFollow(currentUserId, targetUserId);
+                if (onFollowPress) {
+                    onFollowPress();
+                }
+            } catch (error) {
+                setCurrentButtonType('follow');
+                console.error('Failed to follow user:', error);
+            }
+        } else if (onFollowPress) {
+            onFollowPress();
+        }
+    };
+
+    const renderButton = () => {
+        if (currentButtonType === 'none') return null;
+
+        const isFollowing = currentButtonType === 'following';
+        const isPending = currentButtonType === 'pending';
         
         return (
             <TouchableOpacity
                 style={[
                     styles.followButton,
-                    isFollowing ? styles.followingButton : styles.followButtonDefault
+                    isFollowing ? styles.followingButton : 
+                    isPending ? styles.pendingButton : styles.followButtonDefault
                 ]}
-                onPress={onFollowPress}
+                onPress={handleFollowPress}
+                disabled={isPending}
             >
                 <Text style={[
                     styles.followButtonText,
-                    isFollowing ? styles.followingButtonText : styles.followButtonTextDefault
+                    isFollowing ? styles.followingButtonText : 
+                    isPending ? styles.pendingButtonText : styles.followButtonTextDefault
                 ]}>
-                    {isFollowing ? 'Following' : 'Follow'}
+                    {isFollowing ? 'Following' : isPending ? 'Pending' : 'Follow'}
                 </Text>
             </TouchableOpacity>
         );
@@ -118,6 +146,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#00CCA7',
         borderColor: '#00CCA7',
     },
+    pendingButton: {
+        backgroundColor: '#F5F5F5',
+        borderColor: '#CCCCCC',
+    },
     followButtonText: {
         fontSize: 14,
         fontWeight: '600',
@@ -127,6 +159,9 @@ const styles = StyleSheet.create({
     },
     followingButtonText: {
         color: '#FFFFFF',
+    },
+    pendingButtonText: {
+        color: '#999999',
     },
 });
 

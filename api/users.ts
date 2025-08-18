@@ -1,6 +1,6 @@
 import { db } from '../FireBase';
-import { collection, query, where, getDocs, doc, getDoc, addDoc, setDoc } from '@firebase/firestore';
-import { User } from '../types/types';
+import { collection, query, where, getDocs, doc, getDoc, setDoc, limit } from '@firebase/firestore';
+import { Follow, User, UserSearchResult } from '../types/types';
 
 export const getUserByUsername = async (username: string): Promise<User | null> => {
   try {
@@ -70,7 +70,7 @@ export const createUser = async (profile: User): Promise<User> => {
   }
 };
 
-export const searchUsersByUsername = async (searchText: string): Promise<User[]> => {
+export const searchUsersByUsername = async (searchText: string, currentUserID: string): Promise<UserSearchResult[]> => {
   try {
     if (!searchText || searchText.trim().length === 0) {
       return [];
@@ -80,16 +80,17 @@ export const searchUsersByUsername = async (searchText: string): Promise<User[]>
     const searchLower = searchText.toLowerCase();
     
     // Query for usernames that start with the search text
-    const q = query(
+    const userQuery = query(
       usersRef, 
       where('username', '>=', searchLower),
-      where('username', '<=', searchLower + '\uf8ff')
+      where('username', '<=', searchLower + '\uf8ff'),
+      limit(10)
     );
     
-    const querySnapshot = await getDocs(q);
+    const filteredUsers = await getDocs(userQuery);
     
     const users: User[] = [];
-    querySnapshot.forEach((doc) => {
+    filteredUsers.forEach((doc) => {
       const userData = doc.data();
       users.push({
         id: doc.id,
@@ -102,7 +103,45 @@ export const searchUsersByUsername = async (searchText: string): Promise<User[]>
       } as User);
     });
     
-    return users;
+    const userIds = users.map(user => user.id!);
+    
+    if (userIds.length === 0) {
+      return [];
+    }
+
+    const followsRef = collection(db, 'follows');
+    const followQuery = query(
+        followsRef,
+        where('followeeId', 'in', userIds),
+        where('followerId', '==', currentUserID)
+    );
+
+    const followsSnapshot = await getDocs(followQuery);
+    const follows: Follow[] = [];
+    
+    followsSnapshot.forEach((doc) => {
+      const followData = doc.data();
+      follows.push({
+        id: doc.id,
+        followerId: followData?.followerId || '',
+        followeeId: followData?.followeeId || '',
+        createdAt: followData?.createdAt || new Date(),
+        status: followData?.status || 'follow'
+      } as Follow);
+    });
+
+    console.log(follows)
+
+    // Combine users with their follow status
+    const results: UserSearchResult[] = users.map(user => {
+      const followRelation = follows.find(follow => follow.followeeId === user.id);
+      return {
+        user,
+        status: followRelation ? followRelation.status : 'follow'
+      };
+    });
+
+    return results;
   } catch (error) {
     console.error('Error searching users:', error);
     throw error;

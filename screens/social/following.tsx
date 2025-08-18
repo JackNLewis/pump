@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import SearchBar from '../../components/searchBar';
-import UserOverviewCard from '../../components/UserOverviewCard';
+import UserOverviewCard from '../../components/userOverviewCard';
 
 
 export default function Following(){
