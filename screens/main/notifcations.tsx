@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { X, Settings, LogOut } from 'react-native-feather'
 import { colors } from '../../styles/colors';
 import { typography } from '../../styles/typography'
+import { auth } from "../../FireBase";
+import FollowRequestCard from '../../components/FollowRequestCard';
 
 interface NotificationsDrawerProps {
     onClose: () => void;
@@ -25,8 +27,21 @@ function NotificationsDrawer({ onClose }: NotificationsDrawerProps) {
 
             {/* Content Area */}
             <View style={styles.content}>
-                <Text style={styles.contentText}>No new notifications</Text>
-                {/* This area can be expanded with notification content later */}
+                <FollowRequestCard 
+                    name="Jack" 
+                    onAccept={() => console.log('Accepted Jack')}
+                    onDecline={() => console.log('Declined Jack')}
+                />
+                <FollowRequestCard 
+                    name="Julia" 
+                    onAccept={() => console.log('Accepted Julia')}
+                    onDecline={() => console.log('Declined Julia')}
+                />
+                <FollowRequestCard 
+                    name="Jemale" 
+                    onAccept={() => console.log('Accepted Jemale')}
+                    onDecline={() => console.log('Declined Jemale')}
+                />
             </View>
 
             {/* Bottom Section */}
@@ -36,7 +51,7 @@ function NotificationsDrawer({ onClose }: NotificationsDrawerProps) {
                     <Text style={styles.settingsLabel}>SETTINGS</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.logoutButton}>
+                <TouchableOpacity style={styles.logoutButton} onPress={() => auth.signOut()}>
                     <LogOut stroke={colors.grey[800]} width={24} height={24} />
                     <Text style={styles.logoutText}>LOG OUT</Text>
                 </TouchableOpacity>
@@ -88,7 +103,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        paddingHorizontal: 20,
+        paddingLeft: 20,
     },
     contentText: {
         paddingVertical: 20,

@@ -3,21 +3,23 @@ import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ExercisesContent from '../../components/exercisesContent';
 import Header from '../../components/header';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-function Exercises(){
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header title='EXERCISES'/>
-      <ExercisesContent />
-    </SafeAreaView>
-  );
+function Exercises() {
+    const insets = useSafeAreaInsets();
+    return (
+        <View style={[styles.container, {paddingTop: insets.top}]}>
+            <Header title='EXERCISES' />
+            <ExercisesContent />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+    },
 });
 
 export default Exercises;

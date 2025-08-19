@@ -9,31 +9,36 @@ import ProfileStat from '../../components/ProfileStat';
 import SharedWorkouts from '../../components/SharedWorkouts';
 import ActivitySection from '../../components/activitySection';
 import { UserContextProvider, UserContext, UserContextType } from '../../context/userContext';
-import {useContext } from 'react';
-
+import { useContext } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { colors } from '../../styles/colors';
 
 interface ProfileProps {
-    setOpen?: (open: boolean) => void;
+    setOpen: (open: boolean) => void;
 }
 
 const Profile = ({ setOpen }: ProfileProps) => {
     const navigation = useNavigation<any>();
     const { user } = useContext(UserContext) as UserContextType;
-
+    const insets = useSafeAreaInsets();
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={[styles.container, { paddingTop: insets.top }]}>
             <Header title='PROFILE' rightIcons={
-                    <>
-                        <TouchableOpacity onPress={() => navigation.navigate('SearchUser')} style={styles.iconButton}>
-                            <UserPlus stroke="#666" width={24} height={24} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setOpen?.(true)} style={styles.iconButton}>
-                            <AlignRight stroke="#666" width={24} height={24} />
-                        </TouchableOpacity>
-                    </>
-                } />
-                
+                <>
+                    <TouchableOpacity onPress={() => navigation.navigate('SearchUser')} style={styles.iconButton}>
+                        <UserPlus stroke="#666" width={24} height={24} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.iconButton} onPress={() => setOpen(true)}>
+                        <AlignRight stroke="#666" width={24} height={24} />
+                        <View style={styles.notificationNumberContainer}>
+
+                            <Text style={styles.notificationNumber}>3</Text>
+                        </View>
+                    </TouchableOpacity>
+                </>
+            } />
+
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
 
                 <View style={styles.profileSection}>
@@ -73,14 +78,14 @@ const Profile = ({ setOpen }: ProfileProps) => {
 
                 <SharedWorkouts />
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#ffffff'
     },
     scrollView: {
         flex: 1,
@@ -103,6 +108,7 @@ const styles = StyleSheet.create({
     },
     iconButton: {
         marginLeft: 16,
+        position: 'relative'
     },
     profileSection: {
         alignItems: 'center',
@@ -150,7 +156,27 @@ const styles = StyleSheet.create({
     username: {
         fontSize: 16,
         color: '#00CCA7',
+    },
+    notificationNumberContainer: {
+        position: 'absolute',
+        borderRadius: 10,
+        padding: 2,
+        height: 20,
+        width: 20,
+        top: -10,
+        right: -10,
+        backgroundColor: colors.primary[500],
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center'
+    },
+    notificationNumber: {
+        textAlign: 'center',
+        color: '#ffffff',
+        fontSize: 12,
+        fontWeight: 600
     }
+
 });
 
 export default Profile;

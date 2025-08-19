@@ -36,10 +36,17 @@ export interface Follow{
   followerId: string,
   followeeId: string, 
   createdAt: Date,
-  status: "pending" | "accepted" | "blocked" // if you want friend requests
+  status: "requested" | "accepted" | "blocked" // if you want friend requests
+
+  follower_name: string
+  follower_image_url: string
+  
+  followee_name: string 
+  followee_image_url: string
 }
 
 export interface UserSearchResult {
     user: User,
     status: string
 }
+

@@ -56,7 +56,7 @@ const TabOptions = ({ route }: any) => ({
     tabBarActiveTintColor: '#00CCA7',
     tabBarInactiveTintColor: 'gray',
     tabBarStyle: {
-        height: 80,
+        // height: 80,
         paddingTop: 10,
         paddingBottom: 5,
     },
@@ -74,6 +74,8 @@ function MainNav() {
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
             renderDrawerContent={() => <NotificationsDrawer onClose={() => setOpen(false)}/>}
+            swipeEnabled={false}
+            drawerStyle={{ width: '75%' }}
         >
             <Tab.Navigator
                 initialRouteName="Profile"

@@ -6,14 +6,16 @@ import { useNavigation } from '@react-navigation/native';
 import WorkoutCard from '../../components/workoutCard';
 import Header from '../../components/header';
 import { stubWorkoutData, stubExploreWorkoutData } from '../../types/stub';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Explore = () => {
     const navigation = useNavigation<any>();
-
+    const insets = useSafeAreaInsets();
+    
     const workoutData = stubExploreWorkoutData;
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={[styles.container, {paddingTop: insets.top} ]}>
             <Header title='EXPLORE' rightIcons={
                 <TouchableOpacity style={styles.headerIcon}>
                     <SearchIcon height={24} width={24} color="#333" onPress={() => navigation.navigate('SearchUser')}/>
@@ -31,7 +33,7 @@ const Explore = () => {
                     />
                 ))}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 };
 

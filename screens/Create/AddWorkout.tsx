@@ -13,7 +13,6 @@ import { ImageSourcePropType } from "react-native";
 
 function AddWorkout() {
     const navigation = useNavigation<any>();
-    const insets = useSafeAreaInsets();
 
     const [workout, setWorkout] = useState<WorkoutType>({ 
         user : {
