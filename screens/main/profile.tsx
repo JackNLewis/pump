@@ -12,7 +12,11 @@ import { UserContextProvider, UserContext, UserContextType } from '../../context
 import {useContext } from 'react';
 
 
-const Profile = () => {
+interface ProfileProps {
+    setOpen?: (open: boolean) => void;
+}
+
+const Profile = ({ setOpen }: ProfileProps) => {
     const navigation = useNavigation<any>();
     const { user } = useContext(UserContext) as UserContextType;
 
@@ -24,7 +28,7 @@ const Profile = () => {
                         <TouchableOpacity onPress={() => navigation.navigate('SearchUser')} style={styles.iconButton}>
                             <UserPlus stroke="#666" width={24} height={24} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconButton}>
+                        <TouchableOpacity onPress={() => setOpen?.(true)} style={styles.iconButton}>
                             <AlignRight stroke="#666" width={24} height={24} />
                         </TouchableOpacity>
                     </>
