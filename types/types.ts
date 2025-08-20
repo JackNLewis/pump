@@ -32,15 +32,17 @@ export interface User {
 
 // follows collection
 export interface Follow{
-  id: string,
+  id?: string,
   followerId: string,
   followeeId: string, 
   createdAt: Date,
-  status: "requested" | "accepted" | "blocked" // if you want friend requests
+  status: "requested" | "following" // if you want friend requests
 
+  // Denormalized follower data
   follower_name: string
   follower_image_url: string
   
+  //Denormalized followee data
   followee_name: string 
   followee_image_url: string
 }

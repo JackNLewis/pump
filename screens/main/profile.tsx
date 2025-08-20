@@ -33,7 +33,7 @@ const Profile = ({ setOpen }: ProfileProps) => {
                         <AlignRight stroke="#666" width={24} height={24} />
                         <View style={styles.notificationNumberContainer}>
 
-                            <Text style={styles.notificationNumber}>3</Text>
+                            <Text style={styles.notificationNumber}>99</Text>
                         </View>
                     </TouchableOpacity>
                 </>

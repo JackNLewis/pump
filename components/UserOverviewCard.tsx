@@ -1,97 +1,112 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { User as UserIcon } from 'react-native-feather';
 import { insertFollow } from '../api/follows';
-
+import { UserSearchResult } from '../types/types';
+import { UserContext } from '../context/userContext';
 
 interface UserOverviewCardProps {
-    name: string;
-    secondaryText: string;
-    buttonType?: string;
-    onPress?: () => void;
-    onFollowPress?: () => void;
-    currentUserId?: string;
-    targetUserId?: string;
+    targetUser: UserSearchResult;
 }
 
-const UserOverviewCard: React.FC<UserOverviewCardProps> = ({
-    name,
-    secondaryText,
-    buttonType = 'none',
-    onPress,
-    onFollowPress,
-    currentUserId,
-    targetUserId
-}) => {
-    const [currentButtonType, setCurrentButtonType] = useState<string>(buttonType);
+function UserOverviewCard({ targetUser }: UserOverviewCardProps) {
+    const [currentButtonType, setCurrentButtonType] = useState<string>(targetUser.status);
+
+    const userContext = useContext(UserContext);
+    const currentUser = userContext?.user;
 
     const handleFollowPress = async () => {
-        if (currentButtonType === 'follow' && currentUserId && targetUserId) {
-            setCurrentButtonType('pending');
+
+        if (currentButtonType === 'follow' && targetUser.user && currentUser) {
+            setCurrentButtonType('requested');
             
             try {
-                await insertFollow(currentUserId, targetUserId);
-                if (onFollowPress) {
-                    onFollowPress();
-                }
+                await insertFollow(currentUser, targetUser.user);
+
             } catch (error) {
                 setCurrentButtonType('follow');
                 console.error('Failed to follow user:', error);
             }
-        } else if (onFollowPress) {
-            onFollowPress();
         }
     };
 
     const renderButton = () => {
-        if (currentButtonType === 'none') return null;
-
-        const isFollowing = currentButtonType === 'following';
-        const isPending = currentButtonType === 'pending';
-        
-        return (
-            <TouchableOpacity
-                style={[
-                    styles.followButton,
-                    isFollowing ? styles.followingButton : 
-                    isPending ? styles.pendingButton : styles.followButtonDefault
-                ]}
-                onPress={handleFollowPress}
-                disabled={isPending}
-            >
-                <Text style={[
-                    styles.followButtonText,
-                    isFollowing ? styles.followingButtonText : 
-                    isPending ? styles.pendingButtonText : styles.followButtonTextDefault
-                ]}>
-                    {isFollowing ? 'Following' : isPending ? 'Pending' : 'Follow'}
-                </Text>
-            </TouchableOpacity>
-        );
+        console.log(currentButtonType)
+        if (currentButtonType == 'follow') {
+            return (
+                <TouchableOpacity
+                    style={[
+                        styles.followButton, styles.followButtonDefault
+                    ]}
+                    onPress={handleFollowPress}>
+                    <Text style={[
+                        styles.followButtonText, styles.followButtonTextDefault
+                    ]}>
+                        Follow
+                    </Text>
+                </TouchableOpacity>);
+        } else if (currentButtonType == 'requested') {
+            return (
+                <TouchableOpacity
+                    style={[
+                        styles.followButton, styles.pendingButton
+                    ]}
+                    onPress={handleFollowPress}
+                >
+                    <Text style={[
+                        styles.followButtonText, styles.pendingButtonText
+                    ]}>
+                        Requested
+                    </Text>
+                </TouchableOpacity>);
+        } else {
+            return (
+                <TouchableOpacity
+                    style={[
+                        styles.followButton, styles.followingButton,
+                    ]}
+                    onPress={handleFollowPress}
+                    disabled={true}
+                >
+                    <Text style={[
+                        styles.followButtonText, styles.pendingButtonText
+                    ]}>
+                        Following
+                    </Text>
+                </TouchableOpacity>);
+        }
     };
+
 
     const CardContent = () => (
         <View style={styles.userCard}>
             <View style={styles.profileSection}>
                 <View style={styles.profilePicture}>
-                    <UserIcon height={24} width={24} color="#666" />
+                    {targetUser.user.imageURI ? (
+                        <Image
+                            source={{ uri: targetUser.user.imageURI }}
+                            style={styles.profileImage}
+                        />
+                    ) : (
+                        <UserIcon height={24} width={24} color="#666" />
+                    )}
                 </View>
                 <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>{name}</Text>
-                    <Text style={styles.secondaryText}>{secondaryText}</Text>
+                    <Text style={styles.profileName}>{targetUser.user.firstName}</Text>
+                    <Text style={styles.secondaryText}>{targetUser.user.username}</Text>
                 </View>
             </View>
             {renderButton()}
         </View>
     );
 
-    if (onPress && buttonType === 'none') {
-        return (
-            <TouchableOpacity onPress={onPress}>
-                <CardContent />
-            </TouchableOpacity>
-        );
-    }
+    // if (onPress && buttonType === 'none') {
+    //     return (
+    //         <TouchableOpacity onPress={onPress}>
+    //             <CardContent />
+    //         </TouchableOpacity>
+    //     );
+    // }
 
     return <CardContent />;
 };
@@ -118,6 +133,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 16,
+        overflow: 'hidden',
+    },
+    profileImage: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
     },
     profileInfo: {
         flex: 1,

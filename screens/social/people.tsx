@@ -46,16 +46,6 @@ const People = ({ navigation, route }: any) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            {/* <View style={styles.header}>
-                <TouchableOpacity
-                    style={styles.backButton}
-                    onPress={() => navigation.goBack()}
-                >
-                    <ArrowLeft height={24} width={24} color="#333" />
-                </TouchableOpacity>
-                <Text style={styles.title}>PEOPLE</Text>
-            </View> */}
-
             <Header title='PEOPLE' leftIcons={
                 <TouchableOpacity
                     style={styles.backButton}

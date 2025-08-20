@@ -4,9 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeft } from 'react-native-feather';
 import SearchBar from '../../components/searchBar';
 import { searchUsersByUsername } from '../../api/users';
-import { User, UserSearchResult } from '../../types/types';
+import { UserSearchResult } from '../../types/types';
 import UserOverviewCard from '../../components/userOverviewCard';
 import { UserContext } from '../../context/userContext';
+import Header from '../../components/header';
 
 export default function SearchUser({ navigation }: any) {
     const [searchText, setSearchText] = useState('');
@@ -32,7 +33,7 @@ export default function SearchUser({ navigation }: any) {
         if (text.length > 0) {
             setLoading(true);
             try {
-                const results = await searchUsersByUsername(text, currentUser?.id!);
+                const results = await searchUsersByUsername(text, currentUser);
                 setSearchResults(results || []);
             } catch (error) {
                 console.error('Search error:', error);
@@ -54,12 +55,18 @@ export default function SearchUser({ navigation }: any) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <ArrowLeft height={24} width={24} color="#333" />
                 </TouchableOpacity>
-                <Text style={styles.title}>FOLLOW</Text>
-            </View>
+                <Text style={styles.title}>SEARCH</Text>
+            </View> */}
+
+            <Header title='SEARCH'  leftIcons={
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <ArrowLeft height={24} width={24} color="#333" />
+                </TouchableOpacity>
+            }/>
 
             <View style={styles.content}>
                 <View style={{ marginBottom: 20, marginTop:10 }}>
@@ -79,13 +86,8 @@ export default function SearchUser({ navigation }: any) {
                         <View>
                             {searchResults.map((res: UserSearchResult, index: number) => (
                                 <UserOverviewCard 
-                                    key={res.user.id || index} 
-                                    name={`${res.user.firstName} ${res.user.lastName}`.trim() || res.user.username} 
-                                    secondaryText={`@${res.user.username}`}
-                                    buttonType={res.status}
-                                    currentUserId={currentUser?.id}
-                                    targetUserId={res.user.id}
-                                    onPress={() => {}}
+                                    key={res.user.id || index}    
+                                    targetUser={res}                                 
                                 />
                             ))}
                         </View>
