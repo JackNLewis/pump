@@ -1,16 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { X, Settings, LogOut } from 'react-native-feather'
 import { colors } from '../../styles/colors';
 import { typography } from '../../styles/typography'
 import { auth } from "../../FireBase";
 import FollowRequestCard from '../../components/FollowRequestCard';
+import { UserContext } from '../../context/userContext';
+import { getFollowsByFolloweeId, updateFollowStatus } from '../../api/follows';
+import { Follow } from '../../types/types';
 
 interface NotificationsDrawerProps {
     onClose: () => void;
 }
 
 function NotificationsDrawer({ onClose }: NotificationsDrawerProps) {
+    const userContext = useContext(UserContext);
+    const [followRequests, setFollowRequests] = useState<Follow[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    const loadFollowRequests = async () => {
+        if (userContext?.user) {
+            try {
+                setLoading(true);
+                const requests = await getFollowsByFolloweeId(userContext.user);
+                setFollowRequests(requests);
+            } catch (error) {
+                console.error('Error loading follow requests:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
+
+    const handleAcceptRequest = async (request: Follow) => {
+        try {
+            if (!request && userContext && userContext.user){
+                return
+            }
+            
+            let followId = `${request.followerId}_${request.followeeId}`
+            await updateFollowStatus(followId, 'accepted');
+            // Reload the follow requests to reflect the change
+            await loadFollowRequests();
+        } catch (error) {
+            console.error('Error accepting follow request:', error);
+        }
+    };
+
+    const handleDeclineRequest = async (request: Follow) => {
+        try {
+           if (!request && userContext && userContext.user){
+                return
+            }
+            
+            let followId = `${request.followerId}_${request.followeeId}`
+            await updateFollowStatus(followId, 'rejected');
+            // Reload the follow requests to reflect the change
+            await loadFollowRequests();
+        } catch (error) {
+            console.error('Error declining follow request:', error);
+        }
+    };
+
+    useEffect(() => {
+        loadFollowRequests();
+    }, [userContext?.user]);
+
     return (
         <View style={styles.container}>
             {/* Header Section */}
@@ -27,21 +82,21 @@ function NotificationsDrawer({ onClose }: NotificationsDrawerProps) {
 
             {/* Content Area */}
             <View style={styles.content}>
-                <FollowRequestCard 
-                    name="Jack" 
-                    onAccept={() => console.log('Accepted Jack')}
-                    onDecline={() => console.log('Declined Jack')}
-                />
-                <FollowRequestCard 
-                    name="Julia" 
-                    onAccept={() => console.log('Accepted Julia')}
-                    onDecline={() => console.log('Declined Julia')}
-                />
-                <FollowRequestCard 
-                    name="Jemale" 
-                    onAccept={() => console.log('Accepted Jemale')}
-                    onDecline={() => console.log('Declined Jemale')}
-                />
+                {loading ? (
+                    <Text style={styles.contentText}>Loading follow requests...</Text>
+                ) : followRequests.length === 0 ? (
+                    <Text style={styles.contentText}>No follow requests</Text>
+                ) : (
+                    followRequests.map((request, index) => (
+                        <FollowRequestCard 
+                            key={index}
+                            name={request.follower_name}
+                            profilePic={request.follower_image_url}
+                            onAccept={() => handleAcceptRequest(request)}
+                            onDecline={() => handleDeclineRequest(request)}
+                        />
+                    ))
+                )}
             </View>
 
             {/* Bottom Section */}

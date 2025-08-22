@@ -30,7 +30,7 @@ export default function SearchUser({ navigation }: any) {
     };
 
     const handleSearch = async (text: string) => {
-        if (text.length > 0) {
+        if (text.length > 0 && currentUser) {
             setLoading(true);
             try {
                 const results = await searchUsersByUsername(text, currentUser);
@@ -55,12 +55,6 @@ export default function SearchUser({ navigation }: any) {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <ArrowLeft height={24} width={24} color="#333" />
-                </TouchableOpacity>
-                <Text style={styles.title}>SEARCH</Text>
-            </View> */}
 
             <Header title='SEARCH'  leftIcons={
                 <TouchableOpacity onPress={() => navigation.goBack()}>

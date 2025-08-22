@@ -32,7 +32,6 @@ export interface User {
 
 // follows collection
 export interface Follow{
-  id?: string,
   followerId: string,
   followeeId: string, 
   createdAt: Date,

@@ -30,13 +30,13 @@ const FollowRequestCard = ({ name, profilePic, onAccept, onDecline }: FollowRequ
                 {status == "" ?
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.declineButton} onPress={() => {
-                            onDecline;
+                            onDecline?.();
                             setStatus('Declined')
                         }}>
                             <Text style={styles.declineText}>Decline</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.acceptButton} onPress={() => {
-                            onAccept;
+                            onAccept?.();
                             setStatus('Accepted')
                         }}>
                             <Text style={styles.acceptText}>Accept</Text>
