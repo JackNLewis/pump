@@ -22,7 +22,8 @@ function AddWorkout() {
     useEffect(() => {
         if (!workout && user) {
             setWorkout({
-                user: user,
+                userID: user.id,
+                firstName: user.firstName,
                 exercises: [],
             });
         }
@@ -82,6 +83,7 @@ function AddWorkout() {
                             onAddExercise: addExerciseToWorkout
                         })
                         } />
+                    <View style={{paddingTop: 140}}></View>
                 </ScrollView>
             </View>
 

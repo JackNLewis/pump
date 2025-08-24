@@ -10,6 +10,8 @@ import { spacing } from '@/styles/spacing';
 import { typography } from '@/styles/typography';
 import { useWorkoutContext } from '@/context/workoutContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Share } from 'react-native-feather'
+import { postWorkout } from '@/api/workouts';
 
 const { width } = Dimensions.get('window');
 
@@ -18,6 +20,15 @@ export function PublishWorkout() {
     const navigation = useNavigation();
     const insets = useSafeAreaInsets();
     const { workout } = useWorkoutContext();
+
+    const handlePublish = async () => {
+        try {
+            await postWorkout(workout);
+            navigation.navigate('HomeTabs');
+        } catch (error) {
+            console.error('Failed to publish workout:', error);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -30,14 +41,14 @@ export function PublishWorkout() {
                         locations={[0.5, 1]}
                     />
                     <TouchableOpacity
-                        style={[styles.closeButton, {marginTop: insets.top}]}
+                        style={[styles.closeButton, { marginTop: insets.top }]}
                         onPress={() => navigation.goBack()}
                     >
                         <X height={24} width={24} color="#FFFFFF" />
                     </TouchableOpacity>
                     <View style={styles.overlay}>
-                        <Text style={styles.userName}>{`${workout?.user?.firstName || 'Unknown'} ${workout?.user?.lastName || 'User'}`}</Text>
-                        <Text style={styles.workoutTime}>{workout?.user?.lastOnline || 'Unknown time'}</Text>
+                        <Text style={styles.userName}>{`${workout?.firstName || 'Unknown'}`}</Text>
+                        <Text style={styles.workoutTime}>Created now</Text>
                         {/* <Text style={styles.gymName}>{workout?.user?.gym || 'Unknown gym'}</Text> */}
                     </View>
                 </View>
@@ -51,7 +62,15 @@ export function PublishWorkout() {
                         />
                     ))}
                 </View>
+                <View style={{ paddingTop: 140 }}></View>
             </ScrollView>
+            <TouchableOpacity
+                style={styles.floatingButtonPrimary}
+                onPress={handlePublish}
+            >
+                <Share stroke="#FFF" width={24} height={24} />
+            </TouchableOpacity>
+
         </View>
     );
 };
@@ -122,6 +141,25 @@ const styles = StyleSheet.create({
         paddingHorizontal: spacing.lg,
         paddingTop: spacing.lg,
         paddingBottom: spacing.lg,
+    },
+    floatingButtonPrimary: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: '#00CCA7',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
+        position: 'absolute',
+        bottom: 50,
+        right: 50,
+        elevation: 8,
     },
 });
 

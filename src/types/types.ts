@@ -12,7 +12,13 @@ export interface Exercise {
 }
 
 export interface Workout {
-    user: User,
+    userID?: string
+    firstName? : string
+    postTime? : string
+
+    createdAt?: number
+    date? : string
+
     workoutImage?: ImageSourcePropType,
     exercises: Exercise[];
 }
@@ -23,7 +29,7 @@ export interface User {
     lastName: string,
     username: string,
     imageURI?: string,
-    gym?: string,
+    // gym?: string,
     lastOnline?: string,
     follower_count?: number,
     following_count?: number,
