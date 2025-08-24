@@ -35,8 +35,8 @@ const PeopleTabNavigator = ({ initialTab }: { initialTab?: string }) => {
 
             }}
         >
-            <Tab.Screen name="Following" component={Following} />
             <Tab.Screen name="Followers" component={Followers} />
+            <Tab.Screen name="Following" component={Following} />
         </Tab.Navigator>
     );
 };

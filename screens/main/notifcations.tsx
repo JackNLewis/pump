@@ -4,7 +4,7 @@ import { X, Settings, LogOut } from 'react-native-feather'
 import { colors } from '../../styles/colors';
 import { typography } from '../../styles/typography'
 import { auth } from "../../FireBase";
-import FollowRequestCard from '../../components/FollowRequestCard';
+import FollowRequestCard from '../../components/followRequestCard';
 import { UserContext } from '../../context/userContext';
 import { getFollowsByFolloweeId, updateFollowStatus } from '../../api/follows';
 import { Follow } from '../../types/types';

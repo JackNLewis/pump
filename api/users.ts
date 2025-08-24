@@ -150,3 +150,44 @@ export const searchUsersByUsername = async (searchText: string, currentUser: Use
         throw error;
     }
 };
+
+export const getFollowers = async (userId: string): Promise<Follow[]> => {
+    try {
+        if (!userId) {
+            return [];
+        }
+        console.log('fetching followeeId of ' + userId);
+        const followsRef = collection(db, 'follows');
+        const followQuery = query(
+            followsRef,
+            where('followeeId', '==', userId),
+            where('status', '==', 'accepted')
+        );
+
+        const followsSnapshot = await getDocs(followQuery);
+        
+        if (followsSnapshot.empty) {
+            return [];
+        }
+
+        const followers: Follow[] = [];
+        followsSnapshot.forEach((doc) => {
+            const followData = doc.data();
+            followers.push({
+                followerId: followData?.followerId || '',
+                followeeId: followData?.followeeId || '',
+                createdAt: followData?.createdAt || new Date(),
+                status: followData?.status || 'following',
+                follower_name: followData?.follower_name || '',
+                follower_image_url: followData?.follower_image_url || '',
+                followee_name: followData?.followee_name || '',
+                followee_image_url: followData?.followee_image_url || ''
+            } as Follow);
+        });
+
+        return followers;
+    } catch (error) {
+        console.error('Error fetching followers:', error);
+        throw error;
+    }
+};

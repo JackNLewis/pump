@@ -2,33 +2,41 @@ import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { User as UserIcon } from 'react-native-feather';
 import { insertFollow } from '../api/follows';
-import { UserSearchResult } from '../types/types';
+import { Follow, UserSearchResult } from '../types/types';
 import { UserContext } from '../context/userContext';
 
 interface UserOverviewCardProps {
-    targetUser: UserSearchResult;
+    follow: Follow;
 }
 
-function UserOverviewCard({ targetUser }: UserOverviewCardProps) {
-    const [currentButtonType, setCurrentButtonType] = useState<string>(targetUser.status);
+function UserOverviewCard({ follow }: UserOverviewCardProps) {
+    const [currentButtonType, setCurrentButtonType] = useState<string>(follow?.status);
 
     const userContext = useContext(UserContext);
     const currentUser = userContext?.user;
 
-    const handleFollowPress = async () => {
+    // const handleFollowPress = async () => {
 
-        if (currentButtonType === 'follow' && targetUser.user && currentUser) {
-            setCurrentButtonType('requested');
+    //     if (currentButtonType === 'follow' && follow && currentUser) {
+    //         setCurrentButtonType('requested');
             
-            try {
-                await insertFollow(currentUser, targetUser.user);
+    //         try {
+    //             // Create a user object from the follow data for the insertFollow function
+    //             const targetUser = {
+    //                 id: follow.followerId,
+    //                 firstName: '',
+    //                 lastName: '',
+    //                 username: '',
+    //                 imageURI: follow.follower_image_url
+    //             };
+    //             await insertFollow(currentUser, targetUser);
 
-            } catch (error) {
-                setCurrentButtonType('follow');
-                console.error('Failed to follow user:', error);
-            }
-        }
-    };
+    //         } catch (error) {
+    //             setCurrentButtonType('follow');
+    //             console.error('Failed to follow user:', error);
+    //         }
+    //     }
+    // };
 
     const renderButton = () => {
         console.log(currentButtonType)
@@ -38,7 +46,7 @@ function UserOverviewCard({ targetUser }: UserOverviewCardProps) {
                     style={[
                         styles.followButton, styles.followButtonDefault
                     ]}
-                    onPress={handleFollowPress}>
+                    onPress={() => {}}>
                     <Text style={[
                         styles.followButtonText, styles.followButtonTextDefault
                     ]}>
@@ -51,7 +59,7 @@ function UserOverviewCard({ targetUser }: UserOverviewCardProps) {
                     style={[
                         styles.followButton, styles.pendingButton
                     ]}
-                    onPress={handleFollowPress}
+                    onPress={() => {}}
                 >
                     <Text style={[
                         styles.followButtonText, styles.pendingButtonText
@@ -65,11 +73,11 @@ function UserOverviewCard({ targetUser }: UserOverviewCardProps) {
                     style={[
                         styles.followButton, styles.followingButton,
                     ]}
-                    onPress={handleFollowPress}
+                    onPress={() => {}}
                     disabled={true}
                 >
                     <Text style={[
-                        styles.followButtonText, styles.pendingButtonText
+                        styles.followButtonText, styles.followingButtonText
                     ]}>
                         Following
                     </Text>
@@ -82,9 +90,9 @@ function UserOverviewCard({ targetUser }: UserOverviewCardProps) {
         <View style={styles.userCard}>
             <View style={styles.profileSection}>
                 <View style={styles.profilePicture}>
-                    {targetUser.user.imageURI ? (
+                    {follow.follower_image_url ? (
                         <Image
-                            source={{ uri: targetUser.user.imageURI }}
+                            source={{ uri: follow.follower_image_url  }}
                             style={styles.profileImage}
                         />
                     ) : (
@@ -92,8 +100,8 @@ function UserOverviewCard({ targetUser }: UserOverviewCardProps) {
                     )}
                 </View>
                 <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>{targetUser.user.firstName}</Text>
-                    <Text style={styles.secondaryText}>{targetUser.user.username}</Text>
+                    <Text style={styles.profileName}>{follow.follower_name}</Text>
+                    <Text style={styles.secondaryText}>hardcodedusername</Text>
                 </View>
             </View>
             {renderButton()}

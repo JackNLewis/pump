@@ -16,7 +16,7 @@ export default function Following(){
             <View style={{ marginHorizontal: 20, marginTop: 16, marginBottom: 20 }}>
                 <SearchBar value={searchText} onChangeText={setSearchText} />
             </View>
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+            {/* <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 {followingData.map((person) => (
                     <UserOverviewCard
                         key={person.id}
@@ -26,7 +26,7 @@ export default function Following(){
                         onFollowPress={() => { }}
                     />
                 ))}
-            </ScrollView>
+            </ScrollView> */}
         </View>
     );
 };
