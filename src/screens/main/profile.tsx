@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { UserPlus, AlignRight } from 'react-native-feather';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { User } from '@/types/types';
 import Header from '@/components/header';
@@ -21,6 +22,7 @@ const Profile = ({ setOpen }: ProfileProps) => {
     const navigation = useNavigation<any>();
     const { user } = useContext(UserContext) as UserContextType;
     const insets = useSafeAreaInsets();
+    const [notification, setNotifications] = useState<number>(0);
 
     return (
         <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -31,10 +33,13 @@ const Profile = ({ setOpen }: ProfileProps) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton} onPress={() => setOpen(true)}>
                         <AlignRight stroke="#666" width={24} height={24} />
-                        <View style={styles.notificationNumberContainer}>
-
-                            <Text style={styles.notificationNumber}>99</Text>
-                        </View>
+                        
+                        {
+                            notification > 0 &&
+                            <View style={styles.notificationNumberContainer}>
+                                <Text style={styles.notificationNumber}></Text>
+                            </View>
+                        }
                     </TouchableOpacity>
                 </>
             } />
@@ -54,15 +59,15 @@ const Profile = ({ setOpen }: ProfileProps) => {
                 </View>
 
                 <View style={styles.statsContainer}>
-                    <ProfileStat label="Workouts" value="360" />
+                    <ProfileStat label="Workouts" value="0" />
                     <ProfileStat
                         label="Followers"
-                        value="24"
+                        value="0"
                         onPress={() => navigation.navigate('People', { initialTab: 'Followers' })}
                     />
                     <ProfileStat
                         label="Following"
-                        value="32"
+                        value="0"
                         onPress={() => navigation.navigate('People', { initialTab: 'Following' })}
                     />
                 </View>

@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { ChevronRight } from 'react-native-feather';
+import { Workout } from '@/types/types';
 
 const SharedWorkouts = () => {
-  const workoutData = [
-    { id: 1, image: require('../assets/workout1.jpg') },
-    { id: 2, image: require('../assets/workout1.jpg') },
-    { id: 3, image: require('../assets/workout1.jpg') },
-    { id: 4, image: require('../assets/workout1.jpg') },
-  ];
+//   const workoutData = [
+//     { id: 1, image: require('../assets/workout1.jpg') },
+//     { id: 2, image: require('../assets/workout1.jpg') },
+//     { id: 3, image: require('../assets/workout1.jpg') },
+//     { id: 4, image: require('../assets/workout1.jpg') },
+//   ];
+  const workoutData : Workout[] = [];
 
   return (
     <View style={styles.container}>
@@ -19,16 +21,23 @@ const SharedWorkouts = () => {
         </TouchableOpacity>
       </View>
       <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {workoutData.map((workout) => (
+        {
+        workoutData.length > 0 ?
+        workoutData.map((workout) => (
           <TouchableOpacity key={workout.id} style={styles.workoutItem}>
             <Image source={workout.image} style={styles.workoutImage} />
           </TouchableOpacity>
-        ))}
+        )) : 
+        <View style={styles.noWorkoutsContainer}>
+            <Text style={styles.noWorkoutsText}>No workouts available</Text>
+            
+        </View>
+        
+        }
       </ScrollView>
     </View>
   );
@@ -74,6 +83,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  noWorkoutsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  noWorkoutsText: {
+    flex: 1,
+    textAlign: 'center',
+    color: '#666',
   },
 });
 

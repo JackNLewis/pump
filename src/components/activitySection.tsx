@@ -10,7 +10,7 @@ const ActivitySection = () => {
     const daysInMonth = 30;
     
     for (let i = 0; i < daysInMonth; i++) {
-      const hasWorkout = Math.random() > 0.7;
+      const hasWorkout = false;
       days.push(hasWorkout);
     }
     return days;
