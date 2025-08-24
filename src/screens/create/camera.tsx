@@ -3,14 +3,14 @@ import { useState, useRef } from 'react';
 import { X, RotateCw } from 'react-native-feather';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useWorkoutContext } from '@/context/workoutContext';
 
 export default function Camera({ route }: { route: any }) {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
     const navigation = useNavigation<any>();
     const cameraRef = useRef<CameraView>(null);
-    
-    const { onSubmitWorkout } = route.params || {};
+    const { workout, setWorkout } = useWorkoutContext();
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -32,11 +32,16 @@ export default function Camera({ route }: { route: any }) {
     }
 
     async function handleCapture() {
-        if (cameraRef.current && onSubmitWorkout) {
+        if (cameraRef.current && workout) {
             try {
                 const photo = await cameraRef.current.takePictureAsync();
                 if (photo) {
-                    onSubmitWorkout({ uri: photo.uri });
+                    const updatedWorkout = {
+                        ...workout,
+                        workoutImage: { uri: photo.uri }
+                    };
+                    setWorkout(updatedWorkout);
+                    navigation.pop();
                 }
             } catch (error) {
                 console.error('Error taking picture:', error);

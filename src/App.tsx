@@ -19,6 +19,8 @@ import AddWorkout from './screens/create/addWorkout';
 import ViewWorkout from './screens/viewWorkout';
 import RegisterImage from './screens/auth/registerImage';
 import { UserContextProvider, UserContext, UserContextType } from './context/userContext';
+import {WorkoutContextProvider} from "@/context/workoutContext"
+import  PublishWorkout  from './screens/create/publishWorkout';
 
 const Stack = createStackNavigator();
 
@@ -127,10 +129,11 @@ function AppContent() {
                                     <Stack.Screen name="SearchUser" component={SearchUser} />
 
                                     {/* Create Screens */}
-                                    <Stack.Screen name="Create" component={AddWorkout} />
+                                    <Stack.Screen name="Create" component={AddWorkout} options={{gestureEnabled: false}}/>
                                     <Stack.Screen name="SearchExercise" component={SearchExercise} />
                                     <Stack.Screen name="AddExercise" component={AddExercise} />
                                     <Stack.Screen name="Camera" component={Camera} />
+                                    <Stack.Screen name="PublishWorkout" component={PublishWorkout} />
 
                                     {/* Common Screens */}
                                     <Stack.Screen name="ViewWorkout" component={ViewWorkout} />
@@ -162,7 +165,9 @@ function AppContent() {
 export default function App() {
     return (
         <UserContextProvider>
-            <AppContent />
+            <WorkoutContextProvider>
+                <AppContent />
+            </WorkoutContextProvider>
         </UserContextProvider>
     );
 }

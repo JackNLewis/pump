@@ -1,53 +1,60 @@
-import { StyleSheet, Text, View, Modal, Button, TouchableOpacity, ScrollView } from 'react-native';
-import { X, Camera, ArrowLeft } from "react-native-feather";
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
+import { X, Camera, Share, RotateCw } from "react-native-feather";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AddExerciseButton from '@/components/addExerciseButton';
 import Exercise from '@/components/exercise';
 import { useNavigation } from '@react-navigation/native';
-import { useState, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useEffect } from 'react';
 import Header from '@/components/header';
 import { Workout as WorkoutType, User as UserType, Exercise as ExerciseType } from '@/types/types';
 import { ImageSourcePropType } from "react-native";
+import { useWorkoutContext } from '@/context/workoutContext';
+import { useUserContext } from '@/context/userContext';
+import { colors } from '@/styles/colors';
 
 
 function AddWorkout() {
     const navigation = useNavigation<any>();
-
-    const [workout, setWorkout] = useState<WorkoutType>({ 
-        user : {
-            firstName: "",
-            lastName: "",
-            username: "",
-            imageURI: "",
-            lastOnline: "",
-            gym: "",
-        },
-        exercises: [],
-     });
+    const { workout, setWorkout } = useWorkoutContext();
+    const { user } = useUserContext();
     const scrollViewRef = useRef<ScrollView>(null);
 
+    useEffect(() => {
+        if (!workout && user) {
+            setWorkout({
+                user: user,
+                exercises: [],
+            });
+        }
+        console.log(workout?.workoutImage);
+    }, [workout, setWorkout, user]);
+
     const addExerciseToWorkout = (exercise: ExerciseType) => {
-        setWorkout(prevWorkout => ({
-            ...prevWorkout,
-            exercises: [...prevWorkout.exercises, exercise]
-        }));
+        if (workout) {
+            setWorkout({
+                ...workout,
+                exercises: [...workout.exercises, exercise]
+            });
+        }
     };
 
     const submitWorkout = (image: ImageSourcePropType) => {
-        setWorkout(prevWorkout => ({
-            ...prevWorkout,
-            workoutImage: image,
-        }));
-
-        navigation.navigate('ViewWorkout', { workout: { ...workout, workoutImage: image } });
+        if (workout) {
+            const updatedWorkout = {
+                ...workout,
+                workoutImage: image,
+            };
+            setWorkout(updatedWorkout);
+            navigation.navigate('PublishWorkout', { workout: updatedWorkout });
+        }
     };
 
-    
+
     useLayoutEffect(() => {
-        if (workout.exercises.length > 0 && scrollViewRef.current) {
+        if (workout?.exercises.length && workout.exercises.length > 0 && scrollViewRef.current) {
             scrollViewRef.current.scrollToEnd({ animated: true });
         }
-    }, [workout.exercises.length]);
+    }, [workout?.exercises.length]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -55,15 +62,15 @@ function AddWorkout() {
                 <TouchableOpacity onPress={() => navigation.pop()}>
                     <X stroke="#000" width={24} height={24} />
                 </TouchableOpacity>
-            }/>
+            } />
             <View style={styles.contentContainer}>
                 <ScrollView
                     ref={scrollViewRef}
                     style={styles.exercisesList}
                     showsVerticalScrollIndicator={false}
                 >
-                    {workout.exercises.map((exercise, index) => (
-                         <Exercise
+                    {workout?.exercises.map((exercise, index) => (
+                        <Exercise
                             key={index}
                             name={exercise.name}
                             sets={exercise.sets}
@@ -74,20 +81,43 @@ function AddWorkout() {
                         onPress={() => navigation.navigate('SearchExercise', {
                             onAddExercise: addExerciseToWorkout
                         })
-                    }/>
+                        } />
                 </ScrollView>
             </View>
-            
-            {/* Floating Camera Button */}
-            <TouchableOpacity 
-                style={styles.floatingCameraButton}
-                onPress={() => navigation.navigate('Camera', { 
-                    onSubmitWorkout: submitWorkout,
-                    workout: workout 
-                })}
-            >
-                <Camera stroke="#FFF" width={24} height={24} />
-            </TouchableOpacity>
+
+            {
+                workout?.workoutImage ?
+                 <View style={styles.floatingButtonContainer}>
+
+                        <TouchableOpacity
+                            style={styles.floatingButtonSecondary}
+                            onPress={() => navigation.navigate('Camera')}
+                        >
+                            <RotateCw stroke="#FFF" width={20} height={20} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.floatingButtonPrimary}
+                            onPress={() => navigation.navigate('PublishWorkout')}
+                        >
+                            <Share stroke="#FFF" width={24} height={24} />
+                        </TouchableOpacity>
+
+                    </View>:
+                
+                    // Floating Camera Button
+                    <TouchableOpacity
+                        style={[styles.floatingButtonPrimary, styles.floatingButtonPosition]}
+                        onPress={() => navigation.navigate('Camera', {
+                            onSubmitWorkout: submitWorkout,
+                            workout: workout
+                        })}
+                    >
+                        <Camera stroke="#FFF" width={24} height={24} />
+                    </TouchableOpacity>
+            }
+
+
         </SafeAreaView>
     );
 }
@@ -109,17 +139,45 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
     },
-    floatingCameraButton: {
+    floatingButtonPosition: {
         position: 'absolute',
         bottom: 50,
         right: 50,
+        elevation: 8,
+        flexDirection: 'row',
+        gap: 10,
+    },
+    floatingButtonContainer: {
+        position: 'absolute',
+        bottom: 60,
+        right: 50,
+        elevation: 8,
+        flexDirection: 'row',
+        gap: 15,
+        alignItems: 'flex-end'
+    },
+    floatingButtonPrimary: {
         width: 70,
         height: 70,
         borderRadius: 35,
         backgroundColor: '#00CCA7',
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
+    },
+    floatingButtonSecondary: {
+        width: 60,
+        height: 60,
+        borderRadius: 35,
+        backgroundColor: colors.grey[500],
+        justifyContent: 'center',
+        alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -136,6 +194,15 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 20,
     },
+    publishButtonsContainer: {
+        flex: 1,
+    },
+    floatingRetakeButton: {
+
+    },
+    floatingPublishButton: {
+
+    }
 });
 
 export default AddWorkout;
