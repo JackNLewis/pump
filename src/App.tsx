@@ -2,8 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useState, useEffect, useContext } from 'react';
-import { onAuthStateChanged } from '@firebase/auth';
-import { onSnapshot, doc } from '@firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { onSnapshot, doc } from 'firebase/firestore';
 import { auth, db } from './FireBase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import People from './screens/social/people';
@@ -45,7 +45,7 @@ function AppContent() {
                         lastName: userData?.lastName || '',
                         username: userData?.username || '',
                         imageURI: userData?.imageURI || '',
-                        gym: userData?.gym,
+                        // gym: userData?.gym,
                         lastOnline: userData?.lastOnline
                     });
                 } else {

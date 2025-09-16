@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from '@firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/FireBase';
 
 function Login() {

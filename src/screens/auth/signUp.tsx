@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
-import { doc, setDoc, Timestamp } from '@firebase/firestore';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { auth, db } from '@/FireBase';
-import { serverTimestamp } from "@firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
 
 function SignUp() {
     const navigation = useNavigation<any>();

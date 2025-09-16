@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { signOut } from '@firebase/auth';
+import { signOut } from 'firebase/auth';
 import { colors } from '@/styles/colors';
 import { typography } from '@/styles/typography';
 import { spacing } from '@/styles/spacing';
