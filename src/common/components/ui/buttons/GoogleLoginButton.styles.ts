@@ -15,16 +15,4 @@ export const styles =  StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
     },
-    appleButton: {
-        backgroundColor: '#000',
-        borderRadius: 8,
-        padding: 15,
-        alignItems: 'center',
-        marginBottom: 30,
-    },
-    appleButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: '500',
-    },
 })

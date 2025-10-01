@@ -1,8 +1,9 @@
 import { Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './Login.styes';
-import Divider from './components/Divider';
-import ExternalLoginButton from './components/ExternalLoginButton';
+import Divider from '../../common/components/layout/Divider';
+import GoogleLoginButton from 'common/components/ui/buttons/GoogleLoginButton';
+import AppleLoginButton from 'common/components/ui/buttons/AppleLoginButton';
 import useLoginForm from './hooks/useLoginForm';
 import PrimaryButton from './components/PrimaryButton';
 
@@ -45,8 +46,8 @@ function Login() {
 
                 <Divider />
 
-                <ExternalLoginButton variant='google' />
-                <ExternalLoginButton variant='apple' />
+                <GoogleLoginButton />
+                <AppleLoginButton />
 
                 <View style={styles.signupContainer}>
                     <Text style={styles.signupText}>Don't have an account, </Text>
@@ -54,6 +55,7 @@ function Login() {
                         <Text style={styles.signupLink}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
+                
             </View>
         </TouchableWithoutFeedback>
     );
