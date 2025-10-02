@@ -1,15 +1,18 @@
 import { StyleSheet } from 'react-native';
+import { colors } from 'common/styles/colors';
+import { spacing } from 'common/styles/spacing';
+import { typography } from 'common/styles/typography';
+import { sizing } from 'common/styles/sizes';
 
 export const styles = StyleSheet.create({
     input: {
-        width: '100%',
-        height: 50,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 8,
-        paddingHorizontal: 15,
-        marginBottom: 15,
-        fontSize: 16,
-        backgroundColor: '#fff',
+        height: sizing.height.input,
+        borderWidth: sizing.borderWidth.thin,
+        borderColor: colors.grey[300],
+        borderRadius: sizing.borderRadius.md,
+        paddingHorizontal: spacing.md,
+        marginBottom: spacing.md,
+        fontSize: typography.fontSize.md,
+        backgroundColor: colors.white,
     },
 });

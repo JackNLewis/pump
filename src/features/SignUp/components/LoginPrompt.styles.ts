@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import { colors } from 'common/styles/colors';
+import { typography } from 'common/styles/typography';
 
 export const styles = StyleSheet.create({
    signupContainer: {
@@ -7,12 +9,12 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     signupText: {
-        color: '#666',
-        fontSize: 14,
+        color: colors.grey[600],
+        fontSize: typography.fontSize.sm,
     },
     signupLink: {
-        color: '#00CCA7',
-        fontSize: 14,
-        fontWeight: '500',
+        color: colors.primary[500],
+        fontSize: typography.fontSize.sm,
+        fontWeight: typography.fontWeight.medium,
     }
 })

@@ -1,33 +1,36 @@
 import { StyleSheet } from 'react-native';
+import { colors } from 'common/styles/colors';
+import { spacing } from 'common/styles/spacing';
+import { typography } from 'common/styles/typography';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-        backgroundColor: '#FFFFFF',
+        padding: spacing.lg,
+        backgroundColor: colors.white,
         justifyContent: 'center',
     },
     title: {
         fontSize: 48,
-        fontWeight: 'bold',
-        color: '#00CCA7',
+        fontWeight: typography.fontWeight.bold,
+        color: colors.primary[500],
         textAlign: 'center',
         marginBottom: 10,
     },
     subtitle: {
-        fontSize: 16,
-        color: '#666',
+        fontSize: typography.fontSize.md,
+        color: colors.grey[600],
         textAlign: 'center',
-        marginBottom: 40,
+        marginBottom: spacing.xxl,
     },
     input: {
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         borderRadius: 8,
-        padding: 15,
-        marginBottom: 15,
-        fontSize: 16,
+        padding: spacing.md,
+        marginBottom: spacing.md,
+        fontSize: typography.fontSize.md,
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: colors.grey[300],
     },
     signupContainer: {
         flexDirection: 'row',
@@ -35,12 +38,12 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     signupText: {
-        color: '#666',
-        fontSize: 14,
+        color: colors.grey[600],
+        fontSize: typography.fontSize.sm,
     },
     signupLink: {
-        color: '#00CCA7',
-        fontSize: 14,
-        fontWeight: '500',
+        color: colors.primary[500],
+        fontSize: typography.fontSize.sm,
+        fontWeight: typography.fontWeight.medium,
     }
 });

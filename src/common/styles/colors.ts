@@ -1,0 +1,36 @@
+export const colors = {
+  primary: {
+    50: '#E6FFF9',
+    100: '#B3FFE6',
+    200: '#80FFD4',
+    300: '#4DFFC1',
+    400: '#1AFFAF',
+    500: '#00CCA7', // Main primary color
+    600: '#00B395',
+    700: '#009A83',
+    800: '#008171',
+    900: '#00685F',
+  },
+  grey: {
+    50: '#FAFAFA',
+    100: '#F5F5F5',
+    200: '#F0F0F0',
+    300: '#E6E6E6',
+    400: '#CCCCCC',
+    500: '#999999',
+    600: '#666666',
+    700: '#4E4E4E',
+    800: '#333333',
+    900: '#1A1A1A',
+  },
+  white: '#FFFFFF',
+  black: '#000000',
+  success: '#00D4AA',
+  error: '#FF6B6B',
+  warning: '#FFB800',
+  info: '#0066CC',
+} as const;
+
+export type Colors = typeof colors;
+export type Primary = typeof colors.primary;
+export type Grey = typeof colors.grey;

@@ -1,17 +1,23 @@
 import { StyleSheet } from 'react-native';
+import { colors } from 'common/styles/colors';
+import { spacing } from 'common/styles/spacing';
+import { typography } from 'common/styles/typography';
+import { sizing } from 'common/styles/sizes';
 
 export const styles = StyleSheet.create({
     googleButton: {
-        backgroundColor: 'white',
-        borderRadius: 8,
-        padding: 15,
+        height: sizing.height.buttonLg,
+        backgroundColor: colors.white,
+        borderRadius: sizing.borderRadius.md,
+        padding: spacing.md,
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd',
+        justifyContent: 'center',
+        borderWidth: sizing.borderWidth.thin,
+        borderColor: colors.grey[300],
     },
     googleButtonText: {
-        color: '#333',
-        fontSize: 16,
-        fontWeight: '500',
+        color: colors.grey[800],
+        fontSize: typography.fontSize.md,
+        fontWeight: typography.fontWeight.medium,
     },
 })

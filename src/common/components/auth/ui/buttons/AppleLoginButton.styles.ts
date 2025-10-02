@@ -1,15 +1,21 @@
 import { StyleSheet } from 'react-native';
+import { colors } from 'common/styles/colors';
+import { spacing } from 'common/styles/spacing';
+import { typography } from 'common/styles/typography';
+import { sizing } from 'common/styles/sizes';
 
 export const styles =  StyleSheet.create({
     appleButton: {
-        backgroundColor: '#000',
-        borderRadius: 8,
-        padding: 15,
+        height: sizing.height.buttonLg,
+        backgroundColor: colors.black,
+        borderRadius: sizing.borderRadius.md,
+        padding: spacing.md,
         alignItems: 'center',
+        justifyContent: 'center',
     },
     appleButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: '500',
+        color: colors.white,
+        fontSize: typography.fontSize.md,
+        fontWeight: typography.fontWeight.medium,
     },
 })

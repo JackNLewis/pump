@@ -34,7 +34,6 @@ function Login() {
                 <AppleLoginButton style={{ marginBottom: 16 }} />
 
                 <SignUpPrompt />
-
             </View>
         </TouchableWithoutFeedback>
     );
