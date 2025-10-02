@@ -12,7 +12,7 @@ const DummyComponent = () => <View><Text>Hello world</Text></View>
 
 function RootNav() {
 
-    const { isAuthenticated, isRegistered, isLoading} = useUserContext();
+    const { isAuthenticated, isRegistered, isLoading } = useUserContext();
 
     // Show loading screen while checking authentication
     if (isLoading) {
@@ -32,20 +32,20 @@ function RootNav() {
             return (
                 <Stack.Group>
                     {/* <Stack.Screen name='Dummy' component={DummyComponent} /> */}
-                   <Stack.Screen name="Login" component={Login} /> 
-                    <Stack.Screen name="SignUp" component={SignUp} /> 
+                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="SignUp" component={SignUp} />
                 </Stack.Group>
             )
         }
 
         // User is authenticated but hasn't completed registration
         if (!isRegistered) {
-              console.log('not registered')
+            console.log('not registered')
             return (
                 // Authenticated but not registered - Registration Pages
                 <Stack.Group>
-                     <Stack.Screen name="Login" component={Login} /> 
-                    
+                    <Stack.Screen name="Login" component={Login} />
+
                     {/* <Stack.Screen name="RegisterDetails" component={RegisterDetails} />
             <Stack.Screen name="RegisterImage">
                 {(props) => <RegisterImage {...props} setProfile={setUser} />}
@@ -55,7 +55,7 @@ function RootNav() {
             )
         }
 
-            console.log('main screens')
+        console.log('main screens')
         // User is authenticated and has completed registration
         return (
             <Stack.Group>

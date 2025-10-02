@@ -6,18 +6,18 @@ import { auth, db } from 'FireBase';
 
 export const useSignUp = () => {
     const [email, setEmail] = useState<string>('');
-    const [password1, setPassword1] = useState<string>('');
-    const [password2, setPassword2] = useState<string>('');
+    const [newPassword, setNewPassword] = useState<string>('');
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleSignUp = async () => {
-        if (!email || !password1 || !password2) {
+        if (!email || !newPassword || !confirmPassword) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
 
-        if (password1 !== password2) {
+        if (newPassword !== confirmPassword) {
             Alert.alert('Error', 'Passwords must match');
             return;
         }
@@ -29,7 +29,7 @@ export const useSignUp = () => {
             const userCredential = await createUserWithEmailAndPassword(
                 auth, 
                 email.trim(), 
-                password1,
+                newPassword,
             );
 
             return { success: true, user: userCredential.user };
@@ -44,10 +44,10 @@ export const useSignUp = () => {
     return {
         email,
         setEmail,
-        password1,
-        setPassword1,
-        password2,
-        setPassword2,
+        newPassword,
+        setNewPassword,
+        confirmPassword,
+        setConfirmPassword,
         loading,
         error,
         handleSignUp

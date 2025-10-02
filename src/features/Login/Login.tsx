@@ -1,22 +1,22 @@
-import { Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { styles } from './Login.styes';
-import Divider from '../../common/components/layout/Divider';
-import GoogleLoginButton from 'common/components/ui/buttons/GoogleLoginButton';
-import AppleLoginButton from 'common/components/ui/buttons/AppleLoginButton';
+import Divider from 'common/components/auth/layout/Divider';
+import GoogleLoginButton from 'common/components/auth/ui/buttons/GoogleLoginButton';
+import AppleLoginButton from 'common/components/auth/ui/buttons/AppleLoginButton';
 import useLoginForm from './hooks/useLoginForm';
 import PrimaryButton from './components/PrimaryButton';
+import SignUpPrompt from './components/SignUpPrompt';
+import AuthHeader from './components/AuthHeader';
 
 function Login() {
-    const navigation = useNavigation<any>();
+    
 
     const { email, setEmail, password, setPassword, loading, error, handleLogin } = useLoginForm();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-                <Text style={styles.title}>Login</Text>
-                <Text style={styles.subtitle}>Log in with your existing account.</Text>
+                <AuthHeader title='Login' subtitle='Log in with your existing account.' />
 
                 <TextInput
                     style={styles.input}
@@ -42,19 +42,15 @@ function Login() {
                     loading={loading}
                     title="Login"
                     loadingText="Logging In..."
+                    style={{ marginBottom: 16 }}
                 />
 
                 <Divider />
 
-                <GoogleLoginButton />
-                <AppleLoginButton />
+                <GoogleLoginButton style={{ marginBottom: 16 }} />
+                <AppleLoginButton style={{ marginBottom: 16 }} />
 
-                <View style={styles.signupContainer}>
-                    <Text style={styles.signupText}>Don't have an account, </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                        <Text style={styles.signupLink}>Sign Up</Text>
-                    </TouchableOpacity>
-                </View>
+               <SignUpPrompt />
                 
             </View>
         </TouchableWithoutFeedback>

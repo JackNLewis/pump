@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, StyleProp, ViewStyle } from "react-native";
 import { styles } from "./PrimaryButton.styles";
 
 interface PrimaryButtonProps {
@@ -7,6 +7,7 @@ interface PrimaryButtonProps {
     disabled?: boolean;
     title: string;
     loadingText?: string;
+    style?: StyleProp<ViewStyle>;
 }
 
 function PrimaryButton({
@@ -14,14 +15,15 @@ function PrimaryButton({
     loading = false,
     disabled = false,
     title,
-    loadingText = 'Loading...'
+    loadingText = 'Loading...',
+    style
 }: PrimaryButtonProps) {
 
     const isDisabled = loading || disabled;
 
     return (
         <TouchableOpacity
-            style={[styles.loginButton, isDisabled && styles.loginButtonDisabled]}
+            style={[styles.loginButton, isDisabled && styles.loginButtonDisabled, style]}
             onPress={onPress}
             disabled={isDisabled}
         >
