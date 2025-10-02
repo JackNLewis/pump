@@ -12,6 +12,8 @@ export const useSignUp = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleSignUp = async () => {
+         Keyboard.dismiss();
+         
         if (!email || !newPassword || !confirmPassword) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
@@ -23,7 +25,6 @@ export const useSignUp = () => {
         }
 
         setLoading(true);
-        Keyboard.dismiss();
         
         try {
             const userCredential = await createUserWithEmailAndPassword(

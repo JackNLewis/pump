@@ -4,12 +4,13 @@ import Divider from 'common/components/auth/layout/Divider';
 import GoogleLoginButton from 'common/components/auth/ui/buttons/GoogleLoginButton';
 import AppleLoginButton from 'common/components/auth/ui/buttons/AppleLoginButton';
 import useLoginForm from './hooks/useLoginForm';
-import PrimaryButton from './components/PrimaryButton';
+import PrimaryButton from '../../common/components/auth/ui/buttons/PrimaryButton';
 import SignUpPrompt from './components/SignUpPrompt';
-import AuthHeader from './components/AuthHeader';
+import AuthHeader from '../../common/components/auth/AuthHeader';
+import LoginForm from './components/LoginForm';
 
 function Login() {
-    
+
 
     const { email, setEmail, password, setPassword, loading, error, handleLogin } = useLoginForm();
 
@@ -18,31 +19,13 @@ function Login() {
             <View style={styles.container}>
                 <AuthHeader title='Login' subtitle='Log in with your existing account.' />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="Email"
-                    placeholderTextColor="#999"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    value={email}
-                    onChangeText={setEmail}
-                />
-
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor="#999"
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={setPassword}
-                />
-
-                <PrimaryButton
-                    onPress={handleLogin}
+                <LoginForm
+                    email={email}
+                    setEmail={setEmail}
+                    password={password}
+                    setPassword={setPassword}
                     loading={loading}
-                    title="Login"
-                    loadingText="Logging In..."
-                    style={{ marginBottom: 16 }}
+                    handleLogin={handleLogin}
                 />
 
                 <Divider />
@@ -50,8 +33,8 @@ function Login() {
                 <GoogleLoginButton style={{ marginBottom: 16 }} />
                 <AppleLoginButton style={{ marginBottom: 16 }} />
 
-               <SignUpPrompt />
-                
+                <SignUpPrompt />
+
             </View>
         </TouchableWithoutFeedback>
     );
