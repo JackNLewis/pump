@@ -15,4 +15,4 @@ export const styles = StyleSheet.create({
         borderWidth: sizing.borderWidth.thin,
         borderColor: colors.grey[300],
     },
-});
+})

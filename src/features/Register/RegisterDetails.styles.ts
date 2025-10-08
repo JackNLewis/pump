@@ -3,7 +3,7 @@ import { colors } from 'common/styles/colors'
 import { spacing } from 'common/styles/spacing' 
 import { typography } from 'common/styles/typography' 
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: spacing.lg,
@@ -23,15 +23,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: spacing.xxl,
     },
-    input: {
-        backgroundColor: colors.white,
-        borderRadius: 8,
-        padding: spacing.md,
-        marginBottom: spacing.md,
-        fontSize: typography.fontSize.md,
-        borderWidth: 1,
-        borderColor: colors.grey[300],
-    },
     continueButton: {
         backgroundColor: colors.primary[500],
         borderRadius: 8,
@@ -45,16 +36,4 @@ const styles = StyleSheet.create({
         fontSize: typography.fontSize.lg,
         fontWeight: typography.fontWeight.bold,
     },
-    error: {
-        color: 'red',
-        fontSize: typography.fontSize.sm,
-        fontWeight: typography.fontWeight.medium,
-        textAlign: 'center',
-    },
-    goBackText: {
-        color: colors.primary[500],
-        fontSize: typography.fontSize.md,
-        textAlign: 'center',
-        textDecorationLine: 'underline',
-    }
 });

@@ -1,24 +1,11 @@
 import { TextInput } from 'react-native';
 import PrimaryButton from 'common/components/auth/ui/buttons/PrimaryButton';
 import { styles } from './LoginForm.styles';
+import useLoginForm from '../hooks/useLoginForm';
 
-interface LoginFormProps {
-    email: string;
-    setEmail: (email: string) => void;
-    password: string;
-    setPassword: (password: string) => void;
-    loading: boolean;
-    handleLogin: () => void;
-}
+function LoginForm() {
+    const { email, setEmail, password, setPassword, loading, error, handleLogin } = useLoginForm();
 
-function LoginForm({
-    email,
-    setEmail,
-    password,
-    setPassword,
-    loading,
-    handleLogin,
-}: LoginFormProps) {
     return (
         <>
             <TextInput

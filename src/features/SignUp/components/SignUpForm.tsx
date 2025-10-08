@@ -1,28 +1,19 @@
 import { TextInput } from 'react-native';
 import PrimaryButton from 'common/components/auth/ui/buttons/PrimaryButton';
 import { styles } from './SignUpForm.styles'
+import { useSignUp } from '../hooks/useSignUpForm';
 
-interface SignUpFormProps {
-    email: string;
-    setEmail: (email: string) => void;
-    newPassword: string;
-    setNewPassword: (password: string) => void;
-    confirmPassword: string;
-    setConfirmPassword: (password: string) => void;
-    loading: boolean;
-    handleSignUp: () => void;
-}
-
-function SignUpForm({
-    email,
-    setEmail,
-    newPassword,
-    setNewPassword,
-    confirmPassword,
-    setConfirmPassword,
-    loading,
-    handleSignUp,
-}: SignUpFormProps) {
+function SignUpForm() {
+    const {
+        email,
+        setEmail,
+        newPassword,
+        setNewPassword,
+        confirmPassword,
+        setConfirmPassword,
+        loading,
+        handleSignUp
+    } = useSignUp();
     return (
         <>
             <TextInput

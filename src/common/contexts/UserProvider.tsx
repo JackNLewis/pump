@@ -20,7 +20,7 @@ const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export function UserProvider({ children }: UserProviderProps) {
 
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
     const [isRegistered, setIsRegistered] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [user, setUser] = useState<User>({} as User);
@@ -40,29 +40,29 @@ export function UserProvider({ children }: UserProviderProps) {
         }
     };
 
-    useEffect(() => {
-        setIsLoading(true);
+    // useEffect(() => {
+    //     setIsLoading(true);
 
-        // Check if user is Authenticated via firebase auth
-        const unsubscribeAuth = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
-            if (firebaseUser) {
-                console.log(firebaseUser);
-                console.log(`found user ${firebaseUser}`)
-                setIsAuthenticated(true);
-                const uuid = firebaseUser.uid; // or however you get the uuid
+    //     // Check if user is Authenticated via firebase auth
+    //     const unsubscribeAuth = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
+    //         if (firebaseUser) {
+    //             console.log(firebaseUser);
+    //             console.log(`found user ${firebaseUser}`)
+    //             setIsAuthenticated(true);
+    //             const uuid = firebaseUser.uid; // or however you get the uuid
 
-                // Call the async function
-                checkRegistration(uuid);
-                setIsLoading(false);
-            } else {
-                setIsAuthenticated(false);
-                setIsRegistered(false);
-                setIsLoading(false);
-            }
-        });
+    //             // Call the async function
+    //             checkRegistration(uuid);
+    //             setIsLoading(false);
+    //         } else {
+    //             setIsAuthenticated(false);
+    //             setIsRegistered(false);
+    //             setIsLoading(false);
+    //         }
+    //     });
 
-        return unsubscribeAuth;
-    }, []);
+    //     return unsubscribeAuth;
+    // }, []);
 
     return (
         <UserContext.Provider value={{ isAuthenticated, isRegistered, isLoading } as UserContextType}>

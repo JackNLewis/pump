@@ -2,9 +2,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { useUserContext } from '../common/contexts/UserProvider';
 import { View, Text } from 'react-native';
-import { useState } from 'react';
 import Login from 'features/Login/Login'
 import SignUp from 'features/SignUp/SignUp';
+import RegisterDetails from 'features/Register/RegisterDetails';
+import RegisterImage from 'features/Register/RegisterImage';
 
 const Stack = createStackNavigator();
 
@@ -44,7 +45,8 @@ function RootNav() {
             return (
                 // Authenticated but not registered - Registration Pages
                 <Stack.Group>
-                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="RegisterDetails" component={RegisterDetails} />
+                     <Stack.Screen name="RegisterImage" component={RegisterImage} />
 
                     {/* <Stack.Screen name="RegisterDetails" component={RegisterDetails} />
             <Stack.Screen name="RegisterImage">
